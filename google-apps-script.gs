@@ -31,7 +31,12 @@ const SETTINGS = {
   INVITE_CLIENT: false,
 
   // Rappel automatique (en minutes avant le rendez-vous). 0 = aucun.
-  REMINDER_MIN: 24 * 60
+  REMINDER_MIN: 24 * 60,
+
+  // Accusé de réception envoyé à la cliente (commandes et rendez-vous).
+  CONFIRM_CLIENT: true,
+  NOM_EXPEDITEUR: 'Henna by Inès',
+  CONTACT_PUBLIC: 'contact@hennabyines.fr'
 };
 
 /* ==========================================================================
@@ -115,6 +120,28 @@ function handleBooking(d) {
       ? 'L\'événement a été ajouté à votre agenda en attente de l\'acompte.'
       : 'L\'événement a été ajouté à votre agenda. Aucun acompte n\'est demandé : recontactez la cliente pour confirmer.')
   );
+
+  if (d.contact.email) {
+    const lignesClient = [
+      'Bonjour ' + (d.contact.firstName || '') + ',',
+      '',
+      'Votre demande de rendez-vous est bien arrivée. Voici ce que nous avons noté :',
+      '',
+      '   Date      : ' + fmtDate(start),
+      '   Durée est.: ' + minutes + ' min',
+      '   Évènement : ' + type,
+      '   Lieu      : ' + address,
+      '   Prestation: ' + (d.hands || []).map(function (h) { return 'main ' + h.index + ' en ' + h.formule; }).join(', '),
+      ''
+    ];
+    lignesClient.push(attenteAcompte
+      ? 'Votre date sera définitivement bloquée dès réception de l\'acompte de '
+        + d.deposit.amount + ' ' + d.deposit.currency + ' sur PayPal.'
+      : 'Inès vous recontacte très vite pour confirmer le rendez-vous et établir le devis.');
+    lignesClient.push('', 'Une erreur dans ces informations ? Répondez simplement à cet e-mail.');
+
+    confirmerAuClient(d.contact.email, 'Votre demande de rendez-vous du ' + fmtDate(start), lignesClient.join('\n'));
+  }
 
   return {
     ok: true,
@@ -214,7 +241,28 @@ function handleOrder(d) {
     'Le paiement PayPal est à vérifier sur votre compte.'
   ].join('\n');
 
-  notify('Commande — ' + (it.label || 'produit'), corps);
+  const client = (d.customer && d.customer.email) || null;
+  notify('Commande — ' + (it.label || 'produit') + (client ? ' — ' + client : ''), corps, client);
+
+  if (client) {
+    confirmerAuClient(client,
+      'Votre commande — ' + (it.label || 'produit'),
+      [
+        'Bonjour,',
+        '',
+        'Merci pour votre commande chez Henna by Inès. Voici le récapitulatif :',
+        '',
+        '   Produit : ' + (it.label || '—'),
+        '   Montant : ' + it.price + ' ' + (it.currency || 'EUR'),
+        '   Option  : ' + huile,
+        '',
+        'Votre commande sera préparée dès réception du paiement PayPal.',
+        'Nous revenons vers vous très vite pour la livraison ou le retrait.',
+        '',
+        'Une question ? Répondez simplement à cet e-mail.'
+      ].join('\n'));
+  }
+
   return { ok: true, orderId: 'CMD-' + Date.now() };
 }
 
@@ -280,6 +328,21 @@ function saveReference(ref, who) {
 function getFolder(name) {
   const it = DriveApp.getFoldersByName(name);
   return it.hasNext() ? it.next() : DriveApp.createFolder(name);
+}
+
+/** Accusé de réception envoyé à la cliente. Jamais bloquant : si l'envoi
+ *  échoue (quota Gmail, adresse invalide), la réservation reste enregistrée. */
+function confirmerAuClient(email, sujet, corps) {
+  if (!SETTINGS.CONFIRM_CLIENT || !email) return;
+  try {
+    MailApp.sendEmail(email, '[' + SETTINGS.NOM_EXPEDITEUR + '] ' + sujet,
+      corps + '\n\n— ' + SETTINGS.NOM_EXPEDITEUR + '\n' + SETTINGS.CONTACT_PUBLIC
+            + '\n\nVos données ne servent qu\'au traitement de cette demande.'
+            + ' Vous pouvez demander leur suppression à tout moment en répondant à cet e-mail.',
+      { name: SETTINGS.NOM_EXPEDITEUR, replyTo: SETTINGS.CONTACT_PUBLIC });
+  } catch (err) {
+    console.warn('Accusé de réception non envoyé à ' + email + ' : ' + err);
+  }
 }
 
 function notify(sujet, corps, replyTo) {

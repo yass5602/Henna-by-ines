@@ -355,6 +355,16 @@
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:12px 0 10px">{{ modalTitle }}</h3>
         <p style="font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.78);margin:0 0 20px;white-space:pre-line">{{ modalText }}</p>
 
+        <sc-if value="{{ askEmail }}" hint-placeholder-val="{{ false }}">
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(36,26,20,0.6);margin-bottom:18px">Votre e-mail
+            <input id="order-email" type="email" required="required" placeholder="vous@email.com" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.2);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+            <span style="font-size:12.5px;line-height:1.5;color:rgba(36,26,20,0.55);text-transform:none;letter-spacing:normal">Pour recevoir le récapitulatif de votre commande. Utilisé uniquement pour le suivi de cette commande.</span>
+          </label>
+          <sc-if value="{{ emailError }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:-8px 0 16px;font-size:13.5px;color:#A8542A">{{ emailError }}</p>
+          </sc-if>
+        </sc-if>
+
         <sc-if value="{{ showPay }}" hint-placeholder-val="{{ false }}">
           <div id="paypal-widget-slot" style="border:1px solid rgba(36,26,20,0.16);border-radius:16px;padding:22px;background:#fff">
             <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px">
@@ -363,11 +373,15 @@
             </div>
 
             <sc-if value="{{ hasPayLink }}" hint-placeholder-val="{{ true }}">
-              <a href="{{ payUrl }}" target="_blank" rel="noopener" onClick="{{ markPayOpened }}" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#0070BA;color:#fff;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:#003087">Payer avec PayPal</a>
+              <a href="{{ payUrl }}" target="_blank" rel="noopener" onClick="{{ goToPaypal }}" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#0070BA;color:#fff;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:#003087">Payer avec PayPal</a>
               <p style="margin:14px 0 0;font-size:12.5px;line-height:1.6;color:rgba(36,26,20,0.6);text-align:center">PayPal s'ouvre dans un nouvel onglet. Revenez ici une fois le paiement effectué.</p>
 
-              <sc-if value="{{ payOpened }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ canConfirm }}" hint-placeholder-val="{{ false }}">
                 <button onClick="{{ confirmPaid }}" style="width:100%;margin-top:16px;cursor:pointer;background:#1F6B5E;color:#FBF4EB;border:none;padding:15px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#241A14">{{ confirmLabel }}</button>
+              </sc-if>
+
+              <sc-if value="{{ orderSent }}" hint-placeholder-val="{{ false }}">
+                <p style="margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(36,26,20,0.12);font-size:13px;line-height:1.6;color:#1F6B5E;text-align:center">Commande bien reçue ✓<br>Vous pouvez fermer cette fenêtre une fois le paiement effectué.</p>
               </sc-if>
             </sc-if>
 
@@ -396,7 +410,7 @@
       <p style="font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.78);margin:0 0 26px">Une question sur une prestation, un devis pour la location d'assises ou des articles personnalisés ? Écrivez-nous, réponse sous 48 h.</p>
       <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
         <a href="mailto:contact@hennabyines.fr">contact@hennabyines.fr</a>
-        <a href="https://www.instagram.com/henna.by.ines?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">Instagram — @hennabyines</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram — @hennabyines</a>
         <span style="color:rgba(36,26,20,0.7)">Déplacements à domicile et en salle</span>
       </div>
     </div>
@@ -423,8 +437,13 @@
         <a href="#produits" style="color:rgba(251,244,235,0.75)">Produits</a>
         <a href="#rdv" style="color:rgba(251,244,235,0.75)">Prendre RDV</a>
         <a href="#contact" style="color:rgba(251,244,235,0.75)">Contact</a>
+        <a href="mentions-legales.html" style="color:rgba(251,244,235,0.75)">Mentions légales</a>
+        <a href="confidentialite.html" style="color:rgba(251,244,235,0.75)">Confidentialité</a>
       </nav>
-      <span style="font-size:13px">© 2026 Henna by Inès — Henné 100% naturel</span>
+      <span style="font-size:13px;display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        <span>© 2026 Henna by Inès — Henné 100% naturel</span>
+        <a href="https://yasify.site/?utm_medium=company_profile&amp;utm_source=trustpilot&amp;utm_campaign=domain_click" target="_blank" rel="noopener" style="color:#C58B3E">2026 by Yasify</a>
+      </span>
     </div>
   </footer>
 
@@ -657,7 +676,9 @@ class Component extends DCLogic {
       contactLabel: s.sending ? "Envoi en cours…" : "Envoyer",
 
       /* --- commande d'un produit ------------------------------------------ */
-      order: async (e) => {
+      /* Rien n'est envoyé ici : la commande ne part qu'au clic sur PayPal,
+         pour ne pas générer de demande fantôme ni de doublon d'e-mail. */
+      order: (e) => {
         const el = e.currentTarget;
         const item = {
           sku: el.getAttribute("data-sku"),
@@ -666,16 +687,19 @@ class Component extends DCLogic {
           currency: CONFIG.currency,
           options: { huileEssentielle: s.oil === "avec" }
         };
-        const res = await this.send({ type: "order", item, createdAt: new Date().toISOString() });
         this.setState({ modal: {
           kind: "order",
-          ref: res.orderId || null,
+          ref: null,
           kicker: "Commande",
           title: item.label + " — " + euro(item.price),
-          text: "Réglez votre commande via PayPal. Nous vous contacterons par e-mail pour la livraison ou le retrait." + demoNote(res),
+          text: "Indiquez votre e-mail, puis réglez votre commande via PayPal. Le récapitulatif vous sera envoyé.",
           amount: item.price,
           sku: item.sku,
+          item: item,
           payLabel: item.label,
+          needsEmail: true,
+          emailError: null,
+          sent: false,
           payOpened: false,
           paid: false
         }});
@@ -798,7 +822,55 @@ class Component extends DCLogic {
       payOpened: !!(m && m.payOpened),
       confirmLabel: s.sending ? "Enregistrement…" : "J'ai effectué le paiement",
 
-      markPayOpened: () => this.setState({ modal: Object.assign({}, m, { payOpened: true }) }),
+      askEmail: !!(m && m.needsEmail && !m.sent),
+      canConfirm: !!(m && m.payOpened && m.kind === "booking"),
+      orderSent: !!(m && m.kind === "order" && m.sent),
+      emailError: (m && m.emailError) || null,
+
+      /* Clic sur « Payer avec PayPal » : c'est ICI que la commande part, une
+         seule fois. PayPal s'ouvre dans la foulée via le href du lien. */
+      goToPaypal: (e) => {
+        const cur = this.state.modal;
+        if (!cur) return;
+
+        if (cur.needsEmail && !cur.sent) {
+          const field = document.getElementById("order-email");
+          const mail = field ? field.value.trim() : "";
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) {
+            e.preventDefault();
+            if (field) field.focus();
+            this.setState({ modal: Object.assign({}, cur, {
+              emailError: "Merci d'indiquer une adresse e-mail valide pour recevoir votre récapitulatif."
+            })});
+            return;
+          }
+          // Envoi unique, sans bloquer l'ouverture de PayPal.
+          this.setState({ modal: Object.assign({}, cur, { sent: true, payOpened: true, emailError: null }) });
+          api({
+            type: "order",
+            item: cur.item,
+            customer: { email: mail },
+            createdAt: new Date().toISOString()
+          }).then((res) => {
+            const now = this.state.modal;
+            if (!now) return;
+            this.setState({ modal: Object.assign({}, now, {
+              ref: (res && res.orderId) || null,
+              text: "Votre commande est enregistrée et un récapitulatif vient de partir vers " + mail
+                    + ". Finalisez le règlement sur PayPal." + demoNote(res)
+            })});
+          }).catch((err) => {
+            console.error("[HENNA] commande non transmise", err);
+            const now = this.state.modal;
+            if (now) this.setState({ modal: Object.assign({}, now, {
+              text: "⚠️ Votre commande n'a pas pu être enregistrée. Écrivez-nous à contact@hennabyines.fr en précisant le produit souhaité."
+            })});
+          });
+          return;
+        }
+
+        this.setState({ modal: Object.assign({}, cur, { payOpened: true }) });
+      },
 
       confirmPaid: async () => {
         if (!m) return;

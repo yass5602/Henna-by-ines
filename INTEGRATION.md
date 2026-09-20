@@ -98,16 +98,51 @@ PayPal professionnel + un backend (voir étape 4) : le code est déjà prévu po
 
 ---
 
+## Étape 2 bis — Les e-mails
+
+**Un seul e-mail par commande.** Rien n'est envoyé au clic sur « Commander » :
+la cliente saisit d'abord son adresse, et la commande ne part qu'au moment où
+elle est redirigée vers PayPal. Le bouton « J'ai effectué le paiement »
+n'apparaît plus sur les commandes — c'est lui qui créait les doublons. Il reste
+sur les prises de RDV, où il ne fait pas doublon : il fait passer l'évènement
+agenda de ⏳ orange à ✅ vert.
+
+**La cliente reçoit aussi un récapitulatif**, pour une commande comme pour un
+rendez-vous. Pour le désactiver, mettez `CONFIRM_CLIENT: false` en haut du
+script Google. Deux réglages voisins à ajuster : `NOM_EXPEDITEUR` et
+`CONTACT_PUBLIC`, l'adresse à laquelle les clientes répondront.
+
+> ⚠️ Ces e-mails partent depuis votre Gmail. La limite est de 100 destinataires
+> par jour sur un compte gratuit — largement suffisant, mais bon à savoir.
+> Si l'envoi à la cliente échoue, la réservation est quand même enregistrée.
+
+---
+
 ## Étape 3 — Mise en ligne
 
 Le site est composé de :
 
 ```
-index.html      la page
-config.js       vos réglages          ← à remplir
-support.js      le moteur d'affichage
-image/          logo, mains, cônes, poudre
+index.html              la page d'accueil
+config.js               vos réglages          ← à remplir
+support.js              le moteur d'affichage
+confidentialite.html    politique de confidentialité (RGPD)
+mentions-legales.html   mentions légales
+404.html                page d'erreur
+image/                  logo, mains, cônes, poudre
 ```
+
+> ⚠️ **Avant la mise en ligne**, ouvrez `mentions-legales.html` et
+> `confidentialite.html` : les passages surlignés en jaune entre crochets sont
+> à remplacer par vos informations réelles (statut, SIRET, adresse, hébergeur,
+> médiateur de la consommation). Tant qu'ils ne le sont pas, ces pages ne vous
+> protègent pas. Je ne suis pas juriste : pour une activité commerciale,
+> faites relire ces pages.
+
+**La page 404** est reconnue automatiquement par Netlify, Vercel, GitHub Pages
+et la plupart des hébergeurs, du seul fait qu'elle s'appelle `404.html`. Sur un
+serveur Apache classique, ajoutez un fichier `.htaccess` contenant
+`ErrorDocument 404 /404.html`.
 
 Déposez ces fichiers tels quels chez votre hébergeur.
 

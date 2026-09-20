@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>Page introuvable — Henna by Inès</title>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FBF4EB;color:#241A14;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+  a{color:#A8542A}
+  a:hover{color:#1F6B5E}
+  header{position:sticky;top:0;z-index:10;background:rgba(251,244,235,0.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,26,20,0.1)}
+  .bar{max-width:900px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px}
+  .bar img{width:48px;height:48px;object-fit:cover;border-radius:50%;border:1px solid rgba(165,84,42,0.35)}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;text-decoration:none;color:#241A14}
+  .sub{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A}
+  main{max-width:900px;margin:0 auto;padding:54px 20px 80px}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,5vw,48px);margin:14px 0 6px;line-height:1.1}
+  h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;margin:44px 0 10px}
+  h3{font-size:16px;font-weight:500;margin:26px 0 6px;letter-spacing:.02em}
+  p,li{font-size:16px;color:rgba(36,26,20,0.85)}
+  .maj{font-size:13.5px;color:rgba(36,26,20,0.55)}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+  th,td{text-align:left;padding:12px 14px;border:1px solid rgba(36,26,20,0.14);vertical-align:top}
+  th{background:#F6E7D4;font-weight:500}
+  .todo{background:#FFF3D6;border:1px dashed #C58B3E;border-radius:10px;padding:2px 8px;font-size:14px;color:#8A5A12;font-weight:500}
+  .note{background:#F6E7D4;border-radius:16px;padding:20px 24px;margin:28px 0}
+  .note p{margin:0;font-size:15px}
+  footer{background:#241A14;color:rgba(251,244,235,0.72);padding:40px 20px}
+  .fin{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px;align-items:center}
+  .fin a{color:rgba(251,244,235,0.72);text-decoration:none}
+  .fin a:hover{color:#C58B3E}
+  .fin nav{display:flex;gap:20px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a href="index.html"><img src="image/logo/LOGO.jpeg" alt="Henna by Inès"></a>
+    <span>
+      <a class="brand" href="index.html">Henna by Inès</a><br>
+      <span class="sub">Hennaya</span>
+    </span>
+  </div>
+</header>
+
+<main style="text-align:center;padding-top:80px">
+  <span class="kicker">Erreur 404</span>
+  <h1>Cette page n'existe pas</h1>
+  <p style="max-width:52ch;margin:10px auto 0">Le lien que vous avez suivi est peut-être ancien, ou l'adresse comporte une faute. Rien n'est perdu : tout se trouve sur la page d'accueil.</p>
+
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:38px 0 26px">
+    <a href="index.html" style="background:#A8542A;color:#FBF4EB;padding:16px 30px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none">Retour à l'accueil</a>
+    <a href="index.html#rdv" style="border:1px solid rgba(36,26,20,0.25);color:#241A14;padding:16px 30px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none">Prendre RDV</a>
+  </div>
+
+  <p class="maj" id="compte">Redirection automatique vers l'accueil dans 10 secondes.</p>
+  <p class="maj"><button id="stop" style="border:1px solid rgba(36,26,20,0.2);background:transparent;color:rgba(36,26,20,0.6);padding:8px 18px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit">Annuler la redirection</button></p>
+
+  <script>
+    (function () {
+      var reste = 10, actif = true;
+      var texte = document.getElementById('compte');
+      document.getElementById('stop').addEventListener('click', function () {
+        actif = false;
+        texte.textContent = 'Redirection annulée. Utilisez les boutons ci-dessus quand vous voulez.';
+        this.style.display = 'none';
+      });
+      setInterval(function () {
+        if (!actif) return;
+        reste -= 1;
+        if (reste <= 0) { window.location.href = 'index.html'; return; }
+        texte.textContent = 'Redirection automatique vers l\'accueil dans ' + reste + ' seconde' + (reste > 1 ? 's' : '') + '.';
+      }, 1000);
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="fin">
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="confidentialite.html">Confidentialité</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <span>
+      © 2026 Henna by Inès —
+      <a href="https://yasify.site/?utm_medium=company_profile&amp;utm_source=trustpilot&amp;utm_campaign=domain_click" target="_blank" rel="noopener">2026 by Yasify</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
