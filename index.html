@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./config.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Henna by Inès — Hennaya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#FBF4EB;color:#241A14;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#A8542A;text-decoration:none}
+  a:hover{color:#1F6B5E}
+  input,select,textarea,button{font-family:inherit}
+  [data-mobile-only]{display:none!important}
+  @media (max-width:920px){
+    [data-desktop-only]{display:none!important}
+    [data-mobile-only]{display:flex!important}
+    [data-stack]{grid-template-columns:1fr!important}
+  }
+  @keyframes hslide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+  @keyframes hfade{from{opacity:0}to{opacity:1}}
+</style>
+</helmet>
+
+<div style="max-width:100%;overflow-x:hidden;padding-bottom:0">
+
+  <header style="position:sticky;top:0;z-index:60;background:rgba(251,244,235,0.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,26,20,0.1)">
+    <div style="max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+      <a href="#accueil" style="display:flex;align-items:center;gap:12px;color:#241A14">
+        <img src="image/logo/LOGO.jpeg" alt="Henna by Inès" style="width:56px;height:56px;object-fit:cover;border-radius:50%;border:1px solid rgba(165,84,42,0.35);display:block">
+        <span style="display:flex;flex-direction:column;line-height:1.05">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:.02em">Henna by Inès</span>
+          <span style="font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Hennaya</span>
+        </span>
+      </a>
+
+      <nav data-desktop-only style="display:flex;align-items:center;gap:30px">
+        <a href="#accueil" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Home</a>
+        <a href="#realisations" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Nos Réalisations</a>
+        <a href="#produits" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Nos produits</a>
+        <a href="#contact" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Contact</a>
+        <a href="#rdv" style="background:#241A14;color:#FBF4EB;padding:12px 22px;border-radius:999px;font-size:14px;letter-spacing:.08em;text-transform:uppercase" style-hover="background:#A8542A">Prendre RDV</a>
+      </nav>
+
+      <button data-mobile-only onClick="{{ toggleMenu }}" aria-label="Menu" style="display:none;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid rgba(36,26,20,0.18);background:transparent;border-radius:12px;cursor:pointer;flex-direction:column;gap:5px">
+        <span style="display:block;width:20px;height:1.6px;background:#241A14"></span>
+        <span style="display:block;width:20px;height:1.6px;background:#241A14"></span>
+        <span style="display:block;width:20px;height:1.6px;background:#241A14"></span>
+      </button>
+    </div>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:80;background:rgba(36,26,20,0.45);animation:hfade .2s ease">
+      <nav onClick="{{ stop }}" style="position:absolute;top:0;right:0;height:100%;width:min(84vw,330px);background:#FBF4EB;padding:26px 24px;display:flex;flex-direction:column;gap:6px;animation:hslide .26s ease;border-left:1px solid rgba(36,26,20,0.1)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+          <span style="font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Menu</span>
+          <button onClick="{{ closeMenu }}" aria-label="Fermer" style="border:none;background:transparent;font-size:26px;line-height:1;color:#241A14;cursor:pointer">×</button>
+        </div>
+        <a href="#accueil" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Home</a>
+        <a href="#realisations" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Nos Réalisations</a>
+        <a href="#produits" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Nos produits</a>
+        <a href="#rdv" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Prendre RDV</a>
+        <a href="#contact" onClick="{{ closeMenu }}" style="padding:14px 0;color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Contact</a>
+        <a href="#rdv" onClick="{{ closeMenu }}" style="margin-top:22px;text-align:center;background:#241A14;color:#FBF4EB;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase">Réserver ma date</a>
+      </nav>
+    </div>
+  </sc-if>
+
+  <section id="accueil" data-screen-label="Hero" style="position:relative;min-height:min(88vh,760px);display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:48px;max-width:1240px;margin:0 auto;padding:70px 20px 80px" data-stack>
+    <div style="position:relative;z-index:2">
+      <span style="display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#1F6B5E;border:1px solid rgba(31,107,94,0.3);padding:8px 14px;border-radius:999px">L'élégance au bout des doigts</span>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,68px);line-height:1.06;margin:22px 0 0;letter-spacing:-0.01em;text-wrap:pretty">Henna by Inès, des créations qui vous ressemblent avec finesse.</h1>
+      <p style="font-size:17px;line-height:1.7;color:rgba(36,26,20,0.78);max-width:52ch;margin:20px 0 0;text-wrap:pretty">L'art ancestral qui sublime la féminité. Henné naturel du Rajasthan, motifs réalisés à la main pour vos mariages, fiançailles et célébrations.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:34px">
+        <a href="#rdv" style="background:#A8542A;color:#FBF4EB;padding:17px 32px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:#241A14">Prendre RDV</a>
+        <a href="#realisations" style="border:1px solid rgba(36,26,20,0.25);color:#241A14;padding:17px 32px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:rgba(36,26,20,0.06)">Nos réalisations</a>
+      </div>
+      <div style="display:flex;gap:34px;margin-top:44px;flex-wrap:wrap">
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">100%</div><div style="font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(36,26,20,0.6)">Naturel, sans PPD</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">5×</div><div style="font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(36,26,20,0.6)">Poudre filtrée</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">Rajasthan</div><div style="font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(36,26,20,0.6)">Origine de la poudre</div></div>
+      </div>
+    </div>
+    <div style="position:relative">
+      <img src="image/pack/Henna%20charge/charge-1.jpeg" alt="Motif de henné sur main" style="width:100%;height:min(70vh,620px);object-fit:cover;border-radius:260px 260px 24px 24px;display:block;box-shadow:0 30px 60px -30px rgba(36,26,20,0.45)">
+    </div>
+  </section>
+
+  <section id="prestations" data-screen-label="Prestations" style="background:#F6E7D4;padding:88px 20px">
+    <div style="max-width:1240px;margin:0 auto">
+      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prestations Henné</span>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Trois formules, une même exigence</h2>
+      <p style="max-width:62ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0">Chaque création est réalisée à la main et adaptée à vos envies. Choisissez votre formule selon le niveau de détail et la couvrance souhaités.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:42px">
+        <article style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.09);border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <img src="image/pack/henna%20simple/simple-1.jpeg" alt="Henné Délicat" style="width:100%;height:260px;object-fit:cover;display:block">
+          <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">✦ Henné Délicat</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une composition fine et minimaliste pour sublimer la main avec élégance. Motifs légers et épurés, avec une couvrance discrète. Idéal pour une première expérience au henné ou pour celles qui aiment les designs simples et raffinés.</p>
+            <div style="margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:13px;letter-spacing:.08em;color:#1F6B5E">{{ depositTag }}</span>
+              <a href="#rdv" style="text-align:center;background:#241A14;color:#FBF4EB;padding:14px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#A8542A">Prendre RDV</a>
+            </div>
+          </div>
+        </article>
+        <article style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.09);border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné Élégance" style="width:100%;height:260px;object-fit:cover;display:block">
+          <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">✦ Henné Élégance</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une composition plus travaillée, mêlant finesse et détails pour habiller joliment la main. Les motifs sont plus développés et offrent une couvrance intermédiaire, tout en gardant un résultat harmonieux et délicat.</p>
+            <div style="margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:13px;letter-spacing:.08em;color:#1F6B5E">{{ depositTag }}</span>
+              <a href="#rdv" style="text-align:center;background:#241A14;color:#FBF4EB;padding:14px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#A8542A">Prendre RDV</a>
+            </div>
+          </div>
+        </article>
+        <article style="background:#FBF4EB;border:1px solid rgba(168,84,42,0.35);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 50px -34px rgba(36,26,20,0.5)">
+          <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné Signature" style="width:100%;height:260px;object-fit:cover;display:block">
+          <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">✦ Henné Signature</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une création riche et détaillée pour un rendu plus intense et sophistiqué. Les motifs sont travaillés avec davantage de détails et couvrent une plus grande partie de la main. Idéal pour les occasions spéciales ou pour celles qui souhaitent une composition plus spectaculaire.</p>
+            <div style="margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:13px;letter-spacing:.08em;color:#1F6B5E">{{ depositTag }}</span>
+              <a href="#rdv" style="text-align:center;background:#A8542A;color:#FBF4EB;padding:14px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#241A14">Prendre RDV</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="realisations" data-screen-label="Réalisations" style="padding:88px 20px;max-width:1240px;margin:0 auto">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <div>
+        <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Nos Réalisations</span>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 0">Le henné, motif après motif</h2>
+      </div>
+      <a href="#rdv" style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #A8542A;padding-bottom:4px">Réserver une date</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px">
+      <img src="image/pack/Henna%20charge/charge-1.jpeg" alt="Henné chargé, motif complet sur les deux mains" style="width:100%;height:380px;object-fit:cover;border-radius:16px;grid-row:span 2;display:block">
+      <img src="image/pack/henna%20simple/simple-2.jpeg" alt="Henné délicat, motif fin sur le dessus de la main" style="width:100%;height:182px;object-fit:cover;border-radius:16px;display:block">
+      <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné signature, motifs géométriques détaillés" style="width:100%;height:380px;object-fit:cover;border-radius:16px;grid-row:span 2;display:block">
+      <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné élégance, motifs sur les doigts et le poignet" style="width:100%;height:182px;object-fit:cover;border-radius:16px;display:block">
+    </div>
+  </section>
+
+  <section id="produits" data-screen-label="Produits" style="background:#241A14;color:#FBF4EB;padding:88px 20px">
+    <div style="max-width:1240px;margin:0 auto">
+      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#C58B3E">Nos produits</span>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Cônes fraîchement préparés & poudre BAQ</h2>
+      <p style="max-width:64ch;font-size:16.5px;line-height:1.7;color:rgba(251,244,235,0.78);margin:0">100% naturel, sans produits chimiques ni PPD, parfait pour réaliser de délicats motifs au henné ou pour vos soins capillaires naturels.</p>
+
+      <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:28px;margin-top:46px" data-stack>
+        <div style="background:rgba(251,244,235,0.05);border:1px solid rgba(251,244,235,0.16);border-radius:22px;overflow:hidden">
+          <img src="image/cone/cone-2.jpeg" alt="Cônes de henné naturel" style="width:100%;height:300px;object-fit:cover;display:block">
+          <div style="padding:30px">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:0 0 6px">Cônes de Henné naturel — Qualité Premium</h3>
+            <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Découvrez nos cônes de henné naturel, préparés avec soin à partir d'une poudre de henné du Rajasthan, reconnue pour sa finesse et la richesse de sa coloration.</p>
+            <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:12px 0 0">La poudre utilisée pour réaliser ces cônes est filtrée 5 fois, pour obtenir une pâte ultra-fine et homogène, idéale pour réaliser des tracés précis et délicats. La pâte est fraîchement préparée par nos soins, pour préserver toutes les qualités du henné.</p>
+            <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:12px 0 0">Une couleur intense et bien foncée qui se développe progressivement après application. La texture est lisse, agréable et souple, parfaite pour les motifs fins. Un henné naturel pensé pour celles qui recherchent finesse, fraîcheur et intensité de couleur.</p>
+            <p style="font-size:15px;line-height:1.7;color:rgba(251,244,235,0.7);margin:16px 0 0"><strong style="color:#FBF4EB;font-weight:500">Poids :</strong> chaque cône contient environ 20 à 25 g de henné et permet de réaliser en moyenne 9 à 10 motifs, selon leur taille, leur finesse et la quantité de henné utilisée.</p>
+
+            <div style="margin-top:24px">
+              <div style="font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#C58B3E;margin-bottom:12px">Formulation</div>
+              <div style="display:flex;gap:12px;flex-wrap:wrap">
+                <button onClick="{{ pickOil }}" data-oil="avec" style="flex:1;min-width:170px;text-align:left;cursor:pointer;padding:16px 18px;border-radius:14px;border:1px solid rgba(251,244,235,0.2);background:transparent;color:#FBF4EB;font-size:15px">Avec huile essentielle</button>
+                <button onClick="{{ pickOil }}" data-oil="sans" style="flex:1;min-width:170px;text-align:left;cursor:pointer;padding:16px 18px;border-radius:14px;border:1px solid rgba(251,244,235,0.2);background:transparent;color:#FBF4EB;font-size:15px">Sans huile essentielle</button>
+              </div>
+              <div style="margin-top:12px;font-size:13.5px;color:#C58B3E">Sélection : {{ oilLabel }}</div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px">
+              <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:28px">3 €</div>
+                <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">le cône à l'unité</div>
+                <button onClick="{{ order }}" data-sku="cone-1" data-label="1 cône" data-price="3" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+              </div>
+              <div style="border:1px solid rgba(197,139,62,0.5);border-radius:14px;padding:18px;background:rgba(197,139,62,0.1)">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:28px">30 €</div>
+                <div style="font-size:13px;color:rgba(251,244,235,0.78);margin-bottom:14px">10 cônes — le 11ᵉ offert</div>
+                <button onClick="{{ order }}" data-sku="cone-10" data-label="10 cônes + 1 offert" data-price="30" style="width:100%;cursor:pointer;background:#C58B3E;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+              </div>
+              <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:28px">15 €</div>
+                <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">Box débutante : 5 cônes, une huile, un spray révélateur</div>
+                <button onClick="{{ order }}" data-sku="box-debutante" data-label="Box débutante" data-price="15" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+              </div>
+            </div>
+            <p style="font-size:13.5px;line-height:1.6;color:rgba(251,244,235,0.62);margin:22px 0 0;border-top:1px solid rgba(251,244,235,0.14);padding-top:16px">Précaution : ces cônes contiennent des huiles essentielles qui peuvent être déconseillées pour les femmes enceintes, allaitantes, les enfants de moins de 5 ans ou les personnes allergiques.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div style="background:rgba(251,244,235,0.05);border:1px solid rgba(251,244,235,0.16);border-radius:22px;overflow:hidden">
+            <img src="image/poudre/poudre-1.jpeg" alt="Poudre de henné naturel" style="width:100%;height:220px;object-fit:cover;display:block">
+            <div style="padding:28px">
+              <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;margin:0">La poudre de henné du Rajasthan</h3>
+              <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Une poudre fine et soigneusement filtrée 5 fois, de henné naturel BAQ (Body Art Quality). Elle permet d'obtenir une belle coloration foncée après développement. Idéale pour préparer votre propre pâte et réaliser des motifs fins et précis.</p>
+              <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:12px 0 0">La finesse de la poudre permet d'obtenir une pâte lisse, homogène et facile à travailler, adaptée aussi bien aux débutantes qu'aux personnes habituées à la pratique du henné.</p>
+              <p style="font-size:15px;line-height:1.7;color:rgba(251,244,235,0.7);margin:14px 0 0"><strong style="color:#FBF4EB;font-weight:500">Poids :</strong> chaque sachet contient 100 g de poudre, idéal pour préparer plusieurs cônes et réaliser de nombreux motifs.</p>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
+                  <span style="font-size:15px">100 g — <strong style="font-weight:500;color:#C58B3E">8 €</strong></span>
+                  <button onClick="{{ order }}" data-sku="poudre-100" data-label="Poudre 100 g" data-price="8" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
+                  <span style="font-size:15px">Pack 2 × 100 g — <strong style="font-weight:500;color:#C58B3E">14,90 €</strong></span>
+                  <button onClick="{{ order }}" data-sku="poudre-200" data-label="Pack 2 × 100 g" data-price="14.9" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
+                  <span style="font-size:15px">Pack 3 × 100 g — <strong style="font-weight:500;color:#C58B3E">21,50 €</strong></span>
+                  <button onClick="{{ order }}" data-sku="poudre-300" data-label="Pack 3 × 100 g" data-price="21.5" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border:1px solid rgba(251,244,235,0.16);border-radius:22px;padding:28px">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;margin:0 0 14px">Location & articles personnalisés</h3>
+            <ul style="margin:0;padding-left:20px;font-size:15.5px;line-height:1.9;color:rgba(251,244,235,0.82)">
+              <li>Location des assises pour vos cérémonies</li>
+              <li>Bougies, flûtes (verres) et bendir (tambour) personnalisés</li>
+            </ul>
+            <p style="font-size:14px;color:rgba(251,244,235,0.65);margin:14px 0 20px">Sur devis. Contactez-nous pour les délais de livraison.</p>
+            <a href="#contact" style="display:inline-block;border:1px solid rgba(251,244,235,0.4);color:#FBF4EB;padding:13px 26px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:rgba(251,244,235,0.12)">Demander un devis</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="histoire" data-screen-label="Mon histoire" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:center" data-stack>
+    <img src="image/pack/Henna%20moyen/moyen-1.jpeg" alt="Inès, henné" style="width:100%;height:min(64vh,560px);object-fit:cover;border-radius:24px 24px 200px 200px;display:block">
+    <div>
+      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Mon histoire ♡</span>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(28px,3.6vw,42px);margin:14px 0 20px;text-wrap:pretty">Une passion d'enfance devenue une aventure partagée</h2>
+      <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Le henné, c'est une passion que j'ai depuis toute petite. J'attendais toujours les fêtes avec impatience.</p>
+      <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Au-delà de sa beauté, j'ai toujours été attachée à ce que le henné représente. Un art traditionnel qui traverse les générations, accompagne les célébrations et crée de précieux moments de partage et de transmission.</p>
+      <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Avec le temps, j'ai commencé à pratiquer toute seule, d'abord sur moi, puis sur ma famille et mes proches. De fil en aiguille, je me suis intéressée davantage à cet art, à ses traditions et au henné naturel.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.6;color:#A8542A;margin:24px 0 0">Henna by Inès, c'est un petit bout de moi que je partage avec vous. Une passion où se mêlent tradition et créativité, que je prends plaisir à faire vivre à travers chacune de mes créations. Et surtout, le bonheur d'apporter ma touche à vos plus beaux moments. ✨</p>
+    </div>
+  </section>
+
+  <section id="rdv" data-screen-label="Prendre RDV" style="background:#F6E7D4;padding:88px 20px">
+    <div style="max-width:900px;margin:0 auto">
+      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prendre RDV</span>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Réservez votre créneau</h2>
+      <p style="max-width:60ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0 0 36px">{{ depositIntro }}</p>
+
+      <form onSubmit="{{ submitBooking }}" style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.1);border-radius:22px;padding:32px;display:flex;flex-direction:column;gap:22px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" data-stack>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Nom
+            <input name="lastName" required="required" placeholder="Votre nom" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Prénom
+            <input name="firstName" required="required" placeholder="Votre prénom" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Email
+            <input name="email" type="email" required="required" placeholder="vous@email.com" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Téléphone
+            <input name="phone" type="tel" required="required" placeholder="06 00 00 00 00" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Instagram (optionnel)
+            <input name="instagram" placeholder="@pseudo" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Type d'évènement
+            <select name="eventType" onChange="{{ changeEvent }}" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+              <option value="Mariage">Mariage</option>
+              <option value="Anniversaire">Anniversaire</option>
+              <option value="Baptême">Baptême</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </label>
+        </div>
+
+        <sc-if value="{{ isOther }}" hint-placeholder-val="{{ false }}">
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Précisez l'évènement
+            <input name="eventOther" placeholder="Ex. Fiançailles, Aïd…" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal">
+          </label>
+        </sc-if>
+
+        <fieldset style="border:1px solid rgba(36,26,20,0.12);border-radius:16px;padding:22px;margin:0">
+          <legend style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#A8542A;padding:0 8px">Adresse du lieu</legend>
+          <div style="display:grid;grid-template-columns:120px 1fr;gap:14px" data-stack>
+            <input name="streetNumber" placeholder="N° de rue" required="required" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+            <input name="street" placeholder="Nom de la rue" required="required" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+            <input name="zip" placeholder="Code postal" required="required" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+            <input name="city" placeholder="Ville" required="required" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+          </div>
+        </fieldset>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" data-stack>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Date
+            <input name="date" type="date" required="required" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Heure
+            <input name="time" type="time" required="required" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+          </label>
+        </div>
+
+        <fieldset style="border:1px solid rgba(36,26,20,0.12);border-radius:16px;padding:22px;margin:0">
+          <legend style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#A8542A;padding:0 8px">Nombre de mains</legend>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="button" onClick="{{ setHands }}" data-hands="1" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">1</button>
+            <button type="button" onClick="{{ setHands }}" data-hands="2" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">2</button>
+            <button type="button" onClick="{{ setHands }}" data-hands="3" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">3</button>
+            <button type="button" onClick="{{ setHands }}" data-hands="4" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">4</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+            <sc-for list="{{ hands }}" as="hand" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <span style="min-width:90px;font-size:14.5px;color:rgba(36,26,20,0.75)">{{ hand.label }}</span>
+                <select value="{{ hand.value }}" onChange="{{ hand.onChange }}" style="flex:1;min-width:200px;padding:13px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+                  <option value="Délicat">Henné Délicat</option>
+                  <option value="Élégance">Henné Élégance</option>
+                  <option value="Signature">Henné Signature</option>
+                </select>
+              </div>
+            </sc-for>
+          </div>
+        </fieldset>
+
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Référence (optionnel)
+          <input name="reference" type="file" accept="image/*" style="padding:13px 16px;border:1px dashed rgba(36,26,20,0.28);border-radius:12px;background:#fff;font-size:14px;color:#241A14;text-transform:none;letter-spacing:normal">
+        </label>
+
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Message (optionnel)
+          <textarea name="message" rows="4" placeholder="Vos envies, précisions…" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;resize:vertical;text-transform:none;letter-spacing:normal"></textarea>
+        </label>
+
+        <button type="submit" disabled="{{ sending }}" style="cursor:pointer;background:#241A14;color:#FBF4EB;border:none;padding:18px;border-radius:999px;font-size:13px;letter-spacing:.14em;text-transform:uppercase" style-hover="background:#A8542A">{{ bookingLabel }}</button>
+        <p style="margin:0;font-size:13px;color:rgba(36,26,20,0.6);text-align:center">{{ depositNote }}</p>
+      </form>
+    </div>
+  </section>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:120;background:rgba(36,26,20,0.55);display:flex;align-items:center;justify-content:center;padding:20px;animation:hfade .2s ease">
+      <div onClick="{{ stop }}" style="background:#FBF4EB;border-radius:22px;max-width:460px;width:100%;padding:34px;position:relative">
+        <button onClick="{{ closeModal }}" aria-label="Fermer" style="position:absolute;top:16px;right:18px;border:none;background:transparent;font-size:26px;line-height:1;cursor:pointer;color:#241A14">×</button>
+        <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#A8542A">{{ modalKicker }}</span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:12px 0 10px">{{ modalTitle }}</h3>
+        <p style="font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.78);margin:0 0 20px;white-space:pre-line">{{ modalText }}</p>
+
+        <sc-if value="{{ showPay }}" hint-placeholder-val="{{ false }}">
+          <div id="paypal-widget-slot" style="border:1px solid rgba(36,26,20,0.16);border-radius:16px;padding:22px;background:#fff">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px">
+              <span style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(36,26,20,0.55)">Montant à régler</span>
+              <span style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">{{ payAmountLabel }}</span>
+            </div>
+
+            <sc-if value="{{ hasPayLink }}" hint-placeholder-val="{{ true }}">
+              <a href="{{ payUrl }}" target="_blank" rel="noopener" onClick="{{ markPayOpened }}" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#0070BA;color:#fff;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:#003087">Payer avec PayPal</a>
+              <p style="margin:14px 0 0;font-size:12.5px;line-height:1.6;color:rgba(36,26,20,0.6);text-align:center">PayPal s'ouvre dans un nouvel onglet. Revenez ici une fois le paiement effectué.</p>
+
+              <sc-if value="{{ payOpened }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ confirmPaid }}" style="width:100%;margin-top:16px;cursor:pointer;background:#1F6B5E;color:#FBF4EB;border:none;padding:15px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#241A14">{{ confirmLabel }}</button>
+              </sc-if>
+            </sc-if>
+
+            <sc-if value="{{ noPayLink }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;font-size:13px;line-height:1.7;color:#A8542A;text-align:center">Le compte PayPal n'est pas encore configuré.<br>Renseignez <code>HENNA_CONFIG.paypal.me</code> dans la page.</p>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ payDone }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1px solid rgba(31,107,94,0.4);background:rgba(31,107,94,0.08);border-radius:16px;padding:20px;text-align:center">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#1F6B5E;margin-bottom:6px">Paiement signalé ✓</div>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:rgba(36,26,20,0.75)">{{ payDoneText }}</p>
+          </div>
+        </sc-if>
+
+        <button onClick="{{ closeModal }}" style="width:100%;margin-top:20px;cursor:pointer;background:#241A14;color:#FBF4EB;border:none;padding:16px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase">Fermer</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <section id="contact" data-screen-label="Contact" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px" data-stack>
+    <div>
+      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Contact</span>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 18px">Parlons de votre évènement</h2>
+      <p style="font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.78);margin:0 0 26px">Une question sur une prestation, un devis pour la location d'assises ou des articles personnalisés ? Écrivez-nous, réponse sous 48 h.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
+        <a href="mailto:contact@hennabyines.fr">contact@hennabyines.fr</a>
+        <a href="https://www.instagram.com/henna.by.ines?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">Instagram — @hennabyines</a>
+        <span style="color:rgba(36,26,20,0.7)">Déplacements à domicile et en salle</span>
+      </div>
+    </div>
+    <form onSubmit="{{ submitContact }}" style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.1);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:16px">
+      <input name="name" required="required" placeholder="Nom et prénom" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+      <input name="email" type="email" required="required" placeholder="Email" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+      <input name="subject" placeholder="Sujet (prestation, devis, produits…)" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14">
+      <textarea name="message" rows="5" required="required" placeholder="Votre message" style="padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;resize:vertical"></textarea>
+      <button type="submit" disabled="{{ sending }}" style="cursor:pointer;background:#A8542A;color:#FBF4EB;border:none;padding:16px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#241A14">{{ contactLabel }}</button>
+    </form>
+  </section>
+
+  <footer style="background:#241A14;color:rgba(251,244,235,0.75);padding:52px 20px 110px">
+    <div style="max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:center">
+      <div style="display:flex;align-items:center;gap:14px">
+        <img src="image/logo/LOGO.jpeg" alt="Henna by Inès" style="width:52px;height:52px;object-fit:cover;border-radius:50%;display:block">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#FBF4EB">Henna by Inès</div>
+          <div style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#C58B3E">Hennaya</div>
+        </div>
+      </div>
+      <nav style="display:flex;gap:22px;flex-wrap:wrap;font-size:14px">
+        <a href="#realisations" style="color:rgba(251,244,235,0.75)">Réalisations</a>
+        <a href="#produits" style="color:rgba(251,244,235,0.75)">Produits</a>
+        <a href="#rdv" style="color:rgba(251,244,235,0.75)">Prendre RDV</a>
+        <a href="#contact" style="color:rgba(251,244,235,0.75)">Contact</a>
+      </nav>
+      <span style="font-size:13px">© 2026 Henna by Inès — Henné 100% naturel</span>
+    </div>
+  </footer>
+
+  <div data-mobile-only style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:70;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:rgba(251,244,235,0.96);backdrop-filter:blur(10px);border-top:1px solid rgba(36,26,20,0.12);gap:10px">
+    <a href="#rdv" style="flex:2;text-align:center;background:#A8542A;color:#FBF4EB;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase">Prendre RDV</a>
+    <a href="#produits" style="flex:1;text-align:center;border:1px solid rgba(36,26,20,0.25);color:#241A14;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase">Produits</a>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+/* ============================================================================
+   Henna by Inès — couche d'intégration
+   ----------------------------------------------------------------------------
+   Toute la configuration se fait SANS toucher à ce fichier, en injectant
+   window.HENNA_CONFIG avant le chargement de support.js. Exemple :
+
+   <script>
+     window.HENNA_CONFIG = {
+       // 1) Google Agenda + e-mails (Google Apps Script — voir INTEGRATION.md)
+       appsScriptUrl: "https://script.google.com/macros/s/AKfycb.../exec",
+
+       // 2) PayPal (liens de paiement)
+       paypal: {
+         me: "hennabyines",              // identifiant PayPal.Me
+         hostedButtons: {                 // optionnel : boutons PayPal hébergés
+           "cone-10": "https://www.paypal.com/ncp/payment/XXXXXXXX"
+         }
+       },
+
+       // 3) Plus tard : votre propre backend (prioritaire sur appsScriptUrl)
+       apiBase: ""                        // ex. "https://api.hennabyines.fr"
+     };
+   <\/script>
+   ========================================================================== */
+const CONFIG = (() => {
+  const u = (typeof window !== "undefined" && window.HENNA_CONFIG) || {};
+  return {
+    apiBase: u.apiBase || "",
+    appsScriptUrl: u.appsScriptUrl || "",
+    endpoints: Object.assign(
+      { bookings: "/api/bookings", contacts: "/api/contacts", orders: "/api/orders", payments: "/api/payments" },
+      u.endpoints || {}
+    ),
+    depositAmount: u.depositAmount != null ? u.depositAmount : 10,
+    currency: u.currency || "EUR",
+    paypal: Object.assign({ me: "", hostedButtons: {}, businessEmail: "" }, u.paypal || {})
+  };
+})();
+
+/* ---------- Utilitaires ---------------------------------------------------- */
+function euro(n) {
+  return Number(n).toFixed(2).replace(".", ",") + " €";
+}
+
+/* Tant qu'aucun backend n'est configuré (appsScriptUrl / apiBase vides), rien
+   n'est réellement transmis : on le dit, pour ne pas laisser croire à une
+   cliente — ou à vous pendant vos essais — qu'une demande est arrivée. */
+function demoNote(res) {
+  return (res && res.mocked)
+    ? "\n\n⚠️ Mode démonstration : aucun destinataire n'est encore configuré, cette demande n'a été envoyée à personne. Renseignez « appsScriptUrl » dans config.js."
+    : "";
+}
+
+function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result));
+    r.onerror = () => reject(r.error);
+    r.readAsDataURL(file);
+  });
+}
+
+/* Construit le lien de paiement PayPal.
+   Priorité : bouton hébergé pour ce SKU > PayPal.Me > e-mail pro. */
+function paypalUrl(amount, sku, label) {
+  const p = CONFIG.paypal;
+  const hosted = p.hostedButtons && p.hostedButtons[sku];
+  if (hosted) return hosted;
+  if (p.me) {
+    const handle = String(p.me)
+      .replace(/^https?:\/\/(www\.)?paypal\.(me|com\/paypalme)\//i, "")
+      .replace(/^@/, "")
+      .replace(/\/+$/, "");
+    return "https://www.paypal.com/paypalme/" + encodeURIComponent(handle) +
+           "/" + Number(amount).toFixed(2) + CONFIG.currency;
+  }
+  if (p.businessEmail) {
+    const q = new URLSearchParams({
+      cmd: "_xclick",
+      business: p.businessEmail,
+      item_name: label || "Henna by Inès",
+      amount: Number(amount).toFixed(2),
+      currency_code: CONFIG.currency,
+      no_shipping: "1"
+    });
+    return "https://www.paypal.com/cgi-bin/webscr?" + q.toString();
+  }
+  return "";
+}
+
+/* Envoi unique vers le backend.
+   - CONFIG.apiBase renseigné  -> votre serveur, en JSON classique.
+   - sinon CONFIG.appsScriptUrl -> Google Apps Script.
+     Important : Content-Type "text/plain" pour rester une requête « simple »
+     (Apps Script ne répond pas au pre-flight OPTIONS du navigateur).
+   - sinon -> mode démo, le payload est seulement affiché en console. */
+async function api(payload) {
+  const body = JSON.stringify(payload);
+
+  if (CONFIG.apiBase) {
+    const map = { booking: "bookings", contact: "contacts", order: "orders", payment: "payments" };
+    const ep = CONFIG.endpoints[map[payload.type]] || ("/api/" + payload.type);
+    const res = await fetch(CONFIG.apiBase.replace(/\/+$/, "") + ep, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body
+    });
+    return res.json().catch(() => ({ ok: res.ok }));
+  }
+
+  if (CONFIG.appsScriptUrl) {
+    const res = await fetch(CONFIG.appsScriptUrl, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body,
+      redirect: "follow"
+    });
+    return res.json().catch(() => ({ ok: res.ok }));
+  }
+
+  console.info("[HENNA] Aucun backend configuré — payload prêt à être envoyé :", payload);
+  return { ok: true, mocked: true };
+}
+
+class Component extends DCLogic {
+  state = {
+    menuOpen: false,
+    oil: "avec",
+    eventType: "Mariage",
+    handCount: 2,
+    handTypes: ["Délicat", "Délicat", "Délicat", "Délicat"],
+    sending: false,
+    modal: null
+  };
+
+  componentDidMount() {
+    window.HENNA_API = { config: CONFIG, post: api, paypalUrl };
+    // On interdit les dates passées dans le formulaire de réservation.
+    const d = document.querySelector('#rdv input[name="date"]');
+    if (d && !d.min) d.min = new Date().toISOString().slice(0, 10);
+  }
+
+  async send(payload) {
+    this.setState({ sending: true });
+    try {
+      return (await api(payload)) || {};
+    } catch (err) {
+      console.error("[HENNA] échec de l'envoi", err);
+      return { ok: false, error: String(err && err.message || err) };
+    } finally {
+      this.setState({ sending: false });
+    }
+  }
+
+  renderVals() {
+    const s = this.state;
+
+    const hands = [];
+    for (let i = 0; i < s.handCount; i++) {
+      hands.push({
+        label: "Main " + (i + 1),
+        value: s.handTypes[i],
+        onChange: (e) => {
+          const v = e.target.value, next = s.handTypes.slice();
+          next[i] = v;
+          this.setState({ handTypes: next });
+        }
+      });
+    }
+
+    const m = s.modal;
+    const showPay = !!(m && m.amount != null && !m.paid);
+
+    return {
+      /* --- navigation ----------------------------------------------------- */
+      menuOpen: s.menuOpen,
+      toggleMenu: () => this.setState({ menuOpen: !s.menuOpen }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      stop: (e) => e.stopPropagation(),
+
+      /* --- produits ------------------------------------------------------- */
+      oilLabel: s.oil === "avec" ? "Avec huile essentielle" : "Sans huile essentielle",
+      pickOil: (e) => {
+        const v = e.currentTarget.getAttribute("data-oil");
+        this.setState({ oil: v });
+        e.currentTarget.parentNode.querySelectorAll("[data-oil]").forEach(b => {
+          const on = b.getAttribute("data-oil") === v;
+          b.style.borderColor = on ? "#C58B3E" : "rgba(251,244,235,0.2)";
+          b.style.background = on ? "rgba(197,139,62,0.16)" : "transparent";
+        });
+      },
+
+      /* --- réservation ---------------------------------------------------- */
+      isOther: s.eventType === "Autre",
+      changeEvent: (e) => this.setState({ eventType: e.target.value }),
+      hands,
+      setHands: (e) => {
+        const n = parseInt(e.currentTarget.getAttribute("data-hands"), 10);
+        this.setState({ handCount: n });
+        e.currentTarget.parentNode.querySelectorAll("[data-hands]").forEach(b => {
+          const on = parseInt(b.getAttribute("data-hands"), 10) === n;
+          b.style.background = on ? "#241A14" : "transparent";
+          b.style.color = on ? "#FBF4EB" : "#241A14";
+          b.style.borderColor = on ? "#241A14" : "rgba(36,26,20,0.2)";
+        });
+      },
+
+      depositIntro: Number(CONFIG.depositAmount) > 0
+        ? "Chaque prestation est établie sur devis. La réservation est confirmée par un acompte de " + euro(CONFIG.depositAmount) + " réglé en ligne."
+        : "Chaque prestation est établie sur devis. Envoyez votre demande, Inès vous recontacte pour confirmer la date et le tarif.",
+      depositTag: Number(CONFIG.depositAmount) > 0
+        ? "Sur devis · acompte " + euro(CONFIG.depositAmount) + " à la réservation"
+        : "Sur devis · sans acompte",
+      depositNote: Number(CONFIG.depositAmount) > 0
+        ? "Acompte de " + euro(CONFIG.depositAmount) + " réglé en ligne à l'étape suivante."
+        : "Votre demande est sans engagement : Inès vous recontacte pour confirmer.",
+      sending: s.sending,
+      bookingLabel: s.sending ? "Envoi en cours…" : "Réserver",
+      contactLabel: s.sending ? "Envoi en cours…" : "Envoyer",
+
+      /* --- commande d'un produit ------------------------------------------ */
+      order: async (e) => {
+        const el = e.currentTarget;
+        const item = {
+          sku: el.getAttribute("data-sku"),
+          label: el.getAttribute("data-label"),
+          price: parseFloat(el.getAttribute("data-price")),
+          currency: CONFIG.currency,
+          options: { huileEssentielle: s.oil === "avec" }
+        };
+        const res = await this.send({ type: "order", item, createdAt: new Date().toISOString() });
+        this.setState({ modal: {
+          kind: "order",
+          ref: res.orderId || null,
+          kicker: "Commande",
+          title: item.label + " — " + euro(item.price),
+          text: "Réglez votre commande via PayPal. Nous vous contacterons par e-mail pour la livraison ou le retrait." + demoNote(res),
+          amount: item.price,
+          sku: item.sku,
+          payLabel: item.label,
+          payOpened: false,
+          paid: false
+        }});
+      },
+
+      /* --- envoi de la réservation ---------------------------------------- */
+      submitBooking: async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const f = new FormData(form);
+
+        // Image de référence (optionnelle) : transmise en base64 si < 3 Mo.
+        let reference = null;
+        const refInput = form.querySelector('input[name="reference"]');
+        const refFile = refInput && refInput.files && refInput.files[0];
+        if (refFile) {
+          if (refFile.size <= 3 * 1024 * 1024) {
+            try {
+              reference = { name: refFile.name, mimeType: refFile.type, dataUrl: await fileToDataUrl(refFile) };
+            } catch (err) { console.warn("[HENNA] référence illisible", err); }
+          } else {
+            console.warn("[HENNA] référence ignorée (> 3 Mo)");
+          }
+        }
+
+        // depositAmount à 0 (ou négatif) => réservation sans acompte : pas d'étape de paiement.
+        const withDeposit = Number(CONFIG.depositAmount) > 0;
+
+        const payload = {
+          type: "booking",
+          contact: {
+            lastName: f.get("lastName"), firstName: f.get("firstName"),
+            email: f.get("email"), phone: f.get("phone"),
+            instagram: f.get("instagram") || null
+          },
+          address: {
+            streetNumber: f.get("streetNumber"), street: f.get("street"),
+            zip: f.get("zip"), city: f.get("city")
+          },
+          event: {
+            type: s.eventType, other: f.get("eventOther") || null,
+            date: f.get("date"), time: f.get("time")
+          },
+          hands: s.handTypes.slice(0, s.handCount).map((t, i) => ({ index: i + 1, formule: t })),
+          message: f.get("message") || null,
+          reference,
+          hasReference: !!reference,
+          deposit: withDeposit
+            ? { amount: CONFIG.depositAmount, currency: CONFIG.currency, status: "pending" }
+            : null,
+          createdAt: new Date().toISOString()
+        };
+
+        const res = await this.send(payload);
+
+        if (res && res.ok === false) {
+          this.setState({ modal: {
+            kind: "error", kicker: "Oups",
+            title: "L'envoi a échoué",
+            text: "Votre demande n'a pas pu être transmise. Réessayez dans un instant ou écrivez-nous à contact@hennabyines.fr.",
+            amount: null, paid: false
+          }});
+          return;
+        }
+
+        form.reset();
+        const d = payload.event.date
+          ? new Date(payload.event.date + "T00:00:00").toLocaleDateString("fr-FR",
+              { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+          : "—";
+
+        this.setState({ modal: {
+          kind: "booking",
+          ref: res.bookingId || null,
+          kicker: "Réservation",
+          title: withDeposit ? "Acompte de " + euro(CONFIG.depositAmount) : "Demande envoyée",
+          text: (withDeposit
+            ? "Votre demande pour le " + d + " est enregistrée. La date est bloquée dès réception de l'acompte."
+            : "Votre demande pour le " + d + " est enregistrée. Inès vous recontacte très vite pour confirmer le rendez-vous et établir le devis."
+          ) + demoNote(res),
+          amount: withDeposit ? CONFIG.depositAmount : null,
+          sku: "acompte",
+          payLabel: "Acompte réservation — " + d,
+          payOpened: false,
+          paid: false
+        }});
+      },
+
+      /* --- formulaire de contact ------------------------------------------ */
+      submitContact: async (e) => {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        const res = await this.send({
+          type: "contact",
+          name: f.get("name"), email: f.get("email"),
+          subject: f.get("subject") || null, message: f.get("message"),
+          createdAt: new Date().toISOString()
+        });
+        if (res && res.ok === false) {
+          this.setState({ modal: { kind: "error", kicker: "Oups", title: "L'envoi a échoué",
+            text: "Écrivez-nous directement à contact@hennabyines.fr.", amount: null, paid: false } });
+          return;
+        }
+        e.target.reset();
+        this.setState({ modal: { kind: "contact", kicker: "Message envoyé", title: "Merci !",
+          text: "Votre message a bien été transmis. Réponse sous 48 h." + demoNote(res), amount: null, paid: false } });
+      },
+
+      /* --- modale + paiement ---------------------------------------------- */
+      modalOpen: !!m,
+      modalKicker: m ? m.kicker : "",
+      modalTitle: m ? m.title : "",
+      modalText: m ? m.text : "",
+
+      showPay,
+      payAmountLabel: m && m.amount != null ? euro(m.amount) : "",
+      payUrl: m && m.amount != null ? paypalUrl(m.amount, m.sku, m.payLabel) : "",
+      hasPayLink: showPay && !!paypalUrl(m.amount, m.sku, m.payLabel),
+      noPayLink: showPay && !paypalUrl(m.amount, m.sku, m.payLabel),
+      payOpened: !!(m && m.payOpened),
+      confirmLabel: s.sending ? "Enregistrement…" : "J'ai effectué le paiement",
+
+      markPayOpened: () => this.setState({ modal: Object.assign({}, m, { payOpened: true }) }),
+
+      confirmPaid: async () => {
+        if (!m) return;
+        await this.send({
+          type: "payment",
+          kind: m.kind,
+          ref: m.ref || null,
+          amount: m.amount,
+          currency: CONFIG.currency,
+          method: "paypal",
+          declaredBy: "client",
+          createdAt: new Date().toISOString()
+        });
+        this.setState({ modal: Object.assign({}, this.state.modal, { paid: true }) });
+      },
+
+      payDone: !!(m && m.paid),
+      payDoneText: m && m.kind === "order"
+        ? "Merci ! Votre commande est transmise. Nous revenons vers vous par e-mail après vérification du paiement."
+        : "Merci ! Votre date est réservée. Vous recevrez une confirmation par e-mail après vérification de l'acompte.",
+
+      closeModal: () => this.setState({ modal: null })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
