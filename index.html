@@ -13,7 +13,7 @@
 <title>Henna by Inès — Hennaya</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -27,6 +27,19 @@
     [data-mobile-only]{display:flex!important}
     [data-stack]{grid-template-columns:1fr!important}
   }
+  /* Motif floral en fond, à 50 % d'opacité, fixe pendant le défilement. */
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:url("image/motif/motif-floral.jpg") repeat;background-size:560px auto;opacity:.5}
+
+  /* Pinyon Script : titres de sections, h2, h3 et prix.
+     Police calligraphique à petit œil : tailles relevées pour rester lisible. */
+  h2,h3,.kicker,.prix{font-family:'Pinyon Script',cursive!important;font-weight:400!important;
+    letter-spacing:0!important;text-transform:none!important}
+  h2{font-size:clamp(40px,5.4vw,62px)!important;line-height:1.15!important}
+  h3{font-size:34px!important;line-height:1.2!important}
+  .kicker{font-size:36px!important;line-height:1.1!important;display:inline-block}
+  .prix{font-size:36px!important;line-height:1.1!important}
+  strong.prix{font-size:28px!important}
   @keyframes hslide{from{transform:translateX(100%)}to{transform:translateX(0)}}
   @keyframes hfade{from{opacity:0}to{opacity:1}}
 </style>
@@ -97,9 +110,9 @@
     </div>
   </section>
 
-  <section id="prestations" data-screen-label="Prestations" style="background:#F6E7D4;padding:88px 20px">
+  <section id="prestations" data-screen-label="Prestations" style="background:rgba(246,231,212,0.55);padding:88px 20px">
     <div style="max-width:1240px;margin:0 auto">
-      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prestations Henné</span>
+      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prestations Henné</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Trois formules, une même exigence</h2>
       <p style="max-width:62ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0">Chaque création est réalisée à la main et adaptée à vos envies. Choisissez votre formule selon le niveau de détail et la couvrance souhaités.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:42px">
@@ -143,7 +156,7 @@
   <section id="realisations" data-screen-label="Réalisations" style="padding:88px 20px;max-width:1240px;margin:0 auto">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
       <div>
-        <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Nos Réalisations</span>
+        <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Nos Réalisations</span>
         <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 0">Le henné, motif après motif</h2>
       </div>
       <a href="#rdv" style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #A8542A;padding-bottom:4px">Réserver une date</a>
@@ -158,7 +171,7 @@
 
   <section id="produits" data-screen-label="Produits" style="background:#241A14;color:#FBF4EB;padding:88px 20px">
     <div style="max-width:1240px;margin:0 auto">
-      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#C58B3E">Nos produits</span>
+      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#C58B3E">Nos produits</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Cônes fraîchement préparés & poudre BAQ</h2>
       <p style="max-width:64ch;font-size:16.5px;line-height:1.7;color:rgba(251,244,235,0.78);margin:0">100% naturel, sans produits chimiques ni PPD, parfait pour réaliser de délicats motifs au henné ou pour vos soins capillaires naturels.</p>
 
@@ -183,17 +196,17 @@
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px">
               <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
-                <div style="font-family:'Cormorant Garamond',serif;font-size:28px">3 €</div>
+                <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">3 €</div>
                 <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">le cône à l'unité</div>
                 <button onClick="{{ order }}" data-sku="cone-1" data-label="1 cône" data-price="3" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
               </div>
               <div style="border:1px solid rgba(197,139,62,0.5);border-radius:14px;padding:18px;background:rgba(197,139,62,0.1)">
-                <div style="font-family:'Cormorant Garamond',serif;font-size:28px">30 €</div>
+                <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">30 €</div>
                 <div style="font-size:13px;color:rgba(251,244,235,0.78);margin-bottom:14px">10 cônes — le 11ᵉ offert</div>
                 <button onClick="{{ order }}" data-sku="cone-10" data-label="10 cônes + 1 offert" data-price="30" style="width:100%;cursor:pointer;background:#C58B3E;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
               </div>
               <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
-                <div style="font-family:'Cormorant Garamond',serif;font-size:28px">15 €</div>
+                <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">15 €</div>
                 <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">Box débutante : 5 cônes, une huile, un spray révélateur</div>
                 <button onClick="{{ order }}" data-sku="box-debutante" data-label="Box débutante" data-price="15" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
               </div>
@@ -212,15 +225,15 @@
               <p style="font-size:15px;line-height:1.7;color:rgba(251,244,235,0.7);margin:14px 0 0"><strong style="color:#FBF4EB;font-weight:500">Poids :</strong> chaque sachet contient 100 g de poudre, idéal pour préparer plusieurs cônes et réaliser de nombreux motifs.</p>
               <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
-                  <span style="font-size:15px">100 g — <strong style="font-weight:500;color:#C58B3E">8 €</strong></span>
+                  <span style="font-size:15px">100 g — <strong class="prix" style="font-weight:500;color:#C58B3E">8 €</strong></span>
                   <button onClick="{{ order }}" data-sku="poudre-100" data-label="Poudre 100 g" data-price="8" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
-                  <span style="font-size:15px">Pack 2 × 100 g — <strong style="font-weight:500;color:#C58B3E">14,90 €</strong></span>
+                  <span style="font-size:15px">Pack 2 × 100 g — <strong class="prix" style="font-weight:500;color:#C58B3E">14,90 €</strong></span>
                   <button onClick="{{ order }}" data-sku="poudre-200" data-label="Pack 2 × 100 g" data-price="14.9" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
-                  <span style="font-size:15px">Pack 3 × 100 g — <strong style="font-weight:500;color:#C58B3E">21,50 €</strong></span>
+                  <span style="font-size:15px">Pack 3 × 100 g — <strong class="prix" style="font-weight:500;color:#C58B3E">21,50 €</strong></span>
                   <button onClick="{{ order }}" data-sku="poudre-300" data-label="Pack 3 × 100 g" data-price="21.5" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
                 </div>
               </div>
@@ -244,7 +257,7 @@
   <section id="histoire" data-screen-label="Mon histoire" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:center" data-stack>
     <img src="image/pack/Henna%20moyen/moyen-1.jpeg" alt="Inès, henné" style="width:100%;height:min(64vh,560px);object-fit:cover;border-radius:24px 24px 200px 200px;display:block">
     <div>
-      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Mon histoire ♡</span>
+      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Mon histoire ♡</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(28px,3.6vw,42px);margin:14px 0 20px;text-wrap:pretty">Une passion d'enfance devenue une aventure partagée</h2>
       <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Le henné, c'est une passion que j'ai depuis toute petite. J'attendais toujours les fêtes avec impatience.</p>
       <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Au-delà de sa beauté, j'ai toujours été attachée à ce que le henné représente. Un art traditionnel qui traverse les générations, accompagne les célébrations et crée de précieux moments de partage et de transmission.</p>
@@ -253,9 +266,9 @@
     </div>
   </section>
 
-  <section id="rdv" data-screen-label="Prendre RDV" style="background:#F6E7D4;padding:88px 20px">
+  <section id="rdv" data-screen-label="Prendre RDV" style="background:rgba(246,231,212,0.55);padding:88px 20px">
     <div style="max-width:900px;margin:0 auto">
-      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prendre RDV</span>
+      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prendre RDV</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Réservez votre créneau</h2>
       <p style="max-width:60ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0 0 36px">{{ depositIntro }}</p>
 
@@ -313,12 +326,21 @@
 
         <fieldset style="border:1px solid rgba(36,26,20,0.12);border-radius:16px;padding:22px;margin:0">
           <legend style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#A8542A;padding:0 8px">Nombre de mains</legend>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
             <button type="button" onClick="{{ setHands }}" data-hands="1" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">1</button>
-            <button type="button" onClick="{{ setHands }}" data-hands="2" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">2</button>
-            <button type="button" onClick="{{ setHands }}" data-hands="3" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">3</button>
-            <button type="button" onClick="{{ setHands }}" data-hands="4" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid rgba(36,26,20,0.2);background:transparent;font-size:15px;color:#241A14">4</button>
+            <button type="button" onClick="{{ setHands }}" data-hands="2" style="cursor:pointer;min-width:56px;padding:12px 18px;border-radius:999px;border:1px solid #241A14;background:#241A14;font-size:15px;color:#FBF4EB">2</button>
+
+            <sc-if value="{{ devisOff }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ toggleDevis }}" data-devis="off" style="cursor:pointer;padding:12px 20px;border-radius:999px;border:1px dashed rgba(168,84,42,0.6);background:transparent;font-size:14px;color:#A8542A">+ Demande de devis ultérieur</button>
+            </sc-if>
+            <sc-if value="{{ devisOn }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ toggleDevis }}" data-devis="on" style="cursor:pointer;padding:12px 20px;border-radius:999px;border:1px solid #A8542A;background:#A8542A;font-size:14px;color:#FBF4EB">✓ Demande de devis ultérieur</button>
+            </sc-if>
           </div>
+
+          <sc-if value="{{ devisOn }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:16px 0 0;padding:14px 16px;border-radius:12px;background:rgba(168,84,42,0.08);font-size:14px;line-height:1.6;color:rgba(36,26,20,0.8)">Plus de 2 mains ? Réservez votre créneau pour 2 mains : Inès vous recontactera après la réservation pour établir le devis des mains supplémentaires. Précisez le nombre souhaité dans le message ci-dessous.</p>
+          </sc-if>
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
             <sc-for list="{{ hands }}" as="hand" hint-placeholder-count="2">
               <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
@@ -333,7 +355,7 @@
           </div>
         </fieldset>
 
-        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Référence (optionnel)
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)">Modèle de référence (optionnel)
           <input name="reference" type="file" accept="image/*" style="padding:13px 16px;border:1px dashed rgba(36,26,20,0.28);border-radius:12px;background:#fff;font-size:14px;color:#241A14;text-transform:none;letter-spacing:normal">
         </label>
 
@@ -351,7 +373,7 @@
     <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:120;background:rgba(36,26,20,0.55);display:flex;align-items:center;justify-content:center;padding:20px;animation:hfade .2s ease">
       <div onClick="{{ stop }}" style="background:#FBF4EB;border-radius:22px;max-width:460px;width:100%;padding:34px;position:relative">
         <button onClick="{{ closeModal }}" aria-label="Fermer" style="position:absolute;top:16px;right:18px;border:none;background:transparent;font-size:26px;line-height:1;cursor:pointer;color:#241A14">×</button>
-        <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#A8542A">{{ modalKicker }}</span>
+        <span class="kicker" style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#A8542A">{{ modalKicker }}</span>
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:12px 0 10px">{{ modalTitle }}</h3>
         <p style="font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.78);margin:0 0 20px;white-space:pre-line">{{ modalText }}</p>
 
@@ -369,7 +391,7 @@
           <div id="paypal-widget-slot" style="border:1px solid rgba(36,26,20,0.16);border-radius:16px;padding:22px;background:#fff">
             <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px">
               <span style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(36,26,20,0.55)">Montant à régler</span>
-              <span style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">{{ payAmountLabel }}</span>
+              <span class="prix" style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">{{ payAmountLabel }}</span>
             </div>
 
             <sc-if value="{{ hasPayLink }}" hint-placeholder-val="{{ true }}">
@@ -405,7 +427,7 @@
 
   <section id="contact" data-screen-label="Contact" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px" data-stack>
     <div>
-      <span style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Contact</span>
+      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Contact</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 18px">Parlons de votre évènement</h2>
       <p style="font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.78);margin:0 0 26px">Une question sur une prestation, un devis pour la location d'assises ou des articles personnalisés ? Écrivez-nous, réponse sous 48 h.</p>
       <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
@@ -585,7 +607,8 @@ class Component extends DCLogic {
     oil: "avec",
     eventType: "Mariage",
     handCount: 2,
-    handTypes: ["Délicat", "Délicat", "Délicat", "Délicat"],
+    handTypes: ["Délicat", "Délicat"],
+    devisUlterieur: false,
     sending: false,
     modal: null
   };
@@ -661,6 +684,10 @@ class Component extends DCLogic {
           b.style.borderColor = on ? "#241A14" : "rgba(36,26,20,0.2)";
         });
       },
+
+      devisOn: !!s.devisUlterieur,
+      devisOff: !s.devisUlterieur,
+      toggleDevis: () => this.setState({ devisUlterieur: !this.state.devisUlterieur }),
 
       depositIntro: Number(CONFIG.depositAmount) > 0
         ? "Chaque prestation est établie sur devis. La réservation est confirmée par un acompte de " + euro(CONFIG.depositAmount) + " réglé en ligne."
@@ -744,6 +771,7 @@ class Component extends DCLogic {
             date: f.get("date"), time: f.get("time")
           },
           hands: s.handTypes.slice(0, s.handCount).map((t, i) => ({ index: i + 1, formule: t })),
+          devisUlterieur: !!s.devisUlterieur,
           message: f.get("message") || null,
           reference,
           hasReference: !!reference,
@@ -766,6 +794,7 @@ class Component extends DCLogic {
         }
 
         form.reset();
+        this.setState({ devisUlterieur: false });
         const d = payload.event.date
           ? new Date(payload.event.date + "T00:00:00").toLocaleDateString("fr-FR",
               { weekday: "long", day: "numeric", month: "long", year: "numeric" })

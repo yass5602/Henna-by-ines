@@ -7,10 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box}
   body{margin:0;background:#FBF4EB;color:#241A14;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:url("image/motif/motif-floral.jpg") repeat;background-size:560px auto;opacity:.5}
   a{color:#A8542A}
   a:hover{color:#1F6B5E}
   header{position:sticky;top:0;z-index:10;background:rgba(251,244,235,0.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,26,20,0.1)}
@@ -19,10 +21,11 @@
   .brand{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;text-decoration:none;color:#241A14}
   .sub{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A}
   main{max-width:900px;margin:0 auto;padding:54px 20px 80px}
-  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A}
+  .note,table{background:rgba(251,244,235,0.85)}
+  .kicker{font-family:'Pinyon Script',cursive;font-size:36px;color:#A8542A;line-height:1.1}
   h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,5vw,48px);margin:14px 0 6px;line-height:1.1}
-  h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;margin:44px 0 10px}
-  h3{font-size:16px;font-weight:500;margin:26px 0 6px;letter-spacing:.02em}
+  h2{font-family:'Pinyon Script',cursive;font-weight:400;font-size:38px;margin:44px 0 8px;line-height:1.2}
+  h3{font-family:'Pinyon Script',cursive;font-weight:400;font-size:28px;margin:26px 0 4px;line-height:1.2}
   p,li{font-size:16px;color:rgba(36,26,20,0.85)}
   .maj{font-size:13.5px;color:rgba(36,26,20,0.55)}
   table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}

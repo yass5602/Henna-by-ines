@@ -112,6 +112,12 @@ rendez-vous. Pour le désactiver, mettez `CONFIRM_CLIENT: false` en haut du
 script Google. Deux réglages voisins à ajuster : `NOM_EXPEDITEUR` et
 `CONTACT_PUBLIC`, l'adresse à laquelle les clientes répondront.
 
+**Plus de 2 mains ?** Le formulaire propose 1 ou 2 mains, plus un bouton
+« Demande de devis ultérieur ». S'il est coché, la réservation est posée pour
+2 mains, l'évènement agenda porte le repère « ➕ devis mains supp. », et votre
+mail commence par « ➕ DEVIS À ÉTABLIR » : recontactez la cliente pour chiffrer
+le reste (elle précise le nombre dans son message).
+
 > ⚠️ Ces e-mails partent depuis votre Gmail. La limite est de 100 destinataires
 > par jour sur un compte gratuit — largement suffisant, mais bon à savoir.
 > Si l'envoi à la cliente échoue, la réservation est quand même enregistrée.
@@ -129,7 +135,7 @@ support.js              le moteur d'affichage
 confidentialite.html    politique de confidentialité (RGPD)
 mentions-legales.html   mentions légales
 404.html                page d'erreur
-image/                  logo, mains, cônes, poudre
+image/                  logo, mains, cônes, poudre, motif de fond
 ```
 
 > ⚠️ **Avant la mise en ligne**, ouvrez `mentions-legales.html` et

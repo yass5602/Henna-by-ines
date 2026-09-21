@@ -103,9 +103,11 @@ function handleBooking(d) {
 
   // Sans acompte, le rendez-vous est posé directement ; avec acompte, il reste en attente.
   const attenteAcompte = !!(d.deposit && Number(d.deposit.amount) > 0);
-  const titre = attenteAcompte
+  const devis = !!d.devisUlterieur;
+  const titre = (attenteAcompte
     ? '⏳ ' + type + ' — ' + who + ' (acompte en attente)'
-    : '📅 ' + type + ' — ' + who + ' (à confirmer)';
+    : '📅 ' + type + ' — ' + who + ' (à confirmer)')
+    + (devis ? ' · ➕ devis mains supp.' : '');
 
   const ev = cal.createEvent(titre, start, end, options);
 
@@ -115,8 +117,10 @@ function handleBooking(d) {
   } catch (err) { console.warn(err); }
 
   notify(
-    'Nouvelle réservation — ' + who + ' le ' + fmtDate(start),
-    description + '\n\n' + (attenteAcompte
+    'Nouvelle réservation — ' + who + ' le ' + fmtDate(start) + (devis ? ' — DEVIS À ÉTABLIR' : ''),
+    (devis ? '➕ DEVIS À ÉTABLIR : la cliente souhaite plus de 2 mains.\n'
+           + '   Recontactez-la pour chiffrer les mains supplémentaires (détail éventuel dans son message).\n\n' : '')
+    + description + '\n\n' + (attenteAcompte
       ? 'L\'événement a été ajouté à votre agenda en attente de l\'acompte.'
       : 'L\'événement a été ajouté à votre agenda. Aucun acompte n\'est demandé : recontactez la cliente pour confirmer.')
   );
@@ -138,6 +142,10 @@ function handleBooking(d) {
       ? 'Votre date sera définitivement bloquée dès réception de l\'acompte de '
         + d.deposit.amount + ' ' + d.deposit.currency + ' sur PayPal.'
       : 'Inès vous recontacte très vite pour confirmer le rendez-vous et établir le devis.');
+    if (devis) {
+      lignesClient.push('', 'Vous avez demandé un devis pour des mains supplémentaires : Inès vous recontacte'
+        + ' après votre réservation pour l\'établir.');
+    }
     lignesClient.push('', 'Une erreur dans ces informations ? Répondez simplement à cet e-mail.');
 
     confirmerAuClient(d.contact.email, 'Votre demande de rendez-vous du ' + fmtDate(start), lignesClient.join('\n'));
@@ -170,16 +178,17 @@ function buildDescription(d, who, type, address, minutes, refUrl) {
     '',
     'Prestations :',
     mains || '   • —',
+    (d.devisUlterieur ? '   ➕ Devis ultérieur demandé : plus de 2 mains souhaitées' : null),
     '',
     'Message    : ' + (d.message || '—'),
-    'Référence  : ' + (refUrl || '—'),
+    'Modèle réf.: ' + (refUrl || '—'),
     '',
     'Acompte    : ' + (d.deposit && Number(d.deposit.amount) > 0
         ? d.deposit.amount + ' ' + d.deposit.currency + ' — EN ATTENTE'
         : 'aucun acompte demandé'),
     'Demande reçue le ' + fmtDate(new Date(d.createdAt || Date.now()))
   ];
-  return lignes.join('\n');
+  return lignes.filter(function (l) { return l !== null; }).join('\n');
 }
 
 /* ==========================================================================
