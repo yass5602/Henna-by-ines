@@ -13,7 +13,7 @@
 <title>Henna by Inès — Hennaya</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -31,15 +31,27 @@
   body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
     background:url("image/motif/motif-floral.jpg") repeat;background-size:560px auto;opacity:.5}
 
-  /* Pinyon Script : titres de sections, h2, h3 et prix.
-     Police calligraphique à petit œil : tailles relevées pour rester lisible. */
-  h2,h3,.kicker,.prix{font-family:'Pinyon Script',cursive!important;font-weight:400!important;
+  /* Ballet (Google Fonts) : titres de sections, h2, h3 et prix.
+     Calligraphie très fine : tailles relevées pour rester lisible. */
+  h2,h3,.kicker,.prix{font-family:'Ballet',cursive!important;font-weight:400!important;
     letter-spacing:0!important;text-transform:none!important}
   h2{font-size:clamp(40px,5.4vw,62px)!important;line-height:1.15!important}
   h3{font-size:34px!important;line-height:1.2!important}
   .kicker{font-size:36px!important;line-height:1.1!important;display:inline-block}
-  .prix{font-size:36px!important;line-height:1.1!important}
-  strong.prix{font-size:28px!important}
+
+  /* Zones de texte posées directement sur le motif : un voile crème derrière,
+     pour que rien ne se perde dans les feuillages. */
+  .voile{background:rgba(251,244,235,0.78);border-radius:16px;
+    box-shadow:0 0 0 10px rgba(251,244,235,0.78)}
+  .kicker.voile{border-radius:999px;padding:0 6px;box-shadow:0 0 0 8px rgba(251,244,235,0.78)}
+  .voile-bloc{background:rgba(251,244,235,0.80);border-radius:20px;padding:20px 24px}
+  /* Ballet est une variable : l'axe opsz bas donne un dessin plus épais,
+     nécessaire pour les petits prix, surtout sur le fond brun foncé. */
+  .prix{font-size:29px!important;line-height:1.15!important;
+    font-optical-sizing:none;font-variation-settings:"opsz" 16}
+  strong.prix{font-size:34px!important;vertical-align:-2px}
+  /* sur le fond brun, la calligraphie a besoin d'un ton plus clair pour ressortir */
+  #produits .prix{color:#F2D9AE!important}
   @keyframes hslide{from{transform:translateX(100%)}to{transform:translateX(0)}}
   @keyframes hfade{from{opacity:0}to{opacity:1}}
 </style>
@@ -92,14 +104,14 @@
 
   <section id="accueil" data-screen-label="Hero" style="position:relative;min-height:min(88vh,760px);display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:48px;max-width:1240px;margin:0 auto;padding:70px 20px 80px" data-stack>
     <div style="position:relative;z-index:2">
-      <span style="display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#1F6B5E;border:1px solid rgba(31,107,94,0.3);padding:8px 14px;border-radius:999px">L'élégance au bout des doigts</span>
+      <span style="display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#1F6B5E;border:1px solid rgba(31,107,94,0.3);padding:8px 14px;border-radius:999px;background:rgba(251,244,235,0.85)">L'élégance au bout des doigts</span>
       <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,68px);line-height:1.06;margin:22px 0 0;letter-spacing:-0.01em;text-wrap:pretty">Henna by Inès, des créations qui vous ressemblent avec finesse.</h1>
       <p style="font-size:17px;line-height:1.7;color:rgba(36,26,20,0.78);max-width:52ch;margin:20px 0 0;text-wrap:pretty">L'art ancestral qui sublime la féminité. Henné naturel du Rajasthan, motifs réalisés à la main pour vos mariages, fiançailles et célébrations.</p>
       <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:34px">
         <a href="#rdv" style="background:#A8542A;color:#FBF4EB;padding:17px 32px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:#241A14">Prendre RDV</a>
         <a href="#realisations" style="border:1px solid rgba(36,26,20,0.25);color:#241A14;padding:17px 32px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:rgba(36,26,20,0.06)">Nos réalisations</a>
       </div>
-      <div style="display:flex;gap:34px;margin-top:44px;flex-wrap:wrap">
+      <div class="voile-bloc" style="display:flex;gap:34px;margin-top:44px;flex-wrap:wrap">
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">100%</div><div style="font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(36,26,20,0.6)">Naturel, sans PPD</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">5×</div><div style="font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(36,26,20,0.6)">Poudre filtrée</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A">Rajasthan</div><div style="font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(36,26,20,0.6)">Origine de la poudre</div></div>
@@ -112,7 +124,7 @@
 
   <section id="prestations" data-screen-label="Prestations" style="background:rgba(246,231,212,0.55);padding:88px 20px">
     <div style="max-width:1240px;margin:0 auto">
-      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prestations Henné</span>
+      <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prestations Henné</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Trois formules, une même exigence</h2>
       <p style="max-width:62ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0">Chaque création est réalisée à la main et adaptée à vos envies. Choisissez votre formule selon le niveau de détail et la couvrance souhaités.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:42px">
@@ -156,7 +168,7 @@
   <section id="realisations" data-screen-label="Réalisations" style="padding:88px 20px;max-width:1240px;margin:0 auto">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
       <div>
-        <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Nos Réalisations</span>
+        <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Nos Réalisations</span>
         <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 0">Le henné, motif après motif</h2>
       </div>
       <a href="#rdv" style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #A8542A;padding-bottom:4px">Réserver une date</a>
@@ -257,18 +269,18 @@
   <section id="histoire" data-screen-label="Mon histoire" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:center" data-stack>
     <img src="image/pack/Henna%20moyen/moyen-1.jpeg" alt="Inès, henné" style="width:100%;height:min(64vh,560px);object-fit:cover;border-radius:24px 24px 200px 200px;display:block">
     <div>
-      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Mon histoire ♡</span>
+      <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Mon histoire ♡</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(28px,3.6vw,42px);margin:14px 0 20px;text-wrap:pretty">Une passion d'enfance devenue une aventure partagée</h2>
       <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Le henné, c'est une passion que j'ai depuis toute petite. J'attendais toujours les fêtes avec impatience.</p>
       <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Au-delà de sa beauté, j'ai toujours été attachée à ce que le henné représente. Un art traditionnel qui traverse les générations, accompagne les célébrations et crée de précieux moments de partage et de transmission.</p>
       <p style="font-size:16.5px;line-height:1.75;color:rgba(36,26,20,0.82);margin:0 0 14px">Avec le temps, j'ai commencé à pratiquer toute seule, d'abord sur moi, puis sur ma famille et mes proches. De fil en aiguille, je me suis intéressée davantage à cet art, à ses traditions et au henné naturel.</p>
-      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.6;color:#A8542A;margin:24px 0 0">Henna by Inès, c'est un petit bout de moi que je partage avec vous. Une passion où se mêlent tradition et créativité, que je prends plaisir à faire vivre à travers chacune de mes créations. Et surtout, le bonheur d'apporter ma touche à vos plus beaux moments. ✨</p>
+      <p class="voile-bloc" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.6;color:#A8542A;margin:24px 0 0">Henna by Inès, c'est un petit bout de moi que je partage avec vous. Une passion où se mêlent tradition et créativité, que je prends plaisir à faire vivre à travers chacune de mes créations. Et surtout, le bonheur d'apporter ma touche à vos plus beaux moments. ✨</p>
     </div>
   </section>
 
   <section id="rdv" data-screen-label="Prendre RDV" style="background:rgba(246,231,212,0.55);padding:88px 20px">
     <div style="max-width:900px;margin:0 auto">
-      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prendre RDV</span>
+      <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prendre RDV</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Réservez votre créneau</h2>
       <p style="max-width:60ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0 0 36px">{{ depositIntro }}</p>
 
@@ -427,7 +439,7 @@
 
   <section id="contact" data-screen-label="Contact" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px" data-stack>
     <div>
-      <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Contact</span>
+      <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Contact</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 18px">Parlons de votre évènement</h2>
       <p style="font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.78);margin:0 0 26px">Une question sur une prestation, un devis pour la location d'assises ou des articles personnalisés ? Écrivez-nous, réponse sous 48 h.</p>
       <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
