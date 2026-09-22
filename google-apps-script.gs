@@ -17,8 +17,9 @@ const SETTINGS = {
   // (Agenda > Paramètres de l'agenda > Intégrer l'agenda > ID de l'agenda).
   CALENDAR_ID: 'primary',
 
-  // Adresse qui reçoit les notifications. Vide = l'adresse du compte Google.
-  NOTIFY_EMAIL: '',
+  // Adresse qui reçoit les notifications (réservations, commandes, messages).
+  // Vide = l'adresse du compte Google qui a déployé le script.
+  NOTIFY_EMAIL: 'henna.by.ines15@gmail.com',
 
   // Dossier Drive où sont rangées les images de référence envoyées par les clientes.
   DRIVE_FOLDER: 'Henna by Inès — Références clientes',
@@ -36,7 +37,7 @@ const SETTINGS = {
   // Accusé de réception envoyé à la cliente (commandes et rendez-vous).
   CONFIRM_CLIENT: true,
   NOM_EXPEDITEUR: 'Henna by Inès',
-  CONTACT_PUBLIC: 'contact@hennabyines.fr'
+  CONTACT_PUBLIC: 'henna.by.ines15@gmail.com'
 };
 
 /* ==========================================================================

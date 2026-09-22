@@ -443,7 +443,7 @@
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 18px">Parlons de votre évènement</h2>
       <p style="font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.78);margin:0 0 26px">Une question sur une prestation, un devis pour la location d'assises ou des articles personnalisés ? Écrivez-nous, réponse sous 48 h.</p>
       <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
-        <a href="mailto:contact@hennabyines.fr">contact@hennabyines.fr</a>
+        <a href="mailto:henna.by.ines15@gmail.com">henna.by.ines15@gmail.com</a>
         <a href="https://instagram.com" target="_blank" rel="noopener">Instagram — @hennabyines</a>
         <span style="color:rgba(36,26,20,0.7)">Déplacements à domicile et en salle</span>
       </div>
@@ -799,7 +799,7 @@ class Component extends DCLogic {
           this.setState({ modal: {
             kind: "error", kicker: "Oups",
             title: "L'envoi a échoué",
-            text: "Votre demande n'a pas pu être transmise. Réessayez dans un instant ou écrivez-nous à contact@hennabyines.fr.",
+            text: "Votre demande n'a pas pu être transmise. Réessayez dans un instant ou écrivez-nous à henna.by.ines15@gmail.com.",
             amount: null, paid: false
           }});
           return;
@@ -841,7 +841,7 @@ class Component extends DCLogic {
         });
         if (res && res.ok === false) {
           this.setState({ modal: { kind: "error", kicker: "Oups", title: "L'envoi a échoué",
-            text: "Écrivez-nous directement à contact@hennabyines.fr.", amount: null, paid: false } });
+            text: "Écrivez-nous directement à henna.by.ines15@gmail.com.", amount: null, paid: false } });
           return;
         }
         e.target.reset();
@@ -904,7 +904,7 @@ class Component extends DCLogic {
             console.error("[HENNA] commande non transmise", err);
             const now = this.state.modal;
             if (now) this.setState({ modal: Object.assign({}, now, {
-              text: "⚠️ Votre commande n'a pas pu être enregistrée. Écrivez-nous à contact@hennabyines.fr en précisant le produit souhaité."
+              text: "⚠️ Votre commande n'a pas pu être enregistrée. Écrivez-nous à henna.by.ines15@gmail.com en précisant le produit souhaité."
             })});
           });
           return;
