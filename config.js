@@ -15,8 +15,9 @@ window.HENNA_CONFIG = {
      Tant que c'est vide, les réservations s'affichent seulement dans la
      console du navigateur (mode démo) — rien n'est perdu, rien n'est envoyé.
   -------------------------------------------------------------------------- */
-  appsScriptUrl: "https://script.google.com/macros/s/AKfycbyks24yOYPbIt79RShho8E5HTUWtLGRhIqV3-huiidWXFUDWjkmuPi1mlVMQIroYFg5Ow/exec",
-  // Projet Apps Script « Henna by Inès — Réservations », déployé le 20/09/2026.
+  appsScriptUrl: "https://script.google.com/macros/s/AKfycbwTMhLHpVKTRtZALXw6bRFM_5HUWi0jAyAxSfUNoGSG_SGxBEB3VGWUokDhvILowd3j/exec",
+  // Projet Apps Script « Henna by Inès — Réservations »,
+  // compte henna.by.ines15@gmail.com, version 1 déployée le 25/09/2026.
 
 
   /* --------------------------------------------------------------------------
