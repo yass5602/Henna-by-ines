@@ -17,7 +17,7 @@ Comptez 5 minutes, aucune carte bancaire.
 3. En haut du script, réglez `SETTINGS` :
    - `CALENDAR_ID` : laissez `'primary'` pour votre agenda principal ;
    - `NOTIFY_EMAIL` : l'adresse qui recevra les réservations (vide = celle du compte) ;
-   - `MINUTES_PER_HAND` : durée estimée par main, pour bloquer le bon créneau ;
+   - `EVENT_DURATION_MIN` : longueur du repère posé dans l'agenda (30 min par défaut) ;
    - `INVITE_CLIENT` : `true` si vous voulez que la cliente reçoive l'invitation.
 4. Menu **Paramètres du projet** (roue dentée) → vérifiez que le fuseau horaire
    est bien **(GMT+01:00) Paris**.
@@ -42,12 +42,18 @@ Comptez 5 minutes, aucune carte bancaire.
 
 | Moment | Effet |
 |---|---|
-| La cliente envoie le formulaire | Un événement **⏳ orange « acompte en attente »** est créé dans votre agenda, avec coordonnées, adresse, formules par main, message et lien vers l'image de référence. Vous recevez un e-mail. |
+| La cliente envoie le formulaire | Un événement **⏳ orange « acompte en attente »** est créé dans votre agenda à l'heure demandée, avec coordonnées, adresse, formules par main, message et lien vers l'image de référence. Vous recevez un e-mail. |
 | Elle clique « J'ai effectué le paiement » | Le même événement passe en **✅ vert « acompte réglé »**. Vous recevez un second e-mail vous invitant à vérifier PayPal. |
 | Commande produit / message de contact | E-mail de notification (pas d'événement agenda). |
 
 L'image de référence envoyée par la cliente est rangée dans un dossier Drive
 « Henna by Inès — Références clientes » et son lien est ajouté à l'événement.
+
+**Aucune durée n'est annoncée.** Ni le site ni les e-mails n'estiment le temps
+que prendra la prestation, et l'évènement agenda n'est qu'un repère de 30 minutes
+posé à l'heure de début : vous rallongez le créneau vous-même une fois la durée
+réelle connue. Pour changer la longueur de ce repère, modifiez
+`EVENT_DURATION_MIN` en haut du script.
 
 ---
 

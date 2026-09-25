@@ -24,9 +24,11 @@ const SETTINGS = {
   // Dossier Drive où sont rangées les images de référence envoyées par les clientes.
   DRIVE_FOLDER: 'Henna by Inès — Références clientes',
 
-  // Durée estimée du rendez-vous.
-  MINUTES_PER_HAND: 45,
-  MIN_DURATION_MIN: 60,
+  // Longueur du repère posé dans l'agenda, en minutes.
+  // Le site n'estime plus la durée : l'évènement marque seulement l'heure de
+  // début, et c'est vous qui rallongez le créneau quand vous connaissez le temps
+  // réel. Mettez une autre valeur ici si 30 min ne vous convient pas.
+  EVENT_DURATION_MIN: 30,
 
   // true = la cliente reçoit une invitation Google Agenda (elle voit votre adresse e-mail).
   INVITE_CLIENT: false,
@@ -78,9 +80,7 @@ function handleBooking(d) {
   const cal = getCalendar();
 
   const start = parseDateTime(d.event.date, d.event.time);
-  const nbMains = (d.hands || []).length || 1;
-  const minutes = Math.max(SETTINGS.MIN_DURATION_MIN, nbMains * SETTINGS.MINUTES_PER_HAND);
-  const end = new Date(start.getTime() + minutes * 60000);
+  const end = new Date(start.getTime() + SETTINGS.EVENT_DURATION_MIN * 60000);
 
   const who = ((d.contact.firstName || '') + ' ' + (d.contact.lastName || '')).trim();
   const type = (d.event.type === 'Autre' && d.event.other) ? d.event.other : d.event.type;
@@ -94,7 +94,7 @@ function handleBooking(d) {
     catch (err) { console.warn('Référence non enregistrée : ' + err); }
   }
 
-  const description = buildDescription(d, who, type, address, minutes, refUrl);
+  const description = buildDescription(d, who, type, address, refUrl);
 
   const options = { description: description, location: address };
   if (SETTINGS.INVITE_CLIENT && d.contact.email) {
@@ -133,7 +133,6 @@ function handleBooking(d) {
       'Votre demande de rendez-vous est bien arrivée. Voici ce que nous avons noté :',
       '',
       '   Date      : ' + fmtDate(start),
-      '   Durée est.: ' + minutes + ' min',
       '   Évènement : ' + type,
       '   Lieu      : ' + address,
       '   Prestation: ' + (d.hands || []).map(function (h) { return 'main ' + h.index + ' en ' + h.formule; }).join(', '),
@@ -155,12 +154,11 @@ function handleBooking(d) {
   return {
     ok: true,
     bookingId: ev.getId(),
-    start: start.toISOString(),
-    durationMinutes: minutes
+    start: start.toISOString()
   };
 }
 
-function buildDescription(d, who, type, address, minutes, refUrl) {
+function buildDescription(d, who, type, address, refUrl) {
   const mains = (d.hands || [])
     .map(function (h) { return '   • Main ' + h.index + ' : Henné ' + h.formule; })
     .join('\n');
@@ -175,7 +173,6 @@ function buildDescription(d, who, type, address, minutes, refUrl) {
     '',
     'Évènement  : ' + type,
     'Lieu       : ' + address,
-    'Durée est. : ' + minutes + ' min (' + ((d.hands || []).length || 1) + ' main(s))',
     '',
     'Prestations :',
     mains || '   • —',
