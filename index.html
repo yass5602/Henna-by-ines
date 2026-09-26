@@ -211,7 +211,7 @@
 
       <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:28px;margin-top:46px" data-stack>
         <div style="background:rgba(251,244,235,0.05);border:1px solid rgba(251,244,235,0.16);border-radius:22px;overflow:hidden">
-          <div class="photo-cadre"><img src="image/cone/cone-2.jpeg" alt="Cônes de henné naturel" class="photo photo-carte" loading="lazy" style="border-radius:16px"></div>
+          <div class="photo-cadre"><img src="image/cone/cone-4.jpeg" alt="Éventails de cônes de henné préparés à la main" class="photo photo-carte" loading="lazy" style="border-radius:16px;object-position:53% 50%"></div>
           <div style="padding:30px">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:0 0 6px">Cônes de Henné naturel — Qualité Premium</h3>
             <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Découvrez nos cônes de henné naturel, préparés avec soin à partir d'une poudre de henné du Rajasthan, reconnue pour sa finesse et la richesse de sa coloration.</p>
@@ -228,13 +228,14 @@
               <div style="margin-top:12px;font-size:13.5px;color:#C58B3E">Sélection : {{ oilLabel }}</div>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px;align-items:start">
               <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
                 <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">3 €</div>
                 <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">le cône à l'unité</div>
                 <button onClick="{{ order }}" data-sku="cone-1" data-label="1 cône" data-price="3" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
               </div>
               <div style="border:1px solid rgba(197,139,62,0.5);border-radius:14px;padding:18px;background:rgba(197,139,62,0.1)">
+                <img src="image/cone/cone-2.jpeg" alt="Lot de 10 cônes de henné" class="photo" loading="lazy" style="border-radius:10px;margin-bottom:14px">
                 <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">30 €</div>
                 <div style="font-size:13px;color:rgba(251,244,235,0.78);margin-bottom:14px">10 cônes — le 11ᵉ offert</div>
                 <button onClick="{{ order }}" data-sku="cone-10" data-label="10 cônes + 1 offert" data-price="30" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
