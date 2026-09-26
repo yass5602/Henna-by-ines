@@ -27,6 +27,17 @@
     [data-mobile-only]{display:flex!important}
     [data-stack]{grid-template-columns:1fr!important}
   }
+  /* Toutes les photos du site partagent le même cadre 4:5 (hors logo et hero). */
+  .photo{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;display:block}
+  /* Dans les cartes produits, la colonne est large : on borne la photo pour
+     qu'elle ne mange pas toute la carte, sans changer sa proportion. */
+  .photo-carte{max-width:340px;margin:0 auto}
+  .photo-cadre{padding:28px 28px 0}
+  /* Galerie : tuiles identiques, 2 colonnes sur mobile plutôt qu'une seule
+     très longue colonne de 10 photos. */
+  .galerie{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
+  @media (max-width:620px){ .galerie{grid-template-columns:repeat(2,1fr);gap:12px} }
+
   /* Motif floral en fond, à 50 % d'opacité, fixe pendant le défilement. */
   body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
     background:url("image/motif/motif-floral.jpg") repeat;background-size:560px auto;opacity:.5}
@@ -110,7 +121,7 @@
   <section id="accueil" data-screen-label="Hero" style="position:relative;min-height:min(88vh,760px);display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:48px;max-width:1240px;margin:0 auto;padding:70px 20px 80px" data-stack>
     <div style="position:relative;z-index:2">
       <span style="display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#1F6B5E;border:1px solid rgba(31,107,94,0.3);padding:8px 14px;border-radius:999px;background:rgba(251,244,235,0.85)">L'élégance au bout des doigts</span>
-      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,68px);line-height:1.06;margin:22px 0 0;letter-spacing:-0.01em;text-wrap:pretty">Henna by Inès, des créations qui vous ressemblent.</h1>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,68px);line-height:1.06;margin:22px 0 0;letter-spacing:-0.01em;text-wrap:pretty">Henna by Inès, des créations qui vous ressemblent avec finesse.</h1>
       <p style="font-size:17px;line-height:1.7;color:rgba(36,26,20,0.78);max-width:52ch;margin:20px 0 0;text-wrap:pretty">L'art ancestral qui sublime la féminité. Henné naturel du Rajasthan, motifs réalisés à la main pour vos mariages, fiançailles et célébrations.</p>
       <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:34px">
         <a href="#rdv" style="background:#A8542A;color:#FBF4EB;padding:17px 32px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:#241A14">Prendre RDV</a>
@@ -134,7 +145,7 @@
       <p style="max-width:62ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0">Chaque création est réalisée à la main et adaptée à vos envies. Choisissez votre formule selon le niveau de détail et la couvrance souhaités.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:42px">
         <article style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.09);border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
-          <img src="image/pack/henna%20simple/simple-1.jpeg" alt="Henné Délicat" style="width:100%;height:260px;object-fit:cover;display:block">
+          <img src="image/pack/henna%20simple/simple-1.jpeg" alt="Henné Délicat" class="photo" loading="lazy">
           <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">Henné Délicat</h3>
             <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une composition fine et minimaliste pour sublimer la main avec élégance. Motifs légers et épurés, avec une couvrance discrète. Idéal pour une première expérience au henné ou pour celles qui aiment les designs simples et raffinés.</p>
@@ -145,7 +156,7 @@
           </div>
         </article>
         <article style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.09);border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
-          <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné Élégance" style="width:100%;height:260px;object-fit:cover;display:block">
+          <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné Élégance" class="photo" loading="lazy">
           <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">Henné Élégance</h3>
             <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une composition plus travaillée, mêlant finesse et détails pour habiller joliment la main. Les motifs sont plus développés et offrent une couvrance intermédiaire, tout en gardant un résultat harmonieux et délicat.</p>
@@ -156,7 +167,7 @@
           </div>
         </article>
         <article style="background:#FBF4EB;border:1px solid rgba(168,84,42,0.35);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 50px -34px rgba(36,26,20,0.5)">
-          <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné Signature" style="width:100%;height:260px;object-fit:cover;display:block">
+          <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné Signature" class="photo" loading="lazy">
           <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">Henné Signature</h3>
             <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une création riche et détaillée pour un rendu plus intense et sophistiqué. Les motifs sont travaillés avec davantage de détails et couvrent une plus grande partie de la main. Idéal pour les occasions spéciales ou pour celles qui souhaitent une composition plus spectaculaire.</p>
@@ -178,11 +189,17 @@
       </div>
       <a href="#rdv" style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #A8542A;padding-bottom:4px">Réserver une date</a>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px">
-      <img src="image/pack/Henna%20charge/charge-1.jpg" alt="Henné chargé, motif complet sur les deux mains" style="width:100%;height:380px;object-fit:cover;border-radius:16px;grid-row:span 2;display:block">
-      <img src="image/pack/henna%20simple/simple-2.jpeg" alt="Henné délicat, motif fin sur le dessus de la main" style="width:100%;height:182px;object-fit:cover;border-radius:16px;display:block">
-      <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné signature, motifs géométriques détaillés" style="width:100%;height:380px;object-fit:cover;border-radius:16px;grid-row:span 2;display:block">
-      <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné élégance, motifs sur les doigts et le poignet" style="width:100%;height:182px;object-fit:cover;border-radius:16px;display:block">
+    <div class="galerie">
+      <img src="image/pack/Henna%20charge/charge-1.jpg" alt="Henné chargé, motif complet sur les deux mains" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/pack/henna%20simple/simple-2.jpeg" alt="Henné délicat, motif fin sur le dessus de la main" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné signature, motifs géométriques détaillés" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné élégance, motifs sur les doigts et le poignet" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/realisations/realisation-1.jpeg" alt="Motif floral fin sur le dessus de la main et les doigts" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/realisations/realisation-2.jpeg" alt="Deux mains ornées de motifs floraux détaillés jusqu'aux doigts" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/realisations/realisation-3.jpeg" alt="Guirlande florale du poignet aux doigts, tracé très fin" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/realisations/realisation-4.jpeg" alt="Grandes fleurs sur les deux mains, style traditionnel" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/realisations/realisation-5.jpeg" alt="Motif géométrique central et bagues de henné sur les doigts" class="photo" loading="lazy" style="border-radius:16px">
+      <img src="image/realisations/realisation-6.jpeg" alt="Médaillon fleuri au centre de la main, bordures aux doigts" class="photo" loading="lazy" style="border-radius:16px">
     </div>
   </section>
 
@@ -190,11 +207,11 @@
     <div style="max-width:1240px;margin:0 auto">
       <span class="kicker" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#C58B3E">Nos produits</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Cônes fraîchement préparés & poudre BAQ</h2>
-      <p style="max-width:64ch;font-size:16.5px;line-height:1.7;color:rgba(251,244,235,0.78);margin:0">100% naturel, sans produits artificiels ni PPD, parfait pour réaliser de délicats motifs au henné ou pour vos soins capillaires naturels.</p>
+      <p style="max-width:64ch;font-size:16.5px;line-height:1.7;color:rgba(251,244,235,0.78);margin:0">100% naturel, sans produits chimiques ni PPD, parfait pour réaliser de délicats motifs au henné ou pour vos soins capillaires naturels.</p>
 
       <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:28px;margin-top:46px" data-stack>
         <div style="background:rgba(251,244,235,0.05);border:1px solid rgba(251,244,235,0.16);border-radius:22px;overflow:hidden">
-          <img src="image/cone/cone-2.jpeg" alt="Cônes de henné naturel" style="width:100%;height:300px;object-fit:cover;display:block">
+          <div class="photo-cadre"><img src="image/cone/cone-2.jpeg" alt="Cônes de henné naturel" class="photo photo-carte" loading="lazy" style="border-radius:16px"></div>
           <div style="padding:30px">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:0 0 6px">Cônes de Henné naturel — Qualité Premium</h3>
             <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Découvrez nos cônes de henné naturel, préparés avec soin à partir d'une poudre de henné du Rajasthan, reconnue pour sa finesse et la richesse de sa coloration.</p>
@@ -234,7 +251,7 @@
 
         <div style="display:flex;flex-direction:column;gap:28px">
           <div style="background:rgba(251,244,235,0.05);border:1px solid rgba(251,244,235,0.16);border-radius:22px;overflow:hidden">
-            <img src="image/poudre/poudre-1.jpeg" alt="Poudre de henné naturel" style="width:100%;height:220px;object-fit:cover;display:block">
+            <div class="photo-cadre"><img src="image/poudre/poudre-1.jpeg" alt="Poudre de henné naturel" class="photo photo-carte" loading="lazy" style="border-radius:16px"></div>
             <div style="padding:28px">
               <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;margin:0">La poudre de henné du Rajasthan</h3>
               <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Une poudre fine et soigneusement filtrée 5 fois, de henné naturel BAQ (Body Art Quality). Elle permet d'obtenir une belle coloration foncée après développement. Idéale pour préparer votre propre pâte et réaliser des motifs fins et précis.</p>
@@ -272,7 +289,7 @@
   </section>
 
   <section id="histoire" data-screen-label="Mon histoire" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:center" data-stack>
-    <img src="image/pack/Henna%20moyen/moyen-1.jpeg" alt="Inès, henné" style="width:100%;height:min(64vh,560px);object-fit:cover;border-radius:24px 24px 200px 200px;display:block">
+    <img src="image/pack/Henna%20moyen/moyen-1.jpeg" alt="Inès, henné" class="photo" loading="lazy" style="border-radius:24px 24px 200px 200px">
     <div>
       <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Mon histoire ♡</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(28px,3.6vw,42px);margin:14px 0 20px;text-wrap:pretty">Une passion d'enfance devenue une aventure partagée</h2>
@@ -449,7 +466,7 @@
       <p style="font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.78);margin:0 0 26px">Une question sur une prestation, un devis pour la location d'assises ou des articles personnalisés ? Écrivez-nous, réponse sous 48 h.</p>
       <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
         <a href="mailto:henna.by.ines15@gmail.com">henna.by.ines15@gmail.com</a>
-        <a href="https://www.instagram.com/henna.by.ines?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">Instagram — @hennabyines</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram — @hennabyines</a>
         <span style="color:rgba(36,26,20,0.7)">Déplacements à domicile et en salle</span>
       </div>
     </div>
