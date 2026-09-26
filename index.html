@@ -33,6 +33,9 @@
      qu'elle ne mange pas toute la carte, sans changer sa proportion. */
   .photo-carte{max-width:340px;margin:0 auto}
   .photo-cadre{padding:28px 28px 0}
+  /* Bandeau horizontal : la photo panoramique des cônes est montrée en entier,
+     sur toute la largeur de la carte, sans aucun recadrage. */
+  .photo-bandeau{width:100%;height:auto;aspect-ratio:1799/943;object-fit:cover;display:block}
   /* Galerie : tuiles identiques, 2 colonnes sur mobile plutôt qu'une seule
      très longue colonne de 10 photos. */
   .galerie{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
@@ -211,7 +214,7 @@
 
       <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:28px;margin-top:46px" data-stack>
         <div style="background:rgba(251,244,235,0.05);border:1px solid rgba(251,244,235,0.16);border-radius:22px;overflow:hidden">
-          <div class="photo-cadre"><img src="image/cone/cone-4.jpeg" alt="Éventails de cônes de henné préparés à la main" class="photo photo-carte" loading="lazy" style="border-radius:16px;object-position:53% 50%"></div>
+          <div class="photo-cadre"><img src="image/cone/cone-4.jpeg" alt="Éventails de cônes de henné préparés à la main" class="photo-bandeau" loading="lazy" style="border-radius:16px"></div>
           <div style="padding:30px">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:0 0 6px">Cônes de Henné naturel — Qualité Premium</h3>
             <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Découvrez nos cônes de henné naturel, préparés avec soin à partir d'une poudre de henné du Rajasthan, reconnue pour sa finesse et la richesse de sa coloration.</p>
