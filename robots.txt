@@ -1,0 +1,11 @@
+# Henna by Inès — hennaya à Thionville, Moselle (57)
+# Ce fichier autorise les moteurs de recherche à parcourir tout le site.
+# Si le site change d'adresse, modifiez la ligne Sitemap ci-dessous.
+
+User-agent: *
+Allow: /
+
+# La page d'erreur porte déjà une balise noindex : on la laisse accessible
+# aux robots pour qu'ils puissent lire cette balise.
+
+Sitemap: https://henna-by-ines.vercel.app/sitemap.xml

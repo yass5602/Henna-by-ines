@@ -1,19 +1,265 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ===== Référencement =====================================================
+     Ces balises sont volontairement dans le <head> réel, et non dans <helmet>
+     plus bas : Google finit par lire le <helmet> après exécution du JavaScript,
+     mais Bing, Facebook, WhatsApp et Instagram, non. Si l'adresse du site
+     change (nom de domaine personnalisé), remplacer partout
+     https://henna-by-ines.vercel.app ci-dessous.
+     ====================================================================== -->
+<title>Henné de mariée & hennaya à Thionville — Moselle | Henna by Inès</title>
+<meta name="description" content="Hennaya à Thionville : henné de mariée, fiançailles et célébrations au henné naturel du Rajasthan, sans PPD. À domicile en Moselle. Réservation en ligne.">
+<link rel="canonical" href="https://henna-by-ines.vercel.app/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="author" content="Henna by Inès">
+<meta name="theme-color" content="#FBF4EB">
+<meta name="geo.region" content="FR-57">
+<meta name="geo.placename" content="Thionville">
+
+<!-- Aperçu lors d'un partage (WhatsApp, Instagram, Facebook, Messenger) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Henna by Inès">
+<meta property="og:title" content="Henné de mariée & hennaya à Thionville — Moselle | Henna by Inès">
+<meta property="og:description" content="Hennaya à Thionville : henné de mariée, fiançailles et célébrations au henné naturel du Rajasthan, sans PPD. À domicile en Moselle. Réservation en ligne.">
+<meta property="og:url" content="https://henna-by-ines.vercel.app/">
+<meta property="og:image" content="https://henna-by-ines.vercel.app/image/pack/Henna%20charge/charge-2-2.jpeg">
+<meta property="og:image:alt" content="Henné de mariée réalisé à la main sur deux mains">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Henné de mariée & hennaya à Thionville — Moselle | Henna by Inès">
+<meta name="twitter:description" content="Hennaya à Thionville : henné de mariée, fiançailles et célébrations au henné naturel du Rajasthan, sans PPD. À domicile en Moselle. Réservation en ligne.">
+<meta name="twitter:image" content="https://henna-by-ines.vercel.app/image/pack/Henna%20charge/charge-2-2.jpeg">
+
+<link rel="icon" href="image/logo/LOGO.jpeg">
+<link rel="apple-touch-icon" href="image/logo/LOGO.jpeg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
+
+<!-- Fiche d'entreprise pour Google (métier, zone desservie, prestations, tarifs) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  "@id": "https://henna-by-ines.vercel.app/#hennabyines",
+  "name": "Henna by Inès",
+  "alternateName": [
+    "Hennaya Thionville",
+    "Henna by Ines"
+  ],
+  "description": "Hennaya à Thionville et en Moselle. Henné de mariée, henné de fiançailles et tatouage au henné naturel du Rajasthan, sans PPD, réalisé à la main à domicile. Vente de cônes de henné frais et de poudre de henné BAQ.",
+  "url": "https://henna-by-ines.vercel.app/",
+  "image": "https://henna-by-ines.vercel.app/image/pack/Henna%20charge/charge-2-2.jpeg",
+  "logo": "https://henna-by-ines.vercel.app/image/logo/LOGO.jpeg",
+  "email": "henna.by.ines15@gmail.com",
+  "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "PayPal, espèces",
+  "knowsLanguage": [
+    "fr"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Thionville",
+    "postalCode": "57100",
+    "addressRegion": "Grand Est",
+    "addressCountry": "FR"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Thionville"
+    },
+    {
+      "@type": "City",
+      "name": "Yutz"
+    },
+    {
+      "@type": "City",
+      "name": "Terville"
+    },
+    {
+      "@type": "City",
+      "name": "Florange"
+    },
+    {
+      "@type": "City",
+      "name": "Hayange"
+    },
+    {
+      "@type": "City",
+      "name": "Fameck"
+    },
+    {
+      "@type": "City",
+      "name": "Uckange"
+    },
+    {
+      "@type": "City",
+      "name": "Guénange"
+    },
+    {
+      "@type": "City",
+      "name": "Basse-Ham"
+    },
+    {
+      "@type": "City",
+      "name": "Manom"
+    },
+    {
+      "@type": "City",
+      "name": "Illange"
+    },
+    {
+      "@type": "City",
+      "name": "Kuntzig"
+    },
+    {
+      "@type": "City",
+      "name": "Hettange-Grande"
+    },
+    {
+      "@type": "City",
+      "name": "Algrange"
+    },
+    {
+      "@type": "City",
+      "name": "Nilvange"
+    },
+    {
+      "@type": "City",
+      "name": "Knutange"
+    },
+    {
+      "@type": "City",
+      "name": "Serémange-Erzange"
+    },
+    {
+      "@type": "City",
+      "name": "Cattenom"
+    },
+    {
+      "@type": "City",
+      "name": "Sierck-les-Bains"
+    },
+    {
+      "@type": "City",
+      "name": "Bouzonville"
+    },
+    {
+      "@type": "City",
+      "name": "Rombas"
+    },
+    {
+      "@type": "City",
+      "name": "Amnéville"
+    },
+    {
+      "@type": "City",
+      "name": "Maizières-lès-Metz"
+    },
+    {
+      "@type": "City",
+      "name": "Metz"
+    },
+    {
+      "@type": "City",
+      "name": "Audun-le-Tiche"
+    },
+    {
+      "@type": "City",
+      "name": "Villerupt"
+    },
+    {
+      "@type": "City",
+      "name": "Longwy"
+    }
+  ],
+  "serviceArea": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": 49.3578,
+      "longitude": 6.1686
+    },
+    "geoRadius": "30000"
+  },
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Henné Délicat",
+        "description": "Motif fin sur le dessus de la main, tracé léger et épuré."
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Henné Élégance",
+        "description": "Composition travaillée, couvrance intermédiaire, doigts et poignet."
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Henné Signature",
+        "description": "Henné de mariée, motif complet et détaillé pour les grandes occasions."
+      }
+    },
+    {
+      "@type": "Offer",
+      "price": "3",
+      "priceCurrency": "EUR",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Cône de henné naturel"
+      }
+    },
+    {
+      "@type": "Offer",
+      "price": "30",
+      "priceCurrency": "EUR",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "10 cônes de henné + 1 offert"
+      }
+    },
+    {
+      "@type": "Offer",
+      "price": "15",
+      "priceCurrency": "EUR",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Box débutante henné"
+      }
+    },
+    {
+      "@type": "Offer",
+      "price": "8",
+      "priceCurrency": "EUR",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Poudre de henné BAQ du Rajasthan, 100 g"
+      }
+    }
+  ]
+}
+</script>
+
 <script src="./config.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Henna by Inès — Hennaya</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -123,9 +369,9 @@
 
   <section id="accueil" data-screen-label="Hero" style="position:relative;min-height:min(88vh,760px);display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:48px;max-width:1240px;margin:0 auto;padding:70px 20px 80px" data-stack>
     <div style="position:relative;z-index:2">
-      <span style="display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#1F6B5E;border:1px solid rgba(31,107,94,0.3);padding:8px 14px;border-radius:999px;background:rgba(251,244,235,0.85)">L'élégance au bout des doigts</span>
+      <span style="display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#1F6B5E;border:1px solid rgba(31,107,94,0.3);padding:8px 14px;border-radius:999px;background:rgba(251,244,235,0.85)">Hennaya à Thionville &amp; en Moselle</span>
       <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,68px);line-height:1.06;margin:22px 0 0;letter-spacing:-0.01em;text-wrap:pretty;text-align: center;">Henna by Inès, des créations qui vous ressemblent.</h1>
-      <p style="font-size:17px;line-height:1.7;color:rgba(36,26,20,0.78);max-width:52ch;margin:20px 0 0;text-wrap:pretty">L'art ancestral qui sublime la féminité. Henné naturel du Rajasthan, motifs réalisés à la main pour vos mariages, fiançailles et célébrations.</p>
+      <p style="font-size:17px;line-height:1.7;color:rgba(36,26,20,0.78);max-width:52ch;margin:20px 0 0;text-wrap:pretty">Hennaya à Thionville, je me déplace dans toute la Moselle. Henné naturel du Rajasthan, sans PPD, motifs tracés à la main pour votre henné de mariée, vos fiançailles et vos célébrations.</p>
       <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:34px">
         <a href="#rdv" style="background:#A8542A;color:#FBF4EB;padding:17px 32px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:#241A14">Prendre RDV</a>
         <a href="#realisations" style="border:1px solid rgba(36,26,20,0.25);color:#241A14;padding:17px 32px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase" style-hover="background:rgba(36,26,20,0.06)">Nos réalisations</a>
@@ -137,18 +383,18 @@
       </div>
     </div>
     <div style="position:relative">
-      <img src="image/pack/Henna%20charge/charge-2-2.jpeg" alt="Motif de henné sur main" style="width:100%;height:auto;aspect-ratio:9/10;object-fit:cover;object-position:50% 50%;border-radius:min(160px,26%) min(160px,26%) 24px 24px;display:block;box-shadow:0 30px 60px -30px rgba(36,26,20,0.45)">
+      <img src="image/pack/Henna%20charge/charge-2-2.jpeg" alt="Henné de mariée tracé à la main sur deux mains, réalisé à Thionville" style="width:100%;height:auto;aspect-ratio:9/10;object-fit:cover;object-position:50% 50%;border-radius:min(160px,26%) min(160px,26%) 24px 24px;display:block;box-shadow:0 30px 60px -30px rgba(36,26,20,0.45)">
     </div>
   </section>
 
   <section id="prestations" data-screen-label="Prestations" style="background:rgba(246,231,212,0.55);padding:88px 20px">
     <div style="max-width:1240px;margin:0 auto">
       <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Prestations Henné</span>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Trois formules, une même exigence</h2>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:14px 0 12px">Trois formules de henné, une même exigence</h2>
       <p style="max-width:62ch;font-size:16.5px;line-height:1.7;color:rgba(36,26,20,0.75);margin:0">Chaque création est réalisée à la main et adaptée à vos envies. Choisissez votre formule selon le niveau de détail et la couvrance souhaités.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:42px">
         <article style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.09);border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
-          <img src="image/pack/henna%20simple/simple-1.jpeg" alt="Henné Délicat" class="photo" loading="lazy">
+          <img src="image/pack/henna%20simple/simple-1.jpeg" alt="Henné Délicat — motif fin sur le dessus de la main" class="photo" loading="lazy">
           <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">Henné Délicat</h3>
             <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une composition fine et minimaliste pour sublimer la main avec élégance. Motifs légers et épurés, avec une couvrance discrète. Idéal pour une première expérience au henné ou pour celles qui aiment les designs simples et raffinés.</p>
@@ -159,7 +405,7 @@
           </div>
         </article>
         <article style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.09);border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
-          <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné Élégance" class="photo" loading="lazy">
+          <img src="image/pack/Henna%20moyen/moyen-2.jpeg" alt="Henné Élégance — motifs sur les doigts et le poignet" class="photo" loading="lazy">
           <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">Henné Élégance</h3>
             <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une composition plus travaillée, mêlant finesse et détails pour habiller joliment la main. Les motifs sont plus développés et offrent une couvrance intermédiaire, tout en gardant un résultat harmonieux et délicat.</p>
@@ -170,7 +416,7 @@
           </div>
         </article>
         <article style="background:#FBF4EB;border:1px solid rgba(168,84,42,0.35);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 50px -34px rgba(36,26,20,0.5)">
-          <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné Signature" class="photo" loading="lazy">
+          <img src="image/pack/Henna%20charge/charge-2.jpeg" alt="Henné Signature — henné de mariée, motif complet et détaillé" class="photo" loading="lazy">
           <div style="padding:26px;display:flex;flex-direction:column;gap:12px;flex:1">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin:0">Henné Signature</h3>
             <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(36,26,20,0.8)">Une création riche et détaillée pour un rendu plus intense et sophistiqué. Les motifs sont travaillés avec davantage de détails et couvrent une plus grande partie de la main. Idéal pour les occasions spéciales ou pour celles qui souhaitent une composition plus spectaculaire.</p>
@@ -256,7 +502,7 @@
 
         <div style="display:flex;flex-direction:column;gap:28px">
           <div style="background:rgba(251,244,235,0.05);border:1px solid rgba(251,244,235,0.16);border-radius:22px;overflow:hidden">
-            <div class="photo-cadre"><img src="image/poudre/poudre-1.jpeg" alt="Poudre de henné naturel" class="photo photo-carte" loading="lazy" style="border-radius:16px"></div>
+            <div class="photo-cadre"><img src="image/poudre/poudre-1.jpeg" alt="Poudre de henné naturel BAQ du Rajasthan, filtrée 5 fois" class="photo photo-carte" loading="lazy" style="border-radius:16px"></div>
             <div style="padding:28px">
               <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;margin:0">La poudre de henné du Rajasthan</h3>
               <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Une poudre fine et soigneusement filtrée 5 fois, de henné naturel BAQ (Body Art Quality). Elle permet d'obtenir une belle coloration foncée après développement. Idéale pour préparer votre propre pâte et réaliser des motifs fins et précis.</p>
@@ -294,7 +540,7 @@
   </section>
 
   <section id="histoire" data-screen-label="Mon histoire" style="padding:88px 20px;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:center" data-stack>
-    <img src="image/pack/Henna%20moyen/moyen-1.jpeg" alt="Inès, henné" class="photo" loading="lazy" style="border-radius:24px 24px 200px 200px">
+    <img src="image/pack/Henna%20moyen/moyen-1.jpeg" alt="Inès, hennaya à Thionville, main ornée de henné naturel" class="photo" loading="lazy" style="border-radius:24px 24px 200px 200px">
     <div>
       <span class="kicker voile" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A">Mon histoire ♡</span>
       <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(28px,3.6vw,42px);margin:14px 0 20px;text-wrap:pretty">Une passion d'enfance devenue une aventure partagée</h2>
@@ -473,6 +719,7 @@
         <a href="mailto:henna.by.ines15@gmail.com">henna.by.ines15@gmail.com</a>
         <a href="https://instagram.com" target="_blank" rel="noopener">Instagram — @hennabyines</a>
         <span style="color:rgba(36,26,20,0.7)">Déplacements à domicile et en salle</span>
+        <span style="color:rgba(36,26,20,0.7)">Thionville, Yutz, Terville, Florange, Hayange, Fameck, Uckange, Guénange, Hettange-Grande, Metz et alentours — et le Luxembourg frontalier.</span>
       </div>
     </div>
     <form onSubmit="{{ submitContact }}" style="background:#FBF4EB;border:1px solid rgba(36,26,20,0.1);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:16px">
@@ -502,7 +749,7 @@
         <a href="confidentialite.html" style="color:rgba(251,244,235,0.75)">Confidentialité</a>
       </nav>
       <span style="font-size:13px;display:flex;flex-direction:column;gap:6px;align-items:flex-end">
-        <span>© 2026 Henna by Inès — Henné 100% naturel</span>
+        <span>© 2026 Henna by Inès — hennaya à Thionville, Moselle (57)</span>
         <a href="https://yasify.site/?utm_medium=company_profile&amp;utm_source=trustpilot&amp;utm_campaign=domain_click" target="_blank" rel="noopener" style="color:#C58B3E">2026 by Yasify</a>
       </span>
     </div>
