@@ -60,6 +60,9 @@ window.HENNA_CONFIG = {
   depositAmount: 10,           // 0 = aucun acompte, la demande part sans paiement
   currency: "EUR",
 
+  // WhatsApp qui reçoit les demandes de devis de la page Location (indicatif pays + numéro, sans « + » ni espaces)
+  whatsapp: "33627113078",
+
 
   /* --------------------------------------------------------------------------
      4. PRODUITS  (catalogue utilisé par la page de commande commande.html)
@@ -104,7 +107,50 @@ window.HENNA_CONFIG = {
 
 
   /* --------------------------------------------------------------------------
-     6. PLUS TARD : VOTRE PROPRE SERVEUR
+     6. LOCATION D'ARTICLES  (catalogue de la page location.html)
+     --------------------------------------------------------------------------
+     Pour changer un prix, un nom ou ajouter une photo : modifiez ici, la
+     galerie se met à jour toute seule (aucun HTML à toucher).
+       cat    -> la catégorie (un des "id" de rentalCategories ci-dessous)
+       price  -> prix en euros ; null = affiche « Sur devis »
+       note   -> petite précision sous le nom (facultatif)
+       photos -> la 1re est la photo de couverture ; chaque photo existe en
+                 "nom.jpg" (grande) et "nom-t.jpg" (vignette) dans image/location/
+  -------------------------------------------------------------------------- */
+  rentalCategories: [
+    { id: "fleurs",  label: "Décoration florale" },
+    { id: "mariee",  label: "Mariée & tradition" },
+    { id: "assises", label: "Assises & tapis" },
+    { id: "reception", label: "Réception & entrée" }
+  ],
+  rentals: [
+    { id: "structure-fleur", name: "Structure fleur", note: "l'unité", price: 10, cat: "fleurs",
+      photos: ["structure-fleur-1", "structure-fleur-2", "structure-fleur-3", "structure-fleur-4"] },
+    { id: "vases-metal", name: "Vases en métal avec fleurs", price: 10, cat: "fleurs",
+      photos: ["vases-metal-1", "vases-metal-2"] },
+    { id: "bar-a-fleurs", name: "Bar à fleurs", price: 55, cat: "fleurs",
+      photos: ["bar-a-fleurs-1"] },
+    { id: "coffre-mariee", name: "Coffre de mariée traditionnel doré", price: 25, cat: "mariee",
+      photos: ["coffre-mariee-1", "coffre-mariee-2"] },
+    { id: "tayfour", name: "Tayfour", price: 45, cat: "mariee",
+      photos: ["tayfour-1", "tayfour-2"] },
+    { id: "table-a-the", name: "Table à thé dorée & traditionnelle", note: "au choix", price: 35, cat: "mariee",
+      photos: ["table-a-the-1", "table-a-the-2", "table-a-the-3"] },
+    { id: "tapis", name: "Tapis", note: "au choix", price: 40, cat: "assises",
+      photos: ["tapis-1", "tapis-2"] },
+    { id: "assise-henne", name: "Assise henné réversible", note: "plusieurs coloris : bordeaux, vert & doré", price: null, cat: "assises",
+      photos: ["assise-henne-1", "assise-henne-2"] },
+    { id: "livre-dor-audio", name: "Livre d'or audio", note: "clé USB incluse", price: 70, cat: "reception",
+      photos: ["livre-dor-1"] },
+    { id: "entree-vip", name: "Entrée VIP + tapis", note: "tapis rouge ou style persan", price: 50, cat: "reception",
+      photos: ["entree-vip-1", "entree-vip-2", "entree-vip-3"] },
+    { id: "arche-imperiale", name: "L'arche impériale", price: 300, cat: "reception",
+      photos: ["arche-imperiale-1"] }
+  ],
+
+
+  /* --------------------------------------------------------------------------
+     7. PLUS TARD : VOTRE PROPRE SERVEUR
      --------------------------------------------------------------------------
      Le jour où vous aurez un backend, renseignez apiBase : il devient
      prioritaire sur appsScriptUrl et le site postera en JSON sur

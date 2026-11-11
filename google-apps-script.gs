@@ -259,7 +259,8 @@ function handleOrder(d) {
   const sousTotal = d.subtotal != null ? d.subtotal
     : items.reduce(function (s, it) { return s + (it.price || 0) * ((it.qty && it.qty > 1) ? it.qty : 1); }, 0);
   const total = d.amount != null ? d.amount : sousTotal;
-  const portTxt = shipping.free ? 'offerte' : (shipping.fee != null ? Number(shipping.fee).toFixed(2) + ' ' + devise : '—');
+  const locSeule = shipping.tier === 'location';
+  const portTxt = locSeule ? 'à convenir (location, pas de colis)' : shipping.free ? 'offerte' : (shipping.fee != null ? Number(shipping.fee).toFixed(2) + ' ' + devise : '—');
   const titre = items.length > 1 ? (items.length + ' articles') : ((items[0] && items[0].label) || 'produit');
 
   const corps = [
@@ -268,7 +269,8 @@ function handleOrder(d) {
     who ? ('Cliente    : ' + who) : null,
     'E-mail     : ' + (client || '—'),
     contact.phone ? ('Téléphone  : ' + contact.phone) : null,
-    address ? ('Livraison  : ' + address + ' (Colissimo)') : null,
+    address ? ((locSeule ? 'Adresse    : ' : 'Livraison  : ') + address + (locSeule ? '' : ' (Colissimo)')) : null,
+    d.eventDate ? ('Événement  : ' + d.eventDate + '  (LOCATION : vérifier la disponibilité)') : null,
     '',
     'Articles :'
   ].concat(lignes.map(function (l) { return '   • ' + l; })).concat([
@@ -297,11 +299,14 @@ function handleOrder(d) {
       ].concat(lignes.map(function (l) { return '   • ' + l; })).concat([
         '',
         '   Sous-total : ' + Number(sousTotal).toFixed(2) + ' ' + devise,
-        '   Livraison  : ' + portTxt + (shipping.free ? '' : ' (Colissimo)'),
+        '   Livraison  : ' + portTxt + (shipping.free || locSeule ? '' : ' (Colissimo)'),
+        d.eventDate ? ('   Événement  : ' + d.eventDate) : null,
         '   Total      : ' + Number(total).toFixed(2) + ' ' + devise,
         address ? ('   Adresse    : ' + address) : null,
         '',
-        'Votre commande sera préparée et expédiée en Colissimo dès réception du paiement PayPal.',
+        (locSeule
+          ? 'Nous vérifions la disponibilité des articles loués à votre date et revenons vers vous pour convenir de la remise du matériel.'
+          : 'Votre commande sera préparée et expédiée en Colissimo dès réception du paiement PayPal.'),
         '',
         'Une question ? Répondez simplement à cet e-mail.'
       ]).filter(function (l) { return l !== null; }).join('\n'));

@@ -65,8 +65,12 @@
        tout le reste              -> tarif « standard » (7,59 €) */
   function shippingFor(list, subtotal) {
     if (!list.length) return { fee: 0, free: false, tier: null };
-    if (SHIP.freeFrom != null && subtotal >= SHIP.freeFrom) return { fee: 0, free: true, tier: 'free' };
-    var onlyPowder = list.every(function (l) { return PRODUCTS[l.sku].kind === 'poudre'; });
+    // Les locations ne partent pas en colis : seuls les autres articles comptent pour la livraison.
+    var colis = list.filter(function (l) { return PRODUCTS[l.sku].kind !== 'location'; });
+    if (!colis.length) return { fee: 0, free: false, tier: 'location' };
+    var subColis = colis.reduce(function (s, l) { return s + PRODUCTS[l.sku].price * l.qty; }, 0);
+    if (SHIP.freeFrom != null && subColis >= SHIP.freeFrom) return { fee: 0, free: true, tier: 'free' };
+    var onlyPowder = colis.every(function (l) { return PRODUCTS[l.sku].kind === 'poudre'; });
     var light = onlyPowder && powderGrams(list) <= (SHIP.lightMaxGrams || 250);
     return { fee: light ? SHIP.light : SHIP.standard, free: false, tier: light ? 'light' : 'standard' };
   }
@@ -88,6 +92,8 @@
       count: count(list),
       grams: powderGrams(list),
       subtotal: subtotal,
+      hasRental: lines.some(function (l) { return l.kind === 'location'; }),
+      hasParcel: lines.some(function (l) { return l.kind !== 'location'; }),
       shipping: ship,
       total: Math.round((subtotal + ship.fee) * 100) / 100
     };
@@ -338,7 +344,7 @@
       });
       h += '</div><div class="mc-foot">' +
         '<div class="mc-l"><span>Sous-total</span><span>' + euro(c.subtotal) + '</span></div>' +
-        '<div class="mc-l"><span>Livraison</span><span>' + (c.shipping.free ? 'Offerte' : euro(c.shipping.fee)) + '</span></div>' +
+        '<div class="mc-l"><span>Livraison</span><span>' + (c.shipping.tier === 'location' ? 'À convenir' : c.shipping.free ? 'Offerte' : euro(c.shipping.fee)) + '</span></div>' +
         '<div class="mc-l mc-tot"><span>Total</span><span>' + euro(c.total) + '</span></div>' +
         '<a class="mc-valider" href="commande.html">Valider ma commande</a></div>';
     }

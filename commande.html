@@ -199,6 +199,10 @@
           </label>
         </div>
 
+        <label class="champ" id="champ-date" hidden>Date de l'événement (pour la location)
+          <input type="date" name="eventDate" id="event-date">
+        </label>
+
         <label class="champ">Message (optionnel)
           <textarea name="message" rows="3" placeholder="Une précision pour votre commande ou votre livraison…" style="resize:vertical"></textarea>
         </label>
@@ -224,7 +228,7 @@
 
     <div id="zone-merci" class="carte msg-ok" hidden>
       <div class="titre-ok">Merci pour votre commande ✓</div>
-      <p style="margin:0;font-size:14px;line-height:1.6;color:rgba(36,26,20,0.75)">Votre commande est enregistrée. Nous revenons vers vous par e-mail après vérification du paiement, puis nous l'expédions en Colissimo.</p>
+      <p style="margin:0;font-size:14px;line-height:1.6;color:rgba(36,26,20,0.75)"><span id="merci-texte">Votre commande est enregistrée. Nous revenons vers vous par e-mail après vérification du paiement, puis nous l'expédions en Colissimo.</span></p>
       <p style="margin:14px 0 0"><a href="index.html">Retour à l'accueil</a></p>
     </div>
   </div>
@@ -274,7 +278,7 @@
 
     var html = '';
     c.lines.forEach(function (l) {
-      var unite = l.kind === 'cone' ? ' / lot de 10' : '';
+      var unite = l.kind === 'cone' ? ' / lot de 10' : (l.kind === 'location' ? ' / article loué' : '');
       var plusOff = (l.kind === 'poudre' && (c.grams + l.grams > Cart.powderMax)) ||
                     (l.kind !== 'poudre' && l.qty >= Cart.lineMax);
       html += '<div class="panier-ligne" data-key="' + esc(l.key) + '">' +
@@ -307,15 +311,25 @@
     }
 
     $('total-sous').textContent = euro(c.subtotal);
-    $('total-livraison').textContent = c.shipping.free ? 'Offerte' : euro(c.shipping.fee);
+    var locOnly = c.shipping.tier === 'location';
+    $('lib-livraison').textContent = locOnly ? 'Livraison / retrait' : 'Livraison (Colissimo)';
+    $('total-livraison').textContent = locOnly ? 'À convenir' : (c.shipping.free ? 'Offerte' : euro(c.shipping.fee));
     $('total-final').textContent = euro(c.total);
+    // Les locations demandent la date de l'événement
+    $('champ-date').hidden = !c.hasRental;
+    $('event-date').required = !!c.hasRental;
     var note = '';
-    if (c.shipping.tier === 'light') {
+    if (locOnly) {
+      note = 'Les articles loués ne sont pas expédiés : nous convenons avec vous de la remise du matériel.';
+    } else if (c.shipping.tier === 'light') {
       note = 'Poudre jusqu\'à ' + SHIP.lightMaxGrams + ' g : livraison ' + euro(SHIP.light) + '. Au-delà de ' + SHIP.lightMaxGrams + ' g, ou avec des cônes ou une box : ' + euro(SHIP.standard) + '.';
     } else if (c.shipping.tier === 'standard') {
       note = 'Livraison Colissimo ' + euro(SHIP.standard) + ' pour votre colis.';
     } else if (c.shipping.free) {
       note = 'Livraison offerte.';
+    }
+    if (c.hasRental && c.hasParcel) {
+      note += ' La livraison Colissimo ne concerne que les produits ; les articles loués sont remis en main propre (à convenir avec nous).';
     }
     if (SHIP.freeFrom != null && !c.shipping.free) {
       note += ' Livraison offerte dès ' + euro(SHIP.freeFrom) + ' d\'achat.';
@@ -344,7 +358,8 @@
     Cart.setOil(s.closest('.panier-ligne').getAttribute('data-key'), s.value);
     render();
   });
-  window.addEventListener('storage', function () { render(); });   // panier modifié dans un autre onglet
+  window.addEventListener('storage', function () { render(); });
+  window.addEventListener('henna-cart-change', function () { render(); });   // modifié depuis le mini-panier   // panier modifié dans un autre onglet
 
   /* ---------- envoi au backend (Apps Script), même logique que le reste du site ---------- */
   function envoyer(payload) {
@@ -391,7 +406,7 @@
   var btnValider = $('btn-valider');
   var erreurEl = $('form-erreur');
   var commandeRef = null;
-  var dernierTotal = 0;
+  var dernierTotal = 0, dernierLoc = false, dernierColis = false;
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -413,7 +428,7 @@
     var items = c.lines.map(function (l) {
       return {
         sku: l.sku, label: l.label, price: l.price, qty: l.qty, currency: CURRENCY,
-        oilChoice: l.oilChoice,
+        kind: l.kind, oilChoice: l.oilChoice,
         options: l.oilChoice ? { huileEssentielle: l.oil === 'avec' } : undefined
       };
     });
@@ -427,7 +442,9 @@
       item: { sku: 'panier', label: c.lines.map(ligneTexte).join(' ; '), price: c.subtotal, qty: 1, currency: CURRENCY, oilChoice: false },
       promoCode: null,
       subtotal: c.subtotal,
-      shipping: { carrier: 'Colissimo', fee: c.shipping.fee, free: c.shipping.free, tier: c.shipping.tier },
+      shipping: { carrier: c.shipping.tier === 'location' ? 'Aucun (location, remise à convenir)' : 'Colissimo', fee: c.shipping.fee, free: c.shipping.free, tier: c.shipping.tier },
+      eventDate: c.hasRental ? (f.get('eventDate') || null) : null,
+      hasRental: c.hasRental,
       amount: c.total,
       message: f.get('message') || null,
       createdAt: new Date().toISOString()
@@ -443,18 +460,23 @@
       }
       commandeRef = res && res.orderId;
       dernierTotal = c.total;
+      dernierLoc = c.hasRental; dernierColis = c.hasParcel;
       locked = true;
 
       $('bloc-panier').hidden = true;
       var recap = c.lines.map(function (l) {
         return '<li><span>' + esc(ligneTexte(l)) + '</span><span>' + euro(l.total) + '</span></li>';
       }).join('') +
-        '<li><span>Livraison Colissimo</span><span>' + (c.shipping.free ? 'Offerte' : euro(c.shipping.fee)) + '</span></li>';
+        '<li><span>' + (c.shipping.tier === 'location' ? 'Livraison / retrait' : 'Livraison Colissimo') + '</span><span>' +
+          (c.shipping.tier === 'location' ? 'À convenir' : (c.shipping.free ? 'Offerte' : euro(c.shipping.fee))) + '</span></li>';
       $('recap').innerHTML = recap;
 
       $('zone-paiement').hidden = false;
       $('paiement-intro').textContent =
-        'Commande enregistrée pour ' + (f.get('firstName') || '') + '. Réglez le montant ci-dessous pour confirmer l\'expédition.'
+        'Commande enregistrée pour ' + (f.get('firstName') || '') + '. ' +
+          (c.hasRental
+            ? 'Nous vérifions la disponibilité des articles loués à votre date ; le règlement ci-dessous confirme votre commande.'
+            : 'Réglez le montant ci-dessous pour confirmer l\'expédition.')
         + (res && res.mocked ? ' (mode démonstration : le backend n\'est pas encore branché, rien n\'a été envoyé)' : '');
       $('paiement-montant').textContent = euro(dernierTotal);
       var lien = $('lien-paypal');
@@ -485,6 +507,11 @@
     }).then(function () {}, function () {}).then(function () {
       Cart.clear();                       // la commande est partie : on vide le panier
       $('zone-paiement').hidden = true;
+      if (dernierLoc) {
+        $('merci-texte').textContent = dernierColis
+          ? 'Votre commande est enregistrée. Nous revenons vers vous par e-mail après vérification du paiement : les produits partent en Colissimo, et nous convenons avec vous de la remise des articles loués.'
+          : 'Votre demande de location est enregistrée. Nous revenons vers vous par e-mail pour confirmer la disponibilité à votre date et convenir de la remise du matériel.';
+      }
       $('zone-merci').hidden = false;
     });
   });

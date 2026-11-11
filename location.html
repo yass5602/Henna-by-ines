@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>Location d'articles pour mariage — Henna by Inès</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Location d'accessoires et de décoration pour mariages et cérémonies à Thionville : structures fleurs, bar à fleurs, tayfour, coffre de mariée, tables à thé, tapis et assises henné.">
+<link rel="canonical" href="https://hennabyines.ch/location.html">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="image/logo/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="image/logo/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="image/logo/favicon-48x48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="image/logo/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FBF4EB;color:#241A14;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:url("image/motif/motif-floral.jpg") repeat;background-size:560px auto;opacity:.5}
+  a{color:#A8542A}
+  a:hover{color:#1F6B5E}
+  [hidden]{display:none!important}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(251,244,235,0.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,26,20,0.1)}
+  .bar{max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
+  .bar img{width:48px;height:48px;object-fit:cover;border-radius:50%;border:1px solid rgba(165,84,42,0.35);display:block}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;text-decoration:none;color:#241A14}
+  .sub{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A}
+  .bar nav{margin-left:auto;display:flex;gap:10px}
+  .bar nav a{font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:#241A14;border:1px solid rgba(36,26,20,0.2);padding:10px 18px;border-radius:999px;white-space:nowrap}
+  .bar nav a:hover{background:rgba(168,84,42,0.1);color:#241A14}
+  .bar nav{align-items:center}
+  .bar nav a.panier-btn{display:flex;align-items:center;gap:8px;height:46px;padding:0 16px}
+  .panier-ico{display:none;font-size:18px;line-height:1}
+  .panier-btn [data-cart-count]{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#A8542A;color:#FBF4EB;font-size:12px;line-height:22px;text-align:center;letter-spacing:0}
+
+  main{max-width:1240px;margin:0 auto;padding:54px 20px 80px}
+  .kicker{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:26px;color:#A8542A;line-height:1.2;display:block;width:fit-content;
+    background:rgba(251,244,235,0.78);border-radius:999px;box-shadow:0 0 0 8px rgba(251,244,235,0.78)}
+  h1{font-family:'Ballet',cursive;font-weight:400;font-size:clamp(44px,6.5vw,72px);margin:22px 0 18px;line-height:1.3;
+    background:rgba(251,244,235,0.78);border-radius:12px;box-shadow:0 0 0 8px rgba(251,244,235,0.78);display:block;width:fit-content}
+  .intro{max-width:62ch;font-size:16.5px;color:rgba(36,26,20,0.82);margin:6px 0 0;
+    background:rgba(251,244,235,0.78);border-radius:8px;box-shadow:0 0 0 6px rgba(251,244,235,0.78)}
+
+  /* ---- filtres ---- */
+  .filtres{display:flex;gap:10px;flex-wrap:wrap;margin:34px 0 28px}
+  .filtres button{cursor:pointer;font:500 14px/1 'Jost',system-ui,sans-serif;letter-spacing:.04em;padding:13px 20px;border-radius:999px;
+    border:1px solid rgba(36,26,20,0.22);background:rgba(251,244,235,0.92);color:#241A14;transition:background .15s,color .15s,border-color .15s}
+  .filtres button:hover{border-color:#A8542A}
+  .filtres button[aria-pressed="true"]{background:#241A14;border-color:#241A14;color:#FBF4EB}
+  .filtres .nb{opacity:.6;margin-left:6px;font-weight:400}
+
+  /* ---- galerie ---- */
+  .galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
+  .carte{background:#fff;border:1px solid rgba(36,26,20,0.1);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:0 2px 0 rgba(36,26,20,0.02);transition:transform .2s,box-shadow .2s}
+  .carte:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(36,26,20,0.12)}
+  .vignette{position:relative;display:block;width:100%;padding:0;border:0;background:#EFE6D8;cursor:zoom-in;aspect-ratio:4/5;overflow:hidden}
+  .vignette img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+  .carte:hover .vignette img{transform:scale(1.04)}
+  .prix{position:absolute;left:12px;bottom:12px;background:rgba(251,244,235,0.95);color:#A8542A;border-radius:999px;
+    padding:6px 16px 7px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:25px;line-height:1.1;box-shadow:0 4px 14px rgba(36,26,20,0.22)}
+  .prix.devis{font-size:17px;font-style:italic;padding:8px 16px;color:#1F6B5E}
+  .nbphotos{position:absolute;right:12px;top:12px;background:rgba(36,26,20,0.66);color:#FBF4EB;border-radius:999px;padding:3px 11px;font-size:12px;letter-spacing:.04em;line-height:1.6}
+  .infos{padding:16px 18px 18px;display:flex;flex-direction:column;align-items:stretch;gap:14px;flex:1}
+  .infos .txt{min-width:0;flex:1}
+  .infos .devis-btn{align-self:flex-end}
+  .infos h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;line-height:1.2;margin:0}
+  .infos p{margin:4px 0 0;font-size:14px;color:rgba(36,26,20,0.62);line-height:1.45}
+  .devis-btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 17px 0 14px;border-radius:999px;background:#1F6B5E;color:#FBF4EB;
+    text-decoration:none;font:500 12.5px/1 'Jost',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;transition:background .15s,transform .15s}
+  .devis-btn:hover{background:#A8542A;color:#FBF4EB;transform:translateY(-1px)}
+  .devis-btn svg{width:20px;height:20px;display:block;flex:0 0 auto}
+  .vide{grid-column:1/-1;text-align:center;color:rgba(36,26,20,0.6)}
+
+  .contact{margin-top:56px;background:#241A14;color:#FBF4EB;border-radius:24px;padding:36px 30px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .contact h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:30px;line-height:1.25;margin:0}
+  .contact p{margin:6px 0 0;color:rgba(251,244,235,0.75);font-size:15px;max-width:52ch}
+  .contact a{display:inline-block;text-decoration:none;background:#FBF4EB;color:#241A14;padding:15px 30px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase}
+  .contact a:hover{background:#C58B3E;color:#241A14}
+
+  /* ---- visionneuse ---- */
+  .lb{position:fixed;inset:0;z-index:100;background:#140D09;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+  .lb-img{max-width:min(94vw,900px);max-height:76vh;max-height:76dvh;object-fit:contain;border-radius:10px;user-select:none;-webkit-user-drag:none;touch-action:pan-y}
+  .lb-legende{color:#FBF4EB;text-align:center;margin-top:16px;max-width:92vw}
+  .lb-legende strong{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;display:block;line-height:1.25}
+  .lb-legende span{font-size:14px;opacity:.78;margin-right:8px}
+  .lb-prix{font-weight:600;display:inline-block;background:#FBF4EB;color:#A8542A;border-radius:999px;padding:3px 14px;font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;vertical-align:-1px}
+  .lb-devis{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:#1F6B5E;color:#FBF4EB;text-decoration:none;border-radius:999px;padding:12px 22px;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase}
+  .lb-devis svg{width:20px;height:20px;flex:0 0 auto}
+  .lb-devis{white-space:nowrap}
+  .lb-devis:hover{background:#A8542A;color:#FBF4EB}
+  .lb button{position:absolute;border:0;cursor:pointer;color:#FBF4EB;background:rgba(251,244,235,0.14);width:48px;height:48px;border-radius:50%;font-size:26px;line-height:1;padding:0}
+  .lb button:hover{background:rgba(251,244,235,0.3)}
+  .lb-x{top:14px;right:14px}
+  .lb-prec{left:14px;top:50%;margin-top:-24px}
+  .lb-suiv{right:14px;top:50%;margin-top:-24px}
+
+  footer{background:#241A14;color:rgba(251,244,235,0.72);padding:40px 20px}
+  .fin{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px;align-items:center}
+  .fin a{color:rgba(251,244,235,0.72);text-decoration:none}
+  .fin a:hover{color:#C58B3E}
+  .fin nav{display:flex;gap:20px;flex-wrap:wrap}
+
+  @media (max-width:520px){
+    .bar nav a.contact-lien{display:none}
+    .bar nav a.panier-btn{position:relative;width:46px;padding:0;justify-content:center}
+    .panier-txt{display:none} .panier-ico{display:inline}
+    .panier-btn [data-cart-count]{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;line-height:20px;padding:0 5px;font-size:11px}
+  }
+  @media (max-width:600px){
+    main{padding:34px 16px 64px}
+    .bar{padding:10px 16px}
+    .brand{font-size:19px}
+    .bar nav a{padding:9px 14px;font-size:12px}
+    .bar nav a.sec{display:none}
+    .bar nav{gap:8px}
+    .filtres{flex-wrap:nowrap;overflow-x:auto;margin:26px -16px 22px;padding:2px 16px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .filtres::-webkit-scrollbar{display:none}
+    .filtres button{flex:0 0 auto;padding:12px 16px;font-size:13.5px}
+    .galerie{grid-template-columns:repeat(2,1fr);gap:12px}
+    .carte{border-radius:16px}
+    .prix{left:8px;bottom:8px;font-size:21px;padding:4px 12px 5px}
+    .prix.devis{font-size:14.5px;padding:6px 12px}
+    .nbphotos{right:8px;top:8px;font-size:11px;padding:2px 9px}
+    .infos{padding:12px 12px 14px;gap:10px}
+    .devis-btn{height:38px;padding:0 13px 0 11px;font-size:11.5px;gap:6px}
+    .devis-btn svg{width:17px;height:17px}
+    .infos h2{font-size:17.5px;line-height:1.25;overflow-wrap:break-word}
+    .infos p{font-size:12.5px}
+    .contact{padding:28px 22px;margin-top:40px;border-radius:20px}
+    .contact h2{font-size:26px}
+    .lb-prec,.lb-suiv{top:auto;bottom:18px;margin-top:0}
+    .lb-prec{left:calc(50% - 62px)}
+    .lb-suiv{right:calc(50% - 62px)}
+    .lb-img{max-height:68vh;max-height:68dvh}
+    .lb-legende{margin-bottom:60px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a href="index.html"><img src="image/logo/LOGO.jpeg" alt="Henna by Inès"></a>
+    <span>
+      <a class="brand" href="index.html">Henna by Inès</a><br>
+      <span class="sub">Hennaya</span>
+    </span>
+    <nav>
+      <a class="sec" href="index.html#produits">Boutique</a>
+      <a class="contact-lien" href="index.html#contact">Contact</a>
+      <a href="commande.html" class="panier-btn" data-cart-link aria-label="Voir mon panier"><span class="panier-txt">Panier</span><span class="panier-ico" aria-hidden="true">🛒</span><span data-cart-count style="display:none">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <span class="kicker">Location</span>
+  <h1>Articles à louer</h1>
+  <p class="intro">Assises, décoration florale et accessoires de mariée pour vos cérémonies et vos soirées henné. Les prix indiqués sont les tarifs de location par article. Pour réserver un article, appuyez sur « Devis » : une conversation WhatsApp s'ouvre avec l'article déjà indiqué, il ne reste qu'à préciser la date et le lieu de votre événement.</p>
+
+  <div class="filtres" id="filtres" role="group" aria-label="Filtrer par type d'article"></div>
+  <div class="galerie" id="galerie"></div>
+
+  <div class="contact">
+    <div>
+      <h2>Un article vous plaît ?</h2>
+      <p>Écrivez-nous en précisant l'article, la date et le lieu de votre événement : nous vous répondons avec la disponibilité et un devis si besoin.</p>
+    </div>
+    <a href="#" data-wa="Bonjour Inès, je souhaite des informations sur la location d'articles pour mon événement.">Nous écrire sur WhatsApp</a>
+  </div>
+</main>
+
+<footer>
+  <div class="fin">
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="index.html#produits">Boutique</a>
+      <a href="location.html">Location</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="confidentialite.html">Confidentialité</a>
+    </nav>
+    <span>
+      © 2026 Henna by Inès —
+      <a href="https://yasify.site/?utm_medium=company_profile&amp;utm_source=trustpilot&amp;utm_campaign=domain_click" target="_blank" rel="noopener">2026 by Yasify</a>
+    </span>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="cart.js"></script>
+<script>
+(function () {
+  var CFG = window.HENNA_CONFIG || {};
+  var CATS = CFG.rentalCategories || [];
+  var ITEMS = CFG.rentals || [];
+  var DIR = 'image/location/';
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function prixTexte(it) { return it.price == null ? 'Sur devis' : String(it.price).replace('.', ',') + ' €'; }
+
+  /* ---------- filtres ---------- */
+  var current = 'tout';
+  var filtresEl = $('filtres');
+
+  function count(cat) {
+    return ITEMS.filter(function (i) { return cat === 'tout' || i.cat === cat; }).length;
+  }
+
+  function renderFiltres() {
+    var all = [{ id: 'tout', label: 'Tout' }].concat(CATS);
+    filtresEl.innerHTML = all.map(function (c) {
+      return '<button type="button" data-cat="' + esc(c.id) + '" aria-pressed="' + (c.id === current) + '">' +
+        esc(c.label) + '<span class="nb">' + count(c.id) + '</span></button>';
+    }).join('');
+  }
+
+  filtresEl.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('button[data-cat]') : null;
+    if (!b) return;
+    current = b.getAttribute('data-cat');
+    try { history.replaceState(null, '', current === 'tout' ? location.pathname : '#' + current); } catch (err) {}
+    renderFiltres();
+    renderGalerie();
+  });
+
+  /* ---------- galerie ---------- */
+  var galerie = $('galerie');
+  var shown = [];
+
+  /* ---------- demande de devis par WhatsApp ---------- */
+  var WA = String((CFG.whatsapp || '33627113078')).replace(/\D/g, '');
+  function waLien(msg) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg); }
+  function waMessage(it) {
+    return 'Bonjour Inès, je souhaite un devis pour la location de : ' + it.name + (it.note ? ' (' + it.note + ')' : '') +
+      (it.price != null ? ' — ' + prixTexte(it) : '') + '.\nDate et lieu de mon événement : ';
+  }
+  var ICONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M4 20l1.2-4A8 8 0 1 1 8.2 19z"/><path d="M9.2 8.8c.2 2.2 2.8 4.8 5 5l1.2-1.2-1.8-1-.8.6c-.7-.3-1.6-1.2-1.9-1.9l.6-.8-1-1.8z" fill="currentColor" stroke="none"/></svg>';
+
+  function boutonDevis(it) {
+    return '<a class="devis-btn" href="' + esc(waLien(waMessage(it))) + '" target="_blank" rel="noopener" aria-label="Demander un devis sur WhatsApp : ' + esc(it.name) + '">' +
+      ICONE + '<span>Devis</span></a>';
+  }
+
+  function renderGalerie() {
+    shown = ITEMS.filter(function (i) { return current === 'tout' || i.cat === current; });
+    if (!shown.length) {
+      galerie.innerHTML = '<p class="vide">Aucun article dans cette catégorie pour le moment.</p>';
+      return;
+    }
+    galerie.innerHTML = shown.map(function (it, idx) {
+      var n = it.photos.length;
+      return '<article class="carte">' +
+        '<button type="button" class="vignette" data-open="' + idx + '" aria-label="Voir les photos : ' + esc(it.name) + '">' +
+          '<img src="' + DIR + esc(it.photos[0]) + '-t.jpg" alt="' + esc(it.name) + '" loading="lazy" width="520" height="650">' +
+          (n > 1 ? '<span class="nbphotos">' + n + ' photos</span>' : '') +
+          '<span class="prix' + (it.price == null ? ' devis' : '') + '">' + esc(prixTexte(it)) + '</span>' +
+        '</button>' +
+        '<div class="infos"><div class="txt"><h2>' + esc(it.name) + '</h2>' +
+          (it.note ? '<p>' + esc(it.note) + '</p>' : '') + '</div>' + boutonDevis(it) + '</div>' +
+      '</article>';
+    }).join('');
+  }
+
+  galerie.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-open]') : null;
+    if (b) openLb(parseInt(b.getAttribute('data-open'), 10));
+  });
+
+  /* ---------- visionneuse ---------- */
+  var lb = null, lbItem = null, lbPos = 0, lastFocus = null;
+
+  function buildLb() {
+    lb = document.createElement('div');
+    lb.className = 'lb';
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.hidden = true;
+    lb.innerHTML =
+      '<button type="button" class="lb-x" aria-label="Fermer">×</button>' +
+      '<button type="button" class="lb-prec" aria-label="Photo précédente">‹</button>' +
+      '<img class="lb-img" alt="">' +
+      '<button type="button" class="lb-suiv" aria-label="Photo suivante">›</button>' +
+      '<div class="lb-legende"><strong></strong><span></span><b class="lb-prix"></b><br><a class="lb-devis" target="_blank" rel="noopener">' + ICONE + 'Demander un devis</a></div>';
+    document.body.appendChild(lb);
+
+    lb.addEventListener('click', function (e) {
+      if (e.target.closest('.lb-x') || e.target === lb) return closeLb();
+      if (e.target.closest('.lb-prec')) return step(-1);
+      if (e.target.closest('.lb-suiv')) return step(1);
+    });
+    var x0 = null;
+    lb.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function (e) {
+      if (x0 == null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+    });
+  }
+
+  function showPhoto() {
+    var it = lbItem, n = it.photos.length;
+    var img = lb.querySelector('.lb-img');
+    img.src = DIR + it.photos[lbPos] + '.jpg';
+    img.alt = it.name + ' — photo ' + (lbPos + 1) + ' sur ' + n;
+    var leg = lb.querySelector('.lb-legende');
+    leg.querySelector('strong').textContent = it.name + (it.note ? ' (' + it.note + ')' : '');
+    var sp = leg.querySelector('span');
+    sp.textContent = n > 1 ? 'Photo ' + (lbPos + 1) + ' / ' + n : '';
+    var p = leg.querySelector('.lb-prix');
+    p.textContent = prixTexte(it);
+    leg.querySelector('.lb-devis').href = waLien(waMessage(it));
+    lb.querySelector('.lb-prec').hidden = lb.querySelector('.lb-suiv').hidden = n < 2;
+    // précharge la photo suivante
+    if (n > 1) (new Image()).src = DIR + it.photos[(lbPos + 1) % n] + '.jpg';
+  }
+
+  function openLb(idx) {
+    if (!lb) buildLb();
+    lbItem = shown[idx];
+    lbPos = 0;
+    lastFocus = document.activeElement;
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    showPhoto();
+    lb.querySelector('.lb-x').focus();
+  }
+  function closeLb() {
+    if (!lb) return;
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function step(d) {
+    var n = lbItem.photos.length;
+    lbPos = (lbPos + d + n) % n;
+    showPhoto();
+  }
+  document.addEventListener('keydown', function (e) {
+    if (!lb || lb.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+
+  var gen = document.querySelectorAll('[data-wa]');
+  for (var g = 0; g < gen.length; g++) {
+    gen[g].href = waLien(gen[g].getAttribute('data-wa'));
+    gen[g].target = '_blank'; gen[g].rel = 'noopener';
+  }
+
+  /* ---------- démarrage (catégorie possible dans l'adresse : location.html#fleurs) ---------- */
+  var h = (location.hash || '').replace('#', '');
+  if (CATS.some(function (c) { return c.id === h; })) current = h;
+  renderFiltres();
+  renderGalerie();
+})();
+</script>
+</body>
+</html>

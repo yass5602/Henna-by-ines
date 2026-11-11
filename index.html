@@ -273,9 +273,12 @@
   a:hover{color:#1F6B5E}
   input,select,textarea,button{font-family:inherit}
   [data-mobile-only]{display:none!important}
-  @media (max-width:920px){
+  /* Le menu complet (6 liens + panier) a besoin de ~1080 px : en dessous on passe au menu burger. */
+  @media (max-width:1120px){
     [data-desktop-only]{display:none!important}
     [data-mobile-only]{display:flex!important}
+  }
+  @media (max-width:920px){
     [data-stack]{grid-template-columns:1fr!important}
   }
   /* Toutes les photos du site partagent le même cadre 4:5 (hors logo et hero). */
@@ -352,6 +355,7 @@
         <a href="#accueil" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Home</a>
         <a href="#realisations" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Nos Réalisations</a>
         <a href="#produits" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Nos produits</a>
+        <a href="location.html" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Location</a>
         <a href="#contact" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Contact</a>
         <a href="#rdv" style="background:#241A14;color:#FBF4EB;padding:12px 22px;border-radius:999px;font-size:14px;letter-spacing:.08em;text-transform:uppercase" style-hover="background:#A8542A">Prendre RDV</a>
       </nav>
@@ -376,6 +380,7 @@
         <a href="#accueil" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Home</a>
         <a href="#realisations" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Nos Réalisations</a>
         <a href="#produits" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Nos produits</a>
+        <a href="location.html" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Location</a>
         <a href="#rdv" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Prendre RDV</a>
         <a href="#contact" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Contact</a>
         <a href="commande.html" data-cart-link style="padding:14px 0;color:#A8542A;font-family:'Cormorant Garamond',serif;font-size:24px;display:flex;align-items:center;gap:10px">Mon panier <span data-cart-count style="display:none;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#A8542A;color:#FBF4EB;font-size:12px;line-height:22px;text-align:center;font-family:Jost,sans-serif">0</span></a>
@@ -538,7 +543,10 @@
               <li>Bougies, flûtes (verres) et bendir (tambour) personnalisés (ou tout autre objet de votre choix)</li>
             </ul>
             <p style="font-size:14px;color:rgba(251,244,235,0.65);margin:14px 0 20px">Sur devis. Contactez-nous pour les délais de livraison.</p>
-            <a href="#contact" style="display:inline-block;border:1px solid rgba(251,244,235,0.4);color:#FBF4EB;padding:13px 26px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:rgba(251,244,235,0.12)">Demander un devis</a>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <a href="location.html" style="display:inline-block;background:#FBF4EB;color:#241A14;padding:13px 26px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:#C58B3E">Voir le catalogue</a>
+              <a href="#contact" style="display:inline-block;border:1px solid rgba(251,244,235,0.4);color:#FBF4EB;padding:13px 26px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase" style-hover="background:rgba(251,244,235,0.12)">Demander un devis</a>
+            </div>
           </div>
         </div>
       </div>
