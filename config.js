@@ -62,7 +62,49 @@ window.HENNA_CONFIG = {
 
 
   /* --------------------------------------------------------------------------
-     4. PLUS TARD : VOTRE PROPRE SERVEUR
+     4. PRODUITS  (catalogue utilisé par la page de commande commande.html)
+     --------------------------------------------------------------------------
+     C'est ici que vous changez un prix ou un libellé de produit : la page
+     commande.html va chercher ces valeurs, inutile de toucher au HTML.
+     oilChoice: true -> la page propose « avec / sans huile essentielle ».
+  -------------------------------------------------------------------------- */
+  /* kind   : "cone" | "box" | "poudre" (sert au calcul des frais de port)
+     grams  : poids de poudre contenu (poudre uniquement)
+     La poudre est limitée à powderMaxGrams (300 g) par commande.
+     Les cônes ne se vendent plus à l'unité : on part du lot de 10 (le 11ᵉ offert). */
+  products: {
+    "cone-10":       { kind: "cone",   label: "Lot de 10 cônes de henné (le 11ᵉ offert)", price: 30,   oilChoice: true  },
+    "box-debutante": { kind: "box",    label: "Box débutante henné (5 cônes, huile, spray révélateur)", price: 15, oilChoice: true },
+    "poudre-100":    { kind: "poudre", label: "Poudre de henné BAQ — 100 g",           price: 8,    grams: 100, oilChoice: false },
+    "poudre-200":    { kind: "poudre", label: "Poudre de henné BAQ — Pack 2 × 100 g",  price: 14.9, grams: 200, oilChoice: false },
+    "poudre-300":    { kind: "poudre", label: "Poudre de henné BAQ — Pack 3 × 100 g",  price: 21.5, grams: 300, oilChoice: false }
+  },
+  powderMaxGrams: 300,
+
+
+  /* --------------------------------------------------------------------------
+     5. LIVRAISON (Colissimo)
+     --------------------------------------------------------------------------
+     Règle appliquée au panier (un seul colis) :
+       • poudre seule, jusqu'à lightMaxGrams (250 g)  ->  light  (5,49 €)
+       • tout le reste (cônes, box, poudre au-delà de 250 g, panier mixte)
+                                                      ->  standard (7,59 €)
+     Les tarifs se changent ici, la page de commande recalcule tout.
+
+     freeFrom -> montant du panier (hors frais de port) à partir duquel la
+                 livraison est offerte. Seuil pas encore connu : null = jamais
+                 de livraison offerte. Exemple : freeFrom: 60
+  -------------------------------------------------------------------------- */
+  shipping: {
+    light: 5.49,
+    standard: 7.59,
+    lightMaxGrams: 250,
+    freeFrom: null
+  },
+
+
+  /* --------------------------------------------------------------------------
+     6. PLUS TARD : VOTRE PROPRE SERVEUR
      --------------------------------------------------------------------------
      Le jour où vous aurez un backend, renseignez apiBase : il devient
      prioritaire sur appsScriptUrl et le site postera en JSON sur

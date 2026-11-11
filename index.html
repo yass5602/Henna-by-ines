@@ -229,15 +229,6 @@
     },
     {
       "@type": "Offer",
-      "price": "3",
-      "priceCurrency": "EUR",
-      "itemOffered": {
-        "@type": "Product",
-        "name": "Cône de henné naturel"
-      }
-    },
-    {
-      "@type": "Offer",
       "price": "30",
       "priceCurrency": "EUR",
       "itemOffered": {
@@ -268,6 +259,7 @@
 </script>
 
 <script src="./config.js"></script>
+<script src="./cart.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -330,6 +322,14 @@
   strong.prix{font-size:22px!important;vertical-align:0}
   /* sur le fond brun, la calligraphie a besoin d'un ton plus clair pour ressortir */
   #produits .prix{color:#EFCF9C!important}
+  .panier-ico{display:none;font-size:18px;line-height:1}
+  @media (max-width:520px){
+    .panier-txt{display:none} .panier-ico{display:inline}
+    /* téléphone : le panier devient une pastille carrée avec le nombre d'articles en coin, pour que l'en-tête tienne sur une ligne */
+    .panier-btn{position:relative;width:46px;padding:0!important;justify-content:center}
+    .panier-btn [data-cart-count]{position:absolute;top:-7px;right:-7px;min-width:20px!important;height:20px!important;line-height:20px!important;padding:0 5px!important;font-size:11px!important}
+    .hdr-actions{gap:10px!important}
+  }
   @keyframes hslide{from{transform:translateX(100%)}to{transform:translateX(0)}}
   @keyframes hfade{from{opacity:0}to{opacity:1}}
 </style>
@@ -347,6 +347,7 @@
         </span>
       </a>
 
+      <div class="hdr-actions" style="display:flex;align-items:center;gap:18px">
       <nav data-desktop-only style="display:flex;align-items:center;gap:30px">
         <a href="#accueil" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Home</a>
         <a href="#realisations" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Nos Réalisations</a>
@@ -354,12 +355,14 @@
         <a href="#contact" style="font-size:14.5px;letter-spacing:.06em;color:#241A14">Contact</a>
         <a href="#rdv" style="background:#241A14;color:#FBF4EB;padding:12px 22px;border-radius:999px;font-size:14px;letter-spacing:.08em;text-transform:uppercase" style-hover="background:#A8542A">Prendre RDV</a>
       </nav>
+      <a href="commande.html" class="panier-btn" data-cart-link aria-label="Voir mon panier" style="display:flex;align-items:center;gap:8px;height:46px;padding:0 16px;border:1px solid rgba(36,26,20,0.18);border-radius:999px;color:#241A14;font-size:13px;letter-spacing:.08em;text-transform:uppercase" style-hover="background:rgba(168,84,42,0.1)"><span class="panier-txt">Panier</span><span class="panier-ico" aria-hidden="true">🛒</span><span data-cart-count style="display:none;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#A8542A;color:#FBF4EB;font-size:12px;line-height:22px;text-align:center;letter-spacing:0">0</span></a>
 
       <button data-mobile-only onClick="{{ toggleMenu }}" aria-label="Menu" style="display:none;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid rgba(36,26,20,0.18);background:transparent;border-radius:12px;cursor:pointer;flex-direction:column;gap:5px">
         <span style="display:block;width:20px;height:1.6px;background:#241A14"></span>
         <span style="display:block;width:20px;height:1.6px;background:#241A14"></span>
         <span style="display:block;width:20px;height:1.6px;background:#241A14"></span>
       </button>
+      </div>
     </div>
   </header>
 
@@ -374,7 +377,8 @@
         <a href="#realisations" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Nos Réalisations</a>
         <a href="#produits" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Nos produits</a>
         <a href="#rdv" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Prendre RDV</a>
-        <a href="#contact" onClick="{{ closeMenu }}" style="padding:14px 0;color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Contact</a>
+        <a href="#contact" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid rgba(36,26,20,0.08);color:#241A14;font-family:'Cormorant Garamond',serif;font-size:24px">Contact</a>
+        <a href="commande.html" data-cart-link style="padding:14px 0;color:#A8542A;font-family:'Cormorant Garamond',serif;font-size:24px;display:flex;align-items:center;gap:10px">Mon panier <span data-cart-count style="display:none;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#A8542A;color:#FBF4EB;font-size:12px;line-height:22px;text-align:center;font-family:Jost,sans-serif">0</span></a>
         <a href="#rdv" onClick="{{ closeMenu }}" style="margin-top:22px;text-align:center;background:#241A14;color:#FBF4EB;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase">Réserver ma date</a>
       </nav>
     </div>
@@ -481,32 +485,20 @@
             <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:12px 0 0">Une couleur intense et bien foncée qui se développe progressivement après application. La texture est lisse, agréable et souple, parfaite pour les motifs fins. Un henné naturel pensé pour celles qui recherchent finesse, fraîcheur et intensité de couleur.</p>
             <p style="font-size:15px;line-height:1.7;color:rgba(251,244,235,0.7);margin:16px 0 0"><strong style="color:#FBF4EB;font-weight:500">Poids :</strong> chaque cône contient environ 20 à 25 g de henné et permet de réaliser en moyenne 9 à 10 motifs, selon leur taille, leur finesse et la quantité de henné utilisée.</p>
 
-            <div style="margin-top:24px">
-              <div style="font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#C58B3E;margin-bottom:12px">Formulation</div>
-              <div style="display:flex;gap:12px;flex-wrap:wrap">
-                <button onClick="{{ pickOil }}" data-oil="avec" style="flex:1;min-width:170px;text-align:left;cursor:pointer;padding:16px 18px;border-radius:14px;border:1px solid rgba(251,244,235,0.2);background:transparent;color:#FBF4EB;font-size:15px">Avec huile essentielle</button>
-                <button onClick="{{ pickOil }}" data-oil="sans" style="flex:1;min-width:170px;text-align:left;cursor:pointer;padding:16px 18px;border-radius:14px;border:1px solid rgba(251,244,235,0.2);background:transparent;color:#FBF4EB;font-size:15px">Sans huile essentielle</button>
-              </div>
-              <div style="margin-top:12px;font-size:13.5px;color:#C58B3E">Sélection : {{ oilLabel }}</div>
-            </div>
+            <p style="margin-top:24px;font-size:13.5px;line-height:1.6;color:#C58B3E">Les cônes se vendent par lot de 10, pas à l'unité. Le choix « avec / sans huile essentielle » se fait dans votre panier. Livraison Colissimo : 7,59 €.</p>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px;align-items:start">
-              <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
-                <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">3 €</div>
-                <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">le cône à l'unité</div>
-                <button onClick="{{ order }}" data-sku="cone-1" data-label="1 cône" data-price="3" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
-              </div>
               <div style="border:1px solid rgba(197,139,62,0.5);border-radius:14px;padding:18px;background:rgba(197,139,62,0.1)">
                 <img src="image/cone/cone-2.jpeg" alt="Lot de 10 cônes de henné" class="photo" loading="lazy" style="border-radius:10px;margin-bottom:14px">
                 <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">30 €</div>
                 <div style="font-size:13px;color:rgba(251,244,235,0.78);margin-bottom:14px">10 cônes — le 11ᵉ offert</div>
-                <button onClick="{{ order }}" data-sku="cone-10" data-label="10 cônes + 1 offert" data-price="30" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                <button type="button" data-add-to-cart="cone-10" style="display:block;text-align:center;width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
               </div>
               <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
-                <img src="image/cone/coffret-cone-4.jpeg" alt="Lot de 10 cônes de henné" class="photo" loading="lazy" style="border-radius:10px;margin-bottom:14px">
+                <img src="image/cone/coffret-cone-4.jpeg" alt="Box débutante : cônes de henné, huile et spray révélateur" class="photo" loading="lazy" style="border-radius:10px;margin-bottom:14px">
                 <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">15 €</div>
                 <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">Box débutante : 5 cônes, une huile, un spray révélateur</div>
-                <button onClick="{{ order }}" data-sku="box-debutante" data-label="Box débutante" data-price="15" style="width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                <button type="button" data-add-to-cart="box-debutante" style="display:block;text-align:center;width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
               </div>
             </div>
             <p style="font-size:13.5px;line-height:1.6;color:rgba(251,244,235,0.62);margin:22px 0 0;border-top:1px solid rgba(251,244,235,0.14);padding-top:16px">Précaution : ces cônes contiennent des huiles essentielles qui peuvent être déconseillées pour les femmes enceintes, allaitantes, les enfants de moins de 5 ans ou les personnes allergiques.</p>
@@ -521,18 +513,19 @@
               <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:14px 0 0">Une poudre fine et soigneusement filtrée 5 fois, de henné naturel BAQ (Body Art Quality). Elle permet d'obtenir une belle coloration foncée après développement. Idéale pour préparer votre propre pâte et réaliser des motifs fins et précis.</p>
               <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:12px 0 0">La finesse de la poudre permet d'obtenir une pâte lisse, homogène et facile à travailler, adaptée aussi bien aux débutantes qu'aux personnes habituées à la pratique du henné.</p>
               <p style="font-size:15px;line-height:1.7;color:rgba(251,244,235,0.7);margin:14px 0 0"><strong style="color:#FBF4EB;font-weight:500">Poids :</strong> chaque sachet contient 100 g de poudre, idéal pour préparer plusieurs cônes et réaliser de nombreux motifs.</p>
+              <p style="font-size:13.5px;line-height:1.6;color:#C58B3E;margin:12px 0 0">Livraison Colissimo : 5,49 € jusqu'à 250 g, 7,59 € au-delà. 300 g de poudre maximum par commande.</p>
               <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
                   <span style="font-size:15px">100 g — <strong class="prix" style="font-weight:500;color:#C58B3E">8 €</strong></span>
-                  <button onClick="{{ order }}" data-sku="poudre-100" data-label="Poudre 100 g" data-price="8" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                  <button type="button" data-add-to-cart="poudre-100" style="display:inline-block;text-align:center;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
                   <span style="font-size:15px">Pack 2 × 100 g — <strong class="prix" style="font-weight:500;color:#C58B3E">14,90 €</strong></span>
-                  <button onClick="{{ order }}" data-sku="poudre-200" data-label="Pack 2 × 100 g" data-price="14.9" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                  <button type="button" data-add-to-cart="poudre-200" style="display:inline-block;text-align:center;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:14px 16px">
                   <span style="font-size:15px">Pack 3 × 100 g — <strong class="prix" style="font-weight:500;color:#C58B3E">21,50 €</strong></span>
-                  <button onClick="{{ order }}" data-sku="poudre-300" data-label="Pack 3 × 100 g" data-price="21.5" style="cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Commander</button>
+                  <button type="button" data-add-to-cart="poudre-300" style="display:inline-block;text-align:center;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:10px 18px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
                 </div>
               </div>
             </div>

@@ -235,39 +235,76 @@ function handlePayment(d) {
    ========================================================================== */
 
 function handleOrder(d) {
-  const it = d.item || {};
-  const huile = it.options && it.options.huileEssentielle ? 'avec huile essentielle' : 'sans huile essentielle';
+  const contact = d.contact || {};
+  const who = ((contact.firstName || '') + ' ' + (contact.lastName || '')).trim();
+  // Compatible avec l'ancien format (modale) qui n'envoyait que customer.email.
+  const client = contact.email || (d.customer && d.customer.email) || null;
+
+  // Panier : d.items (liste). Ancien format : d.item (un seul produit).
+  const items = (d.items && d.items.length) ? d.items : (d.item ? [d.item] : []);
+  const devise = (items[0] && items[0].currency) || 'EUR';
+
+  const lignes = items.map(function (it) {
+    const qty = (it.qty && it.qty > 1) ? it.qty : 1;
+    const huile = it.options && it.options.huileEssentielle ? ' — avec huile essentielle' : ' — sans huile essentielle';
+    const prix = it.price != null ? ' = ' + (it.price * qty).toFixed(2) + ' ' + devise : '';
+    return qty + ' × ' + (it.label || '—') + (it.oilChoice ? huile : '') + prix;
+  });
+
+  const address = (d.address && (d.address.street || d.address.city))
+    ? [d.address.streetNumber, d.address.street].filter(String).join(' ') + ', ' + d.address.zip + ' ' + d.address.city
+    : null;
+
+  const shipping = d.shipping || {};
+  const sousTotal = d.subtotal != null ? d.subtotal
+    : items.reduce(function (s, it) { return s + (it.price || 0) * ((it.qty && it.qty > 1) ? it.qty : 1); }, 0);
+  const total = d.amount != null ? d.amount : sousTotal;
+  const portTxt = shipping.free ? 'offerte' : (shipping.fee != null ? Number(shipping.fee).toFixed(2) + ' ' + devise : '—');
+  const titre = items.length > 1 ? (items.length + ' articles') : ((items[0] && items[0].label) || 'produit');
+
   const corps = [
     'NOUVELLE COMMANDE',
     '',
-    'Produit   : ' + (it.label || '—') + ' (' + (it.sku || '—') + ')',
-    'Prix      : ' + it.price + ' ' + (it.currency || 'EUR'),
-    'Option    : ' + huile,
-    'Reçue le  : ' + fmtDate(new Date(d.createdAt || Date.now())),
+    who ? ('Cliente    : ' + who) : null,
+    'E-mail     : ' + (client || '—'),
+    contact.phone ? ('Téléphone  : ' + contact.phone) : null,
+    address ? ('Livraison  : ' + address + ' (Colissimo)') : null,
+    '',
+    'Articles :'
+  ].concat(lignes.map(function (l) { return '   • ' + l; })).concat([
+    '',
+    'Sous-total : ' + Number(sousTotal).toFixed(2) + ' ' + devise,
+    'Livraison  : ' + portTxt,
+    'Total      : ' + Number(total).toFixed(2) + ' ' + devise,
+    d.promoCode ? ('Code promo : ' + d.promoCode) : null,
+    d.message ? ('Message    : ' + d.message) : null,
+    '',
+    'Reçue le   : ' + fmtDate(new Date(d.createdAt || Date.now())),
     '',
     'Le paiement PayPal est à vérifier sur votre compte.'
-  ].join('\n');
+  ]).filter(function (l) { return l !== null; }).join('\n');
 
-  const client = (d.customer && d.customer.email) || null;
-  notify('Commande — ' + (it.label || 'produit') + (client ? ' — ' + client : ''), corps, client);
+  notify('Commande — ' + titre + (client ? ' — ' + client : ''), corps, client);
 
   if (client) {
     confirmerAuClient(client,
-      'Votre commande — ' + (it.label || 'produit'),
+      'Votre commande — Henna by Inès',
       [
-        'Bonjour,',
+        'Bonjour' + (contact.firstName ? ' ' + contact.firstName : '') + ',',
         '',
         'Merci pour votre commande chez Henna by Inès. Voici le récapitulatif :',
+        ''
+      ].concat(lignes.map(function (l) { return '   • ' + l; })).concat([
         '',
-        '   Produit : ' + (it.label || '—'),
-        '   Montant : ' + it.price + ' ' + (it.currency || 'EUR'),
-        '   Option  : ' + huile,
+        '   Sous-total : ' + Number(sousTotal).toFixed(2) + ' ' + devise,
+        '   Livraison  : ' + portTxt + (shipping.free ? '' : ' (Colissimo)'),
+        '   Total      : ' + Number(total).toFixed(2) + ' ' + devise,
+        address ? ('   Adresse    : ' + address) : null,
         '',
-        'Votre commande sera préparée dès réception du paiement PayPal.',
-        'Nous revenons vers vous très vite pour la livraison ou le retrait.',
+        'Votre commande sera préparée et expédiée en Colissimo dès réception du paiement PayPal.',
         '',
         'Une question ? Répondez simplement à cet e-mail.'
-      ].join('\n'));
+      ]).filter(function (l) { return l !== null; }).join('\n'));
   }
 
   return { ok: true, orderId: 'CMD-' + Date.now() };

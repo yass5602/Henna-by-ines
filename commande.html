@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>Mon panier — Henna by Inès</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Votre panier et votre commande : cônes de henné naturel, box débutante et poudre BAQ du Rajasthan, livraison Colissimo, Henna by Inès.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://hennabyines.ch/commande.html">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="image/logo/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="image/logo/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="image/logo/favicon-48x48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="image/logo/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FBF4EB;color:#241A14;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:url("image/motif/motif-floral.jpg") repeat;background-size:560px auto;opacity:.5}
+  a{color:#A8542A}
+  a:hover{color:#1F6B5E}
+  header{position:sticky;top:0;z-index:10;background:rgba(251,244,235,0.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,26,20,0.1)}
+  .bar{max-width:760px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px}
+  .bar img{width:48px;height:48px;object-fit:cover;border-radius:50%;border:1px solid rgba(165,84,42,0.35)}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;text-decoration:none;color:#241A14}
+  .sub{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:#A8542A}
+
+  main{max-width:760px;margin:0 auto;padding:44px 20px 80px}
+  .retour{display:inline-block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#A8542A;text-decoration:none;margin-bottom:18px}
+  .kicker{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:26px;color:#A8542A;line-height:1.2;display:inline-block;
+    background:rgba(251,244,235,0.78);border-radius:999px;box-shadow:0 0 0 8px rgba(251,244,235,0.78)}
+  h1{font-family:'Ballet',cursive;font-weight:400;font-size:clamp(40px,6vw,58px);margin:12px 0 26px;line-height:1.3;
+    background:rgba(251,244,235,0.78);border-radius:12px;box-shadow:0 0 0 8px rgba(251,244,235,0.78);display:inline-block}
+
+  .carte{background:#fff;border:1px solid rgba(36,26,20,0.1);border-radius:22px;padding:26px;margin-bottom:22px}
+  .produit-nom{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;margin:0 0 4px}
+  .produit-prix{color:#A8542A;font-size:16px;margin:0 0 20px}
+
+  .ligne{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:16px 0}
+  .label-champ{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65)}
+
+  .stepper{display:flex;align-items:center;gap:0;border:1px solid rgba(36,26,20,0.2);border-radius:999px;overflow:hidden}
+  .stepper button{width:40px;height:40px;border:none;background:transparent;font-size:18px;cursor:pointer;color:#241A14}
+  .stepper button:hover{background:rgba(168,84,42,0.1)}
+  .stepper input{width:46px;text-align:center;border:none;border-left:1px solid rgba(36,26,20,0.15);border-right:1px solid rgba(36,26,20,0.15);height:40px;font-size:15px;color:#241A14;background:transparent}
+
+  .oil-choix{display:flex;gap:10px;flex-wrap:wrap}
+  .oil-choix label{flex:1;min-width:160px;display:flex;align-items:center;gap:8px;padding:12px 14px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;font-size:14px;cursor:pointer}
+  .oil-choix input{accent-color:#A8542A}
+
+  .total-detail{border-top:1px solid rgba(36,26,20,0.1);margin-top:18px;padding-top:16px;font-size:14.5px}
+  .total-detail .ligne{margin:8px 0;font-size:14.5px;color:rgba(36,26,20,0.75)}
+  .total-detail .total-final{font-size:22px;font-family:'Cormorant Garamond',serif;color:#241A14;font-weight:600}
+  .note-livraison{font-size:13px;color:rgba(36,26,20,0.6);margin-top:4px}
+
+  label.champ{display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(36,26,20,0.65);margin-bottom:16px}
+  label.champ input,label.champ textarea{padding:14px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;background:#fff;font-size:16px;color:#241A14;text-transform:none;letter-spacing:normal;font-family:inherit}
+  .grille-2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+  .grille-adresse{display:grid;grid-template-columns:120px 1fr;gap:0 14px}
+  @media (max-width:560px){ .grille-2,.grille-adresse{grid-template-columns:1fr} }
+
+  button.principal{width:100%;cursor:pointer;background:#241A14;color:#FBF4EB;border:none;padding:18px;border-radius:999px;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+  button.principal:hover{background:#A8542A}
+  button.principal:disabled{opacity:.55;cursor:default}
+
+  .paypal-bouton{display:flex;align-items:center;justify-content:center;gap:10px;background:#0070BA;color:#fff;padding:16px;border-radius:999px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
+  .paypal-bouton:hover{background:#003087;color:#fff}
+  .confirmer-btn{width:100%;margin-top:14px;cursor:pointer;background:#1F6B5E;color:#FBF4EB;border:none;padding:15px;border-radius:999px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase}
+  .confirmer-btn:hover{background:#241A14}
+
+  .msg-erreur{font-size:13.5px;color:#A8542A;margin:-6px 0 14px}
+  .msg-ok{border:1px solid rgba(31,107,94,0.4);background:rgba(31,107,94,0.08);border-radius:16px;padding:20px;text-align:center}
+  .msg-ok .titre-ok{font-family:'Cormorant Garamond',serif;font-size:24px;color:#1F6B5E;margin-bottom:6px}
+
+  footer{background:#241A14;color:rgba(251,244,235,0.72);padding:40px 20px}
+  .fin{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px;align-items:center}
+  .fin a{color:rgba(251,244,235,0.72);text-decoration:none}
+  .fin a:hover{color:#C58B3E}
+  .fin nav{display:flex;gap:20px;flex-wrap:wrap}
+
+  /* ---- panier ---- */
+  .panier-ligne{display:grid;grid-template-columns:1fr auto;gap:10px 18px;padding:18px 0;border-bottom:1px solid rgba(36,26,20,0.1)}
+  .panier-ligne:first-child{padding-top:0}
+  .panier-ligne:last-child{border-bottom:none;padding-bottom:0}
+  .pl-nom{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;line-height:1.25;margin:0}
+  .pl-prix{font-size:14px;color:rgba(36,26,20,0.6);margin:2px 0 0}
+  .pl-total{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:#A8542A;text-align:right;white-space:nowrap}
+  .pl-actions{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .pl-huile{font-size:14px;padding:9px 12px;border:1px solid rgba(36,26,20,0.18);border-radius:10px;background:#fff;color:#241A14;font-family:inherit;max-width:100%}
+  .btn-retirer{border:none;background:transparent;color:#A8542A;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px 2px;font-family:inherit}
+  .btn-retirer:hover{color:#1F6B5E}
+  .stepper button:disabled{opacity:.3;cursor:default}
+  .stepper .qte{width:46px;text-align:center;font-size:15px;line-height:40px;border-left:1px solid rgba(36,26,20,0.15);border-right:1px solid rgba(36,26,20,0.15)}
+  .regles{font-size:13px;line-height:1.6;color:rgba(36,26,20,0.62);margin:18px 0 0;padding-top:14px;border-top:1px dashed rgba(36,26,20,0.15)}
+  .poids{display:inline-block;margin-top:10px;font-size:13px;color:#1F6B5E;background:rgba(31,107,94,0.09);border-radius:999px;padding:4px 12px}
+  .promo{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .promo input{flex:1;min-width:160px;padding:13px 16px;border:1px solid rgba(36,26,20,0.18);border-radius:12px;font-size:15px;font-family:inherit;background:#f4ede3;color:rgba(36,26,20,0.5)}
+  .promo button{padding:13px 22px;border-radius:999px;border:1px solid rgba(36,26,20,0.25);background:transparent;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(36,26,20,0.45);cursor:not-allowed;font-family:inherit}
+  .titre-carte{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin:0 0 4px}
+  .nav-panier{margin-left:auto;font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:#241A14;border:1px solid rgba(36,26,20,0.2);padding:10px 18px;border-radius:999px}
+  .recap{margin:0 0 16px;padding:0;list-style:none;font-size:14.5px;color:rgba(36,26,20,0.8)}
+  .recap li{display:flex;justify-content:space-between;gap:14px;padding:6px 0;border-bottom:1px solid rgba(36,26,20,0.08)}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a href="index.html"><img src="image/logo/LOGO.jpeg" alt="Henna by Inès"></a>
+    <span>
+      <a class="brand" href="index.html">Henna by Inès</a><br>
+      <span class="sub">Hennaya</span>
+    </span>
+    <a class="nav-panier" href="index.html#produits">Boutique</a>
+  </div>
+</header>
+
+<main>
+  <a class="retour" href="index.html#produits">&larr; Continuer mes achats</a>
+
+  <!-- Panier vide -->
+  <div id="zone-vide" hidden>
+    <span class="kicker">Mon panier</span>
+    <h1>Votre panier est vide</h1>
+    <p style="background:rgba(251,244,235,0.8);display:inline-block;border-radius:8px;box-shadow:0 0 0 6px rgba(251,244,235,0.8)">Ajoutez des cônes, une box ou de la poudre depuis la <a href="index.html#produits">boutique</a>, puis revenez ici pour finaliser votre commande.</p>
+  </div>
+
+  <div id="zone-commande" hidden>
+    <span class="kicker">Mon panier</span>
+    <h1>Finalisez votre commande</h1>
+
+    <!-- 1. Le panier -->
+    <div id="bloc-panier">
+      <div class="carte">
+        <p class="titre-carte">Mes articles</p>
+        <div id="lignes"></div>
+        <span class="poids" id="poids" hidden></span>
+        <p class="regles">
+          Cônes vendus par lot de 10 (le 11ᵉ offert), à partir de 10 cônes — pas de vente à l'unité.<br>
+          Poudre : 300 g maximum par commande.
+        </p>
+      </div>
+
+      <div class="carte">
+        <p class="titre-carte">Code promo</p>
+        <p style="margin:0;font-size:13.5px;color:rgba(36,26,20,0.6)">Les codes promo arrivent bientôt.</p>
+        <div class="promo">
+          <input type="text" id="promo-code" placeholder="Code promo" disabled aria-label="Code promo (bientôt disponible)">
+          <button type="button" id="promo-btn" disabled>Appliquer</button>
+        </div>
+      </div>
+
+      <div class="carte">
+        <div class="total-detail" style="border-top:none;margin-top:0;padding-top:0">
+          <div class="ligne"><span>Sous-total</span><span id="total-sous"></span></div>
+          <div class="ligne"><span id="lib-livraison">Livraison (Colissimo)</span><span id="total-livraison"></span></div>
+          <div class="ligne"><span class="total-final">Total</span><span class="total-final" id="total-final"></span></div>
+          <p class="note-livraison" id="note-livraison"></p>
+        </div>
+      </div>
+
+      <!-- 2. Coordonnées -->
+      <form id="form-commande" class="carte">
+        <p class="titre-carte" style="margin-bottom:16px">Mes coordonnées</p>
+        <div class="grille-2">
+          <label class="champ">Nom
+            <input type="text" name="lastName" required placeholder="Votre nom" autocomplete="family-name">
+          </label>
+          <label class="champ">Prénom
+            <input type="text" name="firstName" required placeholder="Votre prénom" autocomplete="given-name">
+          </label>
+          <label class="champ">E-mail
+            <input type="email" name="email" required placeholder="vous@email.com" autocomplete="email">
+          </label>
+          <label class="champ">Téléphone
+            <input type="tel" name="phone" required placeholder="06 00 00 00 00" autocomplete="tel">
+          </label>
+        </div>
+
+        <div class="grille-adresse">
+          <label class="champ">N° de rue
+            <input type="text" name="streetNumber" required placeholder="N°" autocomplete="off">
+          </label>
+          <label class="champ">Nom de la rue
+            <input type="text" name="street" required placeholder="Nom de la rue" autocomplete="address-line1">
+          </label>
+          <label class="champ">Code postal
+            <input type="text" name="zip" required placeholder="Code postal" autocomplete="postal-code">
+          </label>
+          <label class="champ">Ville
+            <input type="text" name="city" required placeholder="Ville" autocomplete="address-level2">
+          </label>
+        </div>
+
+        <label class="champ">Message (optionnel)
+          <textarea name="message" rows="3" placeholder="Une précision pour votre commande ou votre livraison…" style="resize:vertical"></textarea>
+        </label>
+
+        <p class="msg-erreur" id="form-erreur" hidden></p>
+        <button type="submit" class="principal" id="btn-valider">Valider ma commande</button>
+      </form>
+    </div>
+
+    <!-- 3. Paiement -->
+    <div id="zone-paiement" class="carte" hidden>
+      <p class="titre-carte" style="margin-bottom:12px">Votre commande</p>
+      <ul class="recap" id="recap"></ul>
+      <p style="margin:0 0 16px;font-size:15px;color:rgba(36,26,20,0.78)" id="paiement-intro"></p>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px">
+        <span style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(36,26,20,0.55)">Montant à régler</span>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#A8542A" id="paiement-montant"></span>
+      </div>
+      <a href="#" id="lien-paypal" class="paypal-bouton" target="_blank" rel="noopener">Payer avec PayPal</a>
+      <p style="margin:14px 0 0;font-size:12.5px;line-height:1.6;color:rgba(36,26,20,0.6);text-align:center">PayPal s'ouvre dans un nouvel onglet. Revenez ici une fois le paiement effectué.</p>
+      <button type="button" class="confirmer-btn" id="btn-confirmer-paiement">J'ai effectué le paiement</button>
+    </div>
+
+    <div id="zone-merci" class="carte msg-ok" hidden>
+      <div class="titre-ok">Merci pour votre commande ✓</div>
+      <p style="margin:0;font-size:14px;line-height:1.6;color:rgba(36,26,20,0.75)">Votre commande est enregistrée. Nous revenons vers vous par e-mail après vérification du paiement, puis nous l'expédions en Colissimo.</p>
+      <p style="margin:14px 0 0"><a href="index.html">Retour à l'accueil</a></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="fin">
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="index.html#produits">Boutique</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="confidentialite.html">Confidentialité</a>
+    </nav>
+    <span>
+      © 2026 Henna by Inès —
+      <a href="https://yasify.site/?utm_medium=company_profile&amp;utm_source=trustpilot&amp;utm_campaign=domain_click" target="_blank" rel="noopener">2026 by Yasify</a>
+    </span>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="cart.js"></script>
+<script>
+(function () {
+  var CFG = window.HENNA_CONFIG || {};
+  var SHIP = CFG.shipping || {};
+  var CURRENCY = CFG.currency || 'EUR';
+  var Cart = window.HennaCart;
+
+  function $(id) { return document.getElementById(id); }
+  function euro(n) { return Number(n).toFixed(2).replace('.', ',') + ' €'; }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var locked = false;     // vrai une fois la commande validée : le panier n'est plus modifiable
+
+  /* ---------- affichage du panier ---------- */
+  function render() {
+    if (locked) return;
+    var c = Cart.compute();
+    $('zone-vide').hidden = c.count > 0;
+    $('zone-commande').hidden = c.count === 0;
+    if (!c.count) return;
+
+    var html = '';
+    c.lines.forEach(function (l) {
+      var unite = l.kind === 'cone' ? ' / lot de 10' : '';
+      var plusOff = (l.kind === 'poudre' && (c.grams + l.grams > Cart.powderMax)) ||
+                    (l.kind !== 'poudre' && l.qty >= Cart.lineMax);
+      html += '<div class="panier-ligne" data-key="' + esc(l.key) + '">' +
+        '<div><p class="pl-nom">' + esc(l.label) + '</p>' +
+        '<p class="pl-prix">' + euro(l.price) + unite + '</p></div>' +
+        '<div class="pl-total">' + euro(l.total) + '</div>' +
+        '<div class="pl-actions">' +
+          '<div class="stepper">' +
+            '<button type="button" data-act="moins" aria-label="Diminuer la quantité">−</button>' +
+            '<span class="qte" aria-label="Quantité">' + l.qty + '</span>' +
+            '<button type="button" data-act="plus" aria-label="Augmenter la quantité"' + (plusOff ? ' disabled' : '') + '>+</button>' +
+          '</div>' +
+          (l.oilChoice
+            ? '<select class="pl-huile" data-act="huile" aria-label="Formulation">' +
+                '<option value="avec"' + (l.oil === 'avec' ? ' selected' : '') + '>Avec huile essentielle</option>' +
+                '<option value="sans"' + (l.oil === 'sans' ? ' selected' : '') + '>Sans huile essentielle</option>' +
+              '</select>'
+            : '') +
+          '<button type="button" class="btn-retirer" data-act="retirer">Retirer</button>' +
+        '</div></div>';
+    });
+    $('lignes').innerHTML = html;
+
+    var poids = $('poids');
+    if (c.grams > 0) {
+      poids.hidden = false;
+      poids.textContent = 'Poudre : ' + c.grams + ' g sur ' + Cart.powderMax + ' g maximum';
+    } else {
+      poids.hidden = true;
+    }
+
+    $('total-sous').textContent = euro(c.subtotal);
+    $('total-livraison').textContent = c.shipping.free ? 'Offerte' : euro(c.shipping.fee);
+    $('total-final').textContent = euro(c.total);
+    var note = '';
+    if (c.shipping.tier === 'light') {
+      note = 'Poudre jusqu\'à ' + SHIP.lightMaxGrams + ' g : livraison ' + euro(SHIP.light) + '. Au-delà de ' + SHIP.lightMaxGrams + ' g, ou avec des cônes ou une box : ' + euro(SHIP.standard) + '.';
+    } else if (c.shipping.tier === 'standard') {
+      note = 'Livraison Colissimo ' + euro(SHIP.standard) + ' pour votre colis.';
+    } else if (c.shipping.free) {
+      note = 'Livraison offerte.';
+    }
+    if (SHIP.freeFrom != null && !c.shipping.free) {
+      note += ' Livraison offerte dès ' + euro(SHIP.freeFrom) + ' d\'achat.';
+    }
+    $('note-livraison').textContent = note;
+  }
+
+  $('lignes').addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-act]') : null;
+    if (!b || b.tagName === 'SELECT') return;
+    var row = b.closest('.panier-ligne');
+    var key = row.getAttribute('data-key');
+    var line = Cart.compute().lines.filter(function (l) { return l.key === key; })[0];
+    if (!line) return;
+    var act = b.getAttribute('data-act');
+    var res = { ok: true };
+    if (act === 'plus') res = Cart.setQty(key, line.qty + 1);
+    if (act === 'moins') res = Cart.setQty(key, line.qty - 1);
+    if (act === 'retirer') Cart.remove(key);
+    if (res && !res.ok && res.reason) Cart.toast(res.reason, true);
+    render();
+  });
+  $('lignes').addEventListener('change', function (e) {
+    var s = e.target;
+    if (s.getAttribute('data-act') !== 'huile') return;
+    Cart.setOil(s.closest('.panier-ligne').getAttribute('data-key'), s.value);
+    render();
+  });
+  window.addEventListener('storage', function () { render(); });   // panier modifié dans un autre onglet
+
+  /* ---------- envoi au backend (Apps Script), même logique que le reste du site ---------- */
+  function envoyer(payload) {
+    var body = JSON.stringify(payload);
+    if (CFG.apiBase) {
+      return fetch(CFG.apiBase.replace(/\/+$/, '') + '/api/orders', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body
+      }).then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); });
+    }
+    if (CFG.appsScriptUrl) {
+      return fetch(CFG.appsScriptUrl, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: body, redirect: 'follow'
+      }).then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); });
+    }
+    console.info('[HENNA] Mode démo — aucun backend configuré, commande non envoyée :', payload);
+    return Promise.resolve({ ok: true, mocked: true });
+  }
+
+  function paypalUrl(amount) {
+    var p = CFG.paypal || {};
+    if (p.me) {
+      var handle = String(p.me)
+        .replace(/^https?:\/\/(www\.)?paypal\.(me|com\/paypalme)\//i, '')
+        .replace(/^@/, '').replace(/\/+$/, '');
+      return 'https://www.paypal.com/paypalme/' + encodeURIComponent(handle) + '/' + Number(amount).toFixed(2) + CURRENCY;
+    }
+    if (p.businessEmail) {
+      var q = new URLSearchParams({
+        cmd: '_xclick', business: p.businessEmail, item_name: 'Commande Henna by Inès',
+        amount: Number(amount).toFixed(2), currency_code: CURRENCY, no_shipping: '0'
+      });
+      return 'https://www.paypal.com/cgi-bin/webscr?' + q.toString();
+    }
+    return '';
+  }
+
+  function ligneTexte(l) {
+    var t = l.qty + ' × ' + l.label;
+    if (l.oilChoice) t += ' — ' + (l.oil === 'avec' ? 'avec' : 'sans') + ' huile essentielle';
+    return t;
+  }
+
+  var form = $('form-commande');
+  var btnValider = $('btn-valider');
+  var erreurEl = $('form-erreur');
+  var commandeRef = null;
+  var dernierTotal = 0;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    erreurEl.hidden = true;
+    var c = Cart.compute();
+    if (!c.count) { render(); return; }
+
+    var f = new FormData(form);
+    var email = String(f.get('email') || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      erreurEl.textContent = 'Merci d\'indiquer une adresse e-mail valide.';
+      erreurEl.hidden = false;
+      return;
+    }
+
+    btnValider.disabled = true;
+    btnValider.textContent = 'Envoi en cours…';
+
+    var items = c.lines.map(function (l) {
+      return {
+        sku: l.sku, label: l.label, price: l.price, qty: l.qty, currency: CURRENCY,
+        oilChoice: l.oilChoice,
+        options: l.oilChoice ? { huileEssentielle: l.oil === 'avec' } : undefined
+      };
+    });
+
+    var payload = {
+      type: 'order',
+      contact: { lastName: f.get('lastName'), firstName: f.get('firstName'), email: email, phone: f.get('phone') },
+      address: { streetNumber: f.get('streetNumber'), street: f.get('street'), zip: f.get('zip'), city: f.get('city') },
+      items: items,
+      // Résumé sur une ligne : lu par les anciennes versions du script Google qui ne connaissent pas encore « items ».
+      item: { sku: 'panier', label: c.lines.map(ligneTexte).join(' ; '), price: c.subtotal, qty: 1, currency: CURRENCY, oilChoice: false },
+      promoCode: null,
+      subtotal: c.subtotal,
+      shipping: { carrier: 'Colissimo', fee: c.shipping.fee, free: c.shipping.free, tier: c.shipping.tier },
+      amount: c.total,
+      message: f.get('message') || null,
+      createdAt: new Date().toISOString()
+    };
+
+    envoyer(payload).then(function (res) {
+      btnValider.disabled = false;
+      btnValider.textContent = 'Valider ma commande';
+      if (res && res.ok === false) {
+        erreurEl.textContent = 'L\'envoi a échoué. Réessayez, ou écrivez-nous à henna.by.ines15@gmail.com.';
+        erreurEl.hidden = false;
+        return;
+      }
+      commandeRef = res && res.orderId;
+      dernierTotal = c.total;
+      locked = true;
+
+      $('bloc-panier').hidden = true;
+      var recap = c.lines.map(function (l) {
+        return '<li><span>' + esc(ligneTexte(l)) + '</span><span>' + euro(l.total) + '</span></li>';
+      }).join('') +
+        '<li><span>Livraison Colissimo</span><span>' + (c.shipping.free ? 'Offerte' : euro(c.shipping.fee)) + '</span></li>';
+      $('recap').innerHTML = recap;
+
+      $('zone-paiement').hidden = false;
+      $('paiement-intro').textContent =
+        'Commande enregistrée pour ' + (f.get('firstName') || '') + '. Réglez le montant ci-dessous pour confirmer l\'expédition.'
+        + (res && res.mocked ? ' (mode démonstration : le backend n\'est pas encore branché, rien n\'a été envoyé)' : '');
+      $('paiement-montant').textContent = euro(dernierTotal);
+      var lien = $('lien-paypal');
+      var url = paypalUrl(dernierTotal);
+      if (url) {
+        lien.href = url;
+      } else {
+        lien.style.display = 'none';
+        $('paiement-intro').textContent += ' ⚠️ Le compte PayPal n\'est pas encore configuré (HENNA_CONFIG.paypal.me dans config.js).';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }).catch(function (err) {
+      console.error('[HENNA] échec de l\'envoi', err);
+      btnValider.disabled = false;
+      btnValider.textContent = 'Valider ma commande';
+      erreurEl.textContent = 'L\'envoi a échoué. Réessayez, ou écrivez-nous à henna.by.ines15@gmail.com.';
+      erreurEl.hidden = false;
+    });
+  });
+
+  $('btn-confirmer-paiement').addEventListener('click', function () {
+    var b = $('btn-confirmer-paiement');
+    b.disabled = true;
+    b.textContent = 'Enregistrement…';
+    envoyer({
+      type: 'payment', kind: 'order', ref: commandeRef, amount: dernierTotal, currency: CURRENCY,
+      method: 'paypal', declaredBy: 'client', createdAt: new Date().toISOString()
+    }).then(function () {}, function () {}).then(function () {
+      Cart.clear();                       // la commande est partie : on vide le panier
+      $('zone-paiement').hidden = true;
+      $('zone-merci').hidden = false;
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
