@@ -143,7 +143,7 @@
         <div id="lignes"></div>
         <span class="poids" id="poids" hidden></span>
         <p class="regles">
-          Cônes vendus par lot de 10 (le 11ᵉ offert), à partir de 10 cônes — pas de vente à l'unité.<br>
+          Frais de port calculés par offre (1 cône, lot de 10, box, poudre) : ils s'additionnent.<br>
           Poudre : 300 g maximum par commande.
         </p>
       </div>
@@ -278,7 +278,7 @@
 
     var html = '';
     c.lines.forEach(function (l) {
-      var unite = l.kind === 'cone' ? ' / lot de 10' : (l.kind === 'location' ? ' / article loué' : '');
+      var unite = (l.kind === 'location' ? ' / article loué' : '');
       var plusOff = (l.kind === 'poudre' && (c.grams + l.grams > Cart.powderMax)) ||
                     (l.kind !== 'poudre' && l.qty >= Cart.lineMax);
       html += '<div class="panier-ligne" data-key="' + esc(l.key) + '">' +
@@ -321,10 +321,13 @@
     var note = '';
     if (locOnly) {
       note = 'Les articles loués ne sont pas expédiés : nous convenons avec vous de la remise du matériel.';
-    } else if (c.shipping.tier === 'light') {
-      note = 'Poudre jusqu\'à ' + SHIP.lightMaxGrams + ' g : livraison ' + euro(SHIP.light) + '. Au-delà de ' + SHIP.lightMaxGrams + ' g, ou avec des cônes ou une box : ' + euro(SHIP.standard) + '.';
-    } else if (c.shipping.tier === 'standard') {
-      note = 'Livraison Colissimo ' + euro(SHIP.standard) + ' pour votre colis.';
+    } else if (c.shipping.tier === 'calc') {
+      var pts = c.shipping.parts;
+      note = pts.length > 1
+        ? 'Frais de port calculés par offre : ' + pts.map(function (g) {
+            return (g.qty > 1 && g.cones ? g.qty + ' × ' : '') + g.label + ' ' + euro(g.fee);
+          }).join(' + ') + '.'
+        : 'Livraison Colissimo ' + euro(c.shipping.fee) + ' pour ' + (pts[0].qty > 1 && pts[0].cones ? pts[0].qty + ' × ' : '') + pts[0].label + '.';
     } else if (c.shipping.free) {
       note = 'Livraison offerte.';
     }
@@ -442,7 +445,7 @@
       item: { sku: 'panier', label: c.lines.map(ligneTexte).join(' ; '), price: c.subtotal, qty: 1, currency: CURRENCY, oilChoice: false },
       promoCode: null,
       subtotal: c.subtotal,
-      shipping: { carrier: c.shipping.tier === 'location' ? 'Aucun (location, remise à convenir)' : 'Colissimo', fee: c.shipping.fee, free: c.shipping.free, tier: c.shipping.tier },
+      shipping: { carrier: c.shipping.tier === 'location' ? 'Aucun (location, remise à convenir)' : 'Colissimo', fee: c.shipping.fee, free: c.shipping.free, tier: c.shipping.tier, parts: c.shipping.parts },
       eventDate: c.hasRental ? (f.get('eventDate') || null) : null,
       hasRental: c.hasRental,
       amount: c.total,

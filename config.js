@@ -73,11 +73,14 @@ window.HENNA_CONFIG = {
   -------------------------------------------------------------------------- */
   /* kind   : "cone" | "box" | "poudre" (sert au calcul des frais de port)
      grams  : poids de poudre contenu (poudre uniquement)
-     La poudre est limitée à powderMaxGrams (300 g) par commande.
-     Les cônes ne se vendent plus à l'unité : on part du lot de 10 (le 11ᵉ offert). */
+     shipCones : nombre de cônes pris en compte dans la grille de frais de port (voir §5)
+                 — le lot de 10 compte 11 (le 11ᵉ est offert) ; la box compte 9 (cônes + huile + spray,
+                 ce qui donne 7,59 € pour une box).
+     La poudre est limitée à powderMaxGrams (300 g) par commande. */
   products: {
-    "cone-10":       { kind: "cone",   label: "Lot de 10 cônes de henné (le 11ᵉ offert)", price: 30,   oilChoice: true  },
-    "box-debutante": { kind: "box",    label: "Box débutante henné (5 cônes, huile, spray révélateur)", price: 15, oilChoice: true },
+    "cone-1":        { kind: "cone",   label: "1 cône de henné",                          price: 3,    shipCones: 1,  oilChoice: true  },
+    "cone-10":       { kind: "cone",   label: "Lot de 10 cônes de henné (le 11ᵉ offert)", price: 30,   shipCones: 11, oilChoice: true  },
+    "box-debutante": { kind: "box",    label: "Box débutante henné (5 cônes, huile, spray révélateur)", price: 15, shipCones: 9, oilChoice: true },
     "poudre-100":    { kind: "poudre", label: "Poudre de henné BAQ — 100 g",           price: 8,    grams: 100, oilChoice: false },
     "poudre-200":    { kind: "poudre", label: "Poudre de henné BAQ — Pack 2 × 100 g",  price: 14.9, grams: 200, oilChoice: false },
     "poudre-300":    { kind: "poudre", label: "Poudre de henné BAQ — Pack 3 × 100 g",  price: 21.5, grams: 300, oilChoice: false }
@@ -88,11 +91,15 @@ window.HENNA_CONFIG = {
   /* --------------------------------------------------------------------------
      5. LIVRAISON (Colissimo)
      --------------------------------------------------------------------------
-     Règle appliquée au panier (un seul colis) :
-       • poudre seule, jusqu'à lightMaxGrams (250 g)  ->  light  (5,49 €)
-       • tout le reste (cônes, box, poudre au-delà de 250 g, panier mixte)
-                                                      ->  standard (7,59 €)
+     Les frais sont calculés OFFRE PAR OFFRE puis additionnés :
+       • chaque offre de cônes (1 cône, lot de 10, box) : la grille coneTiers
+         ci-dessous s'applique au nombre de cônes de cette offre
+         (quantité × shipCones). Exemple : 1 box (7,59 €) + 1 lot de 10
+         cônes (7,59 €) = 15,18 € de frais de port.
+       • poudre (toutes les poudres ensemble) : jusqu'à lightMaxGrams (250 g)
+         -> light (5,49 €), au-delà -> standard (7,59 €).
      Les tarifs se changent ici, la page de commande recalcule tout.
+     coneTiers : « max » = nombre de cônes maximum de la tranche, « fee » = frais.
 
      freeFrom -> montant du panier (hors frais de port) à partir duquel la
                  livraison est offerte. Seuil pas encore connu : null = jamais
@@ -102,6 +109,17 @@ window.HENNA_CONFIG = {
     light: 5.49,
     standard: 7.59,
     lightMaxGrams: 250,
+    coneTiers: [
+      { max: 8,    fee: 5.49 },
+      { max: 18,   fee: 7.59 },
+      { max: 28,   fee: 9.29 },
+      { max: 38,   fee: 9.59 },
+      { max: 78,   fee: 11.19 },
+      { max: 198,  fee: 17.39 },
+      { max: 398,  fee: 25.29 },
+      { max: 598,  fee: 31.99 },
+      { max: 1198, fee: 39.59 }
+    ],
     freeFrom: null
   },
 

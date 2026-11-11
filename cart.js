@@ -60,19 +60,41 @@
     return list.reduce(function (n, l) { return n + l.qty; }, 0);
   }
 
-  /* Frais de port d'un panier (un seul colis Colissimo).
-       poudre seule jusqu'à 250 g -> tarif « light » (5,49 €)
-       tout le reste              -> tarif « standard » (7,59 €) */
+  /* Frais de port d'un panier : calculés OFFRE PAR OFFRE, puis additionnés.
+       • cônes / box : la grille Colissimo de config.js (shipping.coneTiers) s'applique au nombre de
+         cônes de CHAQUE offre (quantité × shipCones). Ex. : 1 box (7,59 €) + 1 lot de 10 cônes (7,59 €) = 15,18 €.
+       • poudre (toutes les poudres ensemble) : jusqu'à 250 g -> 5,49 €, au-delà -> 7,59 €.
+       • location : jamais de colis. */
+  function coneFee(n) {
+    var tiers = SHIP.coneTiers || [];
+    for (var i = 0; i < tiers.length; i++) if (n <= tiers[i].max) return tiers[i].fee;
+    return tiers.length ? tiers[tiers.length - 1].fee : (SHIP.standard || 0);
+  }
+
   function shippingFor(list, subtotal) {
-    if (!list.length) return { fee: 0, free: false, tier: null };
-    // Les locations ne partent pas en colis : seuls les autres articles comptent pour la livraison.
+    if (!list.length) return { fee: 0, free: false, tier: null, parts: [] };
     var colis = list.filter(function (l) { return PRODUCTS[l.sku].kind !== 'location'; });
-    if (!colis.length) return { fee: 0, free: false, tier: 'location' };
+    if (!colis.length) return { fee: 0, free: false, tier: 'location', parts: [] };
     var subColis = colis.reduce(function (s, l) { return s + PRODUCTS[l.sku].price * l.qty; }, 0);
-    if (SHIP.freeFrom != null && subColis >= SHIP.freeFrom) return { fee: 0, free: true, tier: 'free' };
-    var onlyPowder = colis.every(function (l) { return PRODUCTS[l.sku].kind === 'poudre'; });
-    var light = onlyPowder && powderGrams(list) <= (SHIP.lightMaxGrams || 250);
-    return { fee: light ? SHIP.light : SHIP.standard, free: false, tier: light ? 'light' : 'standard' };
+    if (SHIP.freeFrom != null && subColis >= SHIP.freeFrom) return { fee: 0, free: true, tier: 'free', parts: [] };
+
+    var parts = [], bySku = {};
+    colis.forEach(function (l) {
+      var p = PRODUCTS[l.sku];
+      if (p.kind === 'poudre') return;
+      var g = bySku[l.sku];
+      if (!g) { g = bySku[l.sku] = { sku: l.sku, label: shortLabel(p.label), qty: 0, cones: 0 }; parts.push(g); }
+      g.qty += l.qty;
+      g.cones += l.qty * (p.shipCones || 1);
+    });
+    parts.forEach(function (g) { g.fee = coneFee(g.cones); });
+    var grams = powderGrams(colis);
+    if (grams > 0) {
+      parts.push({ sku: 'poudre', label: 'Poudre de henné (' + grams + ' g)', qty: 1, cones: 0,
+        fee: grams <= (SHIP.lightMaxGrams || 250) ? SHIP.light : SHIP.standard });
+    }
+    var fee = Math.round(parts.reduce(function (s, g) { return s + g.fee; }, 0) * 100) / 100;
+    return { fee: fee, free: false, tier: 'calc', parts: parts };
   }
 
   function compute(list) {

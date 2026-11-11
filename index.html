@@ -229,6 +229,15 @@
     },
     {
       "@type": "Offer",
+      "price": "3",
+      "priceCurrency": "EUR",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Cône de henné naturel"
+      }
+    },
+    {
+      "@type": "Offer",
       "price": "30",
       "priceCurrency": "EUR",
       "itemOffered": {
@@ -286,6 +295,8 @@
   /* Dans les cartes produits, la colonne est large : on borne la photo pour
      qu'elle ne mange pas toute la carte, sans changer sa proportion. */
   .photo-carte{max-width:340px;margin:0 auto}
+  .offre{display:flex;flex-direction:column}
+  .offre .desc{flex:1}
   .photo-cadre{padding:28px 28px 0}
   /* Bandeau horizontal : la photo panoramique des cônes est montrée en entier,
      sur toute la largeur de la carte, sans aucun recadrage. */
@@ -490,19 +501,25 @@
             <p style="font-size:15.5px;line-height:1.7;color:rgba(251,244,235,0.82);margin:12px 0 0">Une couleur intense et bien foncée qui se développe progressivement après application. La texture est lisse, agréable et souple, parfaite pour les motifs fins. Un henné naturel pensé pour celles qui recherchent finesse, fraîcheur et intensité de couleur.</p>
             <p style="font-size:15px;line-height:1.7;color:rgba(251,244,235,0.7);margin:16px 0 0"><strong style="color:#FBF4EB;font-weight:500">Poids :</strong> chaque cône contient environ 20 à 25 g de henné et permet de réaliser en moyenne 9 à 10 motifs, selon leur taille, leur finesse et la quantité de henné utilisée.</p>
 
-            <p style="margin-top:24px;font-size:13.5px;line-height:1.6;color:#C58B3E">Les cônes se vendent par lot de 10, pas à l'unité. Le choix « avec / sans huile essentielle » se fait dans votre panier. Livraison Colissimo : 7,59 €.</p>
+            <p style="margin-top:24px;font-size:13.5px;line-height:1.6;color:#C58B3E">Le choix « avec / sans huile essentielle » se fait dans votre panier. Livraison Colissimo selon le nombre de cônes : dès 5,49 € (1 à 8 cônes), 7,59 € (9 à 18 cônes)… calculée pour chaque offre dans votre panier.</p>
 
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px;align-items:start">
-              <div style="border:1px solid rgba(197,139,62,0.5);border-radius:14px;padding:18px;background:rgba(197,139,62,0.1)">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px;align-items:stretch">
+              <div class="offre" style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
+                <img src="image/cone/cone-1.jpeg" alt="Cône de henné naturel" class="photo" loading="lazy" style="border-radius:10px;margin-bottom:14px">
+                <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">3 €</div>
+                <div class="desc" style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">1 cône de henné</div>
+                <button type="button" data-add-to-cart="cone-1" style="display:block;text-align:center;width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
+              </div>
+              <div class="offre" style="border:1px solid rgba(197,139,62,0.5);border-radius:14px;padding:18px;background:rgba(197,139,62,0.1)">
                 <img src="image/cone/cone-2.jpeg" alt="Lot de 10 cônes de henné" class="photo" loading="lazy" style="border-radius:10px;margin-bottom:14px">
                 <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">30 €</div>
-                <div style="font-size:13px;color:rgba(251,244,235,0.78);margin-bottom:14px">10 cônes — le 11ᵉ offert</div>
+                <div class="desc" style="font-size:13px;color:rgba(251,244,235,0.78);margin-bottom:14px">10 cônes — le 11ᵉ offert</div>
                 <button type="button" data-add-to-cart="cone-10" style="display:block;text-align:center;width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
               </div>
-              <div style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
+              <div class="offre" style="border:1px solid rgba(251,244,235,0.16);border-radius:14px;padding:18px">
                 <img src="image/cone/coffret-cone-4.jpeg" alt="Box débutante : cônes de henné, huile et spray révélateur" class="photo" loading="lazy" style="border-radius:10px;margin-bottom:14px">
                 <div class="prix" style="font-family:'Cormorant Garamond',serif;font-size:28px">15 €</div>
-                <div style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">Box débutante : 5 cônes, une huile, un spray révélateur</div>
+                <div class="desc" style="font-size:13px;color:rgba(251,244,235,0.7);margin-bottom:14px">Box débutante : 5 cônes, une huile, un spray révélateur</div>
                 <button type="button" data-add-to-cart="box-debutante" style="display:block;text-align:center;width:100%;cursor:pointer;background:#FBF4EB;color:#241A14;border:none;padding:12px;border-radius:999px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase">Ajouter au panier</button>
               </div>
             </div>
