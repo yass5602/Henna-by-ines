@@ -57,6 +57,11 @@ alter table public.site_content enable row level security;
 alter table public.rentals      enable row level security;
 alter table public.gallery      enable row level security;
 
+-- Droits d'accès aux tables (au cas où « Automatically expose new tables » est désactivé dans Supabase).
+grant select on public.site_content, public.rentals, public.gallery to anon, authenticated;
+grant insert, update, delete on public.site_content, public.rentals, public.gallery to authenticated;
+grant usage, select on all sequences in schema public to authenticated;
+
 drop policy if exists "lecture publique"  on public.site_content;
 drop policy if exists "ecriture admin"     on public.site_content;
 create policy "lecture publique" on public.site_content for select using (true);
@@ -80,10 +85,13 @@ insert into storage.buckets (id, name, public)
 values ('media', 'media', true)
 on conflict (id) do update set public = true;
 
+drop policy if exists "media lecture"            on storage.objects;
 drop policy if exists "media ajout admin"        on storage.objects;
 drop policy if exists "media modification admin" on storage.objects;
 drop policy if exists "media suppression admin"  on storage.objects;
 
+-- Lecture : indispensable, l'envoi d'une photo « écrase si elle existe » et Supabase exige alors le droit de lecture.
+create policy "media lecture" on storage.objects for select using (bucket_id = 'media');
 create policy "media ajout admin" on storage.objects for insert to authenticated
   with check (bucket_id = 'media' and public.est_admin());
 create policy "media modification admin" on storage.objects for update to authenticated
