@@ -1,0 +1,9 @@
+# Secrets : ne jamais publier
+.env
+.env.*
+!.env.example
+
+# Fichiers système / éditeur
+.DS_Store
+Thumbs.db
+node_modules/

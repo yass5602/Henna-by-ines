@@ -60,6 +60,14 @@ La clé « anon » peut être publique : ce sont la connexion et les règles de 
 
 L'adresse `/admin.html` n'est ni dans le menu, ni dans le sitemap, et la page est marquée « noindex ».
 
+## Modifier directement sur les pages
+
+Depuis l'espace administrateur (`/admin.html`), le bandeau sombre « Modifier directement sur le site » ouvre la page d'accueil ou la page Location en **mode édition** (adresses `index.html?edit` et `location.html?edit`). Il faut être connectée : sans connexion, rien ne s'affiche et la page reste normale.
+
+- **Accueil** : un clic sur un texte, une photo ou un prix ouvre sa fenêtre de modification (avec « Rétablir l'original »). Sous la galerie de réalisations, « + Ajouter des photos » ; un clic sur une photo de la galerie permet de changer sa légende, la remplacer, la déplacer (◀ ▶) ou la supprimer.
+- **Location** : chaque article porte ses boutons (◀ ▶ déplacer, ✎ Modifier, 🗑 Supprimer) ; « + Ajouter un article » en haut de la liste ; les articles masqués se réaffichent via « Articles masqués ».
+- **Quitter** : bouton « Quitter » dans la barre en bas de l'écran. Les visiteurs ne voient jamais cette barre et ne téléchargent pas le fichier `edit-mode.js`.
+
 ## Bon à savoir
 
 - **Rien ne casse si Supabase est indisponible** : le site affiche la dernière version connue (mémorisée dans le navigateur

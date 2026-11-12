@@ -158,11 +158,16 @@
     for (i = 0; i < texts.length; i++) {
       el = texts[i];
       var v = c['text.' + el.getAttribute('data-edit')];
-      if (v == null || v === '' || el._hv === v) continue;
+      if (v == null || v === '') {              // texte rétabli : on remet l'original
+        if (el._hv !== undefined && el._hOrig !== undefined) { el.innerHTML = el._hOrig; el._hv = undefined; }
+        continue;
+      }
+      if (el._hv === v) continue;
       if (el._hStyle === undefined) {          // on retient le style du gras d'origine
         var st = el.querySelector('strong,b');
         el._hStyle = st ? st.getAttribute('style') : null;
       }
+      if (el._hOrig === undefined) el._hOrig = el.innerHTML;
       el.innerHTML = toHtml(v, el._hStyle);
       el._hv = v;
     }
@@ -171,7 +176,12 @@
     for (i = 0; i < imgs.length; i++) {
       el = imgs[i];
       var u = c['img.' + el.getAttribute('data-img')];
-      if (!u || el._hs === u) continue;
+      if (!u) {                                 // photo rétablie : on remet l'original
+        if (el._hs !== undefined && el._hSrc0 != null) { el.setAttribute('src', el._hSrc0); el._hs = undefined; }
+        continue;
+      }
+      if (el._hs === u) continue;
+      if (el._hSrc0 === undefined) el._hSrc0 = el.getAttribute('src');
       el.src = u; el._hs = u;
     }
 
@@ -206,6 +216,7 @@
         im.src = g.src;
         im.alt = g.caption || 'Réalisation de henné';
         im.setAttribute('data-gal-db', '');
+        im.setAttribute('data-gal-id', g.id);
         box.appendChild(im);
       });
     }
@@ -248,8 +259,35 @@
     });
   }
 
+  /* ---------------------------------------------------------------------- */
+  /* Mode édition sur la page : chargé UNIQUEMENT si l'administratrice est    */
+  /* connectée (session de admin.html) et a ouvert la page avec « ?edit ».    */
+  /* Les visiteurs ne téléchargent rien de plus.                              */
+  /* ---------------------------------------------------------------------- */
+  function loadEditMode() {
+    try {
+      if (!ENABLED || /admin(\.html)?\/?$/.test(location.pathname)) return;
+      var asked = /[?&]edit(=|&|$)/.test(location.search);
+      var hasSession = !!window.localStorage.getItem('henna_admin_session');
+      if (!hasSession) { window.sessionStorage.removeItem('henna_edit'); return; }
+      if (asked) {
+        window.sessionStorage.setItem('henna_edit', '1');
+        var clean = location.search.replace(/([?&])edit(=[^&]*)?(&|$)/, function (m, a, b, c) { return c ? a : ''; }).replace(/[?&]$/, '');
+        history.replaceState(null, '', location.pathname + clean + location.hash);
+      }
+      if (window.sessionStorage.getItem('henna_edit') !== '1') return;
+      var go = function () {
+        var s = document.createElement('script');
+        s.src = 'edit-mode.js?v=1';
+        document.head.appendChild(s);
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+    } catch (e) {}
+  }
+
   readCache();
   applyConfig();                                  // tout de suite, avant que cart.js lise les produits
+  loadEditMode();
 
   document.addEventListener('DOMContentLoaded', applyDom);
   window.addEventListener('pageshow', applyDom);

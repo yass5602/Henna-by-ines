@@ -71,6 +71,12 @@
   .recherche{max-width:340px;width:100%;padding:12px 16px;border:1px solid rgba(36,26,20,.22);border-radius:999px;background:#fff;font-size:15px}
   .recherche:focus{outline:2px solid #A8542A;outline-offset:1px}
   .chargement{padding:60px 0;text-align:center;color:rgba(36,26,20,.55)}
+  .direct{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:#241A14;color:#FBF4EB;border-radius:20px;padding:20px 24px;margin-bottom:24px}
+  .direct strong{font:600 22px/1.2 'Cormorant Garamond',serif;display:block}
+  .direct span{font-size:14.5px;opacity:.78}
+  .direct .liens{display:flex;gap:10px;flex-wrap:wrap}
+  .direct .btn{background:#FBF4EB;color:#241A14;border-color:#FBF4EB}
+  .direct .btn:hover{background:#C58B3E;border-color:#C58B3E;color:#241A14}
 
   /* textes */
   .groupe{margin-bottom:26px}
@@ -212,6 +218,13 @@
   </header>
 
   <main>
+    <div class="direct">
+      <div><strong>Modifier directement sur le site</strong><span>Ouvrez une page : cliquez sur un texte, une photo ou un prix pour le changer, et ajoutez ou supprimez des photos et des articles.</span></div>
+      <div class="liens">
+        <a class="btn" href="index.html?edit">Page d'accueil</a>
+        <a class="btn" href="location.html?edit">Page Location</a>
+      </div>
+    </div>
     <div class="onglets" role="tablist" id="onglets">
       <button type="button" role="tab" data-tab="textes" aria-selected="true">Textes</button>
       <button type="button" role="tab" data-tab="photos" aria-selected="false">Photos du site</button>

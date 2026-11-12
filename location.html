@@ -269,7 +269,7 @@
     }
     galerie.innerHTML = shown.map(function (it, idx) {
       var n = it.photos.length;
-      return '<article class="carte">' +
+      return '<article class="carte" data-id="' + esc(it.id) + '">' +
         '<button type="button" class="vignette" data-open="' + idx + '" aria-label="Voir les photos : ' + esc(it.name) + '">' +
           '<img src="' + esc(photoSrc(it.photos[0], true)) + '" alt="' + esc(it.name) + '" loading="lazy" width="520" height="650">' +
           (n > 1 ? '<span class="nbphotos">' + n + ' photos</span>' : '') +
