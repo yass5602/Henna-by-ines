@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Espace administrateur — Henna by Inès</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="image/logo/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FBF4EB;color:#241A14;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55}
+  [hidden]{display:none!important}
+  a{color:#A8542A}
+  button,input,select,textarea{font:inherit;color:inherit}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;margin:0;line-height:1.2}
+
+  /* ---- boutons ---- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #241A14;background:#241A14;color:#FBF4EB;border-radius:999px;padding:11px 20px;
+    font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:background .15s,color .15s,border-color .15s;white-space:nowrap}
+  .btn:hover{background:#A8542A;border-color:#A8542A;color:#FBF4EB}
+  .btn.sec{background:transparent;color:#241A14;border-color:rgba(36,26,20,.28)}
+  .btn.sec:hover{background:rgba(168,84,42,.1);color:#241A14;border-color:#A8542A}
+  .btn.danger{background:transparent;color:#9B2C1F;border-color:rgba(155,44,31,.4)}
+  .btn.danger:hover{background:#9B2C1F;color:#fff;border-color:#9B2C1F}
+  .btn.petit{padding:8px 14px;font-size:12px}
+  .btn[disabled]{opacity:.55;cursor:default;pointer-events:none}
+  .ico{width:36px;height:36px;padding:0;border-radius:50%;border:1px solid rgba(36,26,20,.22);background:#fff;cursor:pointer;font-size:15px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+  .ico:hover{border-color:#A8542A;background:rgba(168,84,42,.08)}
+  .ico[disabled]{opacity:.35;cursor:default}
+
+  /* ---- connexion ---- */
+  .centre{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .boite{width:100%;max-width:430px;background:#fff;border:1px solid rgba(36,26,20,.1);border-radius:24px;padding:36px 32px;box-shadow:0 18px 48px rgba(36,26,20,.08)}
+  .boite .logo{width:64px;height:64px;border-radius:50%;object-fit:cover;border:1px solid rgba(165,84,42,.35);display:block;margin:0 auto 14px}
+  .boite h1{font-size:32px;text-align:center}
+  .boite .sous{text-align:center;color:rgba(36,26,20,.62);font-size:14.5px;margin:6px 0 26px}
+  .champ{display:block;margin-bottom:16px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(36,26,20,.65)}
+  .champ input,.champ select,.champ textarea{display:block;width:100%;margin-top:6px;padding:13px 15px;border:1px solid rgba(36,26,20,.22);border-radius:12px;background:#FBF4EB;
+    font-size:16px;letter-spacing:0;text-transform:none;color:#241A14}
+  .champ input:focus,.champ select:focus,.champ textarea:focus{outline:2px solid #A8542A;outline-offset:1px;background:#fff}
+  .champ textarea{resize:vertical;min-height:120px;line-height:1.5}
+  .aide{font-size:13px;color:rgba(36,26,20,.6);margin:-8px 0 16px;letter-spacing:0;text-transform:none}
+  .erreur{background:rgba(155,44,31,.09);border:1px solid rgba(155,44,31,.3);color:#7A2016;border-radius:12px;padding:11px 14px;font-size:14px;margin:0 0 16px}
+  .info{background:rgba(31,107,94,.09);border:1px solid rgba(31,107,94,.3);color:#175246;border-radius:12px;padding:12px 16px;font-size:14.5px}
+  .boite .btn{width:100%;padding:15px}
+  .retour{display:block;text-align:center;margin-top:18px;font-size:14px}
+  ol.etapes{padding-left:20px;font-size:15px}
+  ol.etapes li{margin-bottom:8px}
+  code{background:#F0E4D3;border-radius:6px;padding:1px 7px;font-size:.92em}
+
+  /* ---- espace admin ---- */
+  header.top{position:sticky;top:0;z-index:20;background:rgba(251,244,235,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(36,26,20,.1)}
+  .top .in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+  .top img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid rgba(165,84,42,.35)}
+  .top .titre{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:21px;line-height:1.1}
+  .top .qui{font-size:12.5px;color:rgba(36,26,20,.6)}
+  .top .actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+  main{max-width:1180px;margin:0 auto;padding:26px 20px 90px}
+  .onglets{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:22px;scrollbar-width:none}
+  .onglets::-webkit-scrollbar{display:none}
+  .onglets button{flex:0 0 auto;cursor:pointer;border:1px solid rgba(36,26,20,.22);background:rgba(255,255,255,.7);border-radius:999px;padding:12px 20px;font-size:14.5px;font-weight:500}
+  .onglets button:hover{border-color:#A8542A}
+  .onglets button[aria-selected="true"]{background:#241A14;border-color:#241A14;color:#FBF4EB}
+  .entete{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .entete h2{font-size:30px}
+  .entete p{margin:4px 0 0;color:rgba(36,26,20,.65);font-size:15px;max-width:60ch}
+  .recherche{max-width:340px;width:100%;padding:12px 16px;border:1px solid rgba(36,26,20,.22);border-radius:999px;background:#fff;font-size:15px}
+  .recherche:focus{outline:2px solid #A8542A;outline-offset:1px}
+  .chargement{padding:60px 0;text-align:center;color:rgba(36,26,20,.55)}
+
+  /* textes */
+  .groupe{margin-bottom:26px}
+  .groupe h3{font-size:22px;color:#A8542A;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid rgba(36,26,20,.12)}
+  .ligne{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid rgba(36,26,20,.1);border-radius:14px;padding:12px 16px;margin-bottom:8px}
+  .ligne .type{flex:0 0 96px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(36,26,20,.5)}
+  .ligne .txt{flex:1;min-width:0;font-size:15px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word;white-space:pre-line}
+  .badge{display:inline-block;background:rgba(197,139,62,.2);color:#7A5316;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 9px;margin-left:8px;vertical-align:2px}
+
+  /* grilles de cartes */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+  .carte{background:#fff;border:1px solid rgba(36,26,20,.1);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+  .carte .photo{position:relative;aspect-ratio:4/5;background:#EFE6D8;overflow:hidden}
+  .carte .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .carte .photo .nb{position:absolute;right:10px;top:10px;background:rgba(36,26,20,.66);color:#FBF4EB;border-radius:999px;padding:2px 10px;font-size:12px}
+  .carte .photo .prix{position:absolute;left:10px;bottom:10px;background:rgba(251,244,235,.96);color:#A8542A;border-radius:999px;padding:3px 13px;font:600 20px/1.2 'Cormorant Garamond',serif}
+  .carte .corps{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .carte .nom{font:600 19px/1.25 'Cormorant Garamond',serif}
+  .carte .meta{font-size:13px;color:rgba(36,26,20,.6)}
+  .carte .barre{display:flex;gap:6px;margin-top:auto;padding-top:8px;flex-wrap:wrap}
+  .carte.masque{opacity:.55}
+  .vide{background:rgba(255,255,255,.6);border:1px dashed rgba(36,26,20,.28);border-radius:18px;padding:34px 24px;text-align:center}
+  .vide p{margin:0 0 16px;color:rgba(36,26,20,.7)}
+
+  /* modale */
+  .voile{position:fixed;inset:0;z-index:100;background:rgba(36,26,20,.55);display:flex;align-items:center;justify-content:center;padding:18px}
+  .modale{background:#FBF4EB;border-radius:24px;width:100%;max-width:640px;max-height:92vh;max-height:92dvh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+  .modale .mh{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 26px 6px}
+  .modale .mh h2{font-size:26px}
+  .modale .mx{border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer;padding:4px 10px;margin-right:-10px}
+  .modale .mb{padding:10px 26px 6px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .modale .mf{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;padding:16px 26px 22px;border-top:1px solid rgba(36,26,20,.1)}
+  .modale .mf .gauche{margin-right:auto}
+  .modale details{margin:0 0 14px;font-size:14px}
+  .modale summary{cursor:pointer;color:#A8542A}
+  .modale details p{margin:8px 0 0;padding:10px 14px;background:#fff;border-radius:10px;white-space:pre-line;color:rgba(36,26,20,.75)}
+  .apercu{display:block;max-width:100%;max-height:300px;margin:6px auto 16px;border-radius:12px;border:1px solid rgba(36,26,20,.12);object-fit:contain;background:#EFE6D8}
+  .deposer{display:flex;flex-direction:column;align-items:center;gap:6px;border:2px dashed rgba(168,84,42,.5);border-radius:16px;padding:22px 16px;text-align:center;cursor:pointer;background:rgba(255,255,255,.6);margin-bottom:14px}
+  .deposer:hover,.deposer.survol{background:rgba(168,84,42,.08);border-color:#A8542A}
+  .deposer strong{font-weight:500}
+  .deposer span{font-size:13px;color:rgba(36,26,20,.6)}
+  .deposer input{display:none}
+  .photos-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;margin-bottom:16px}
+  .vignette{position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#EFE6D8;border:1px solid rgba(36,26,20,.12)}
+  .vignette img{width:100%;height:100%;object-fit:cover;display:block}
+  .vignette .cv{position:absolute;left:4px;bottom:4px;background:#241A14;color:#FBF4EB;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:1px 8px}
+  .vignette .acts{position:absolute;right:3px;top:3px;display:flex;flex-direction:column;gap:3px}
+  .vignette .acts button{width:26px;height:26px;border-radius:50%;border:0;background:rgba(251,244,235,.94);cursor:pointer;font-size:13px;line-height:1;padding:0}
+  .vignette .acts button:hover{background:#fff}
+  .deux{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .case{display:flex;align-items:center;gap:10px;margin:2px 0 16px;font-size:15px;cursor:pointer}
+  .case input{width:20px;height:20px;accent-color:#A8542A}
+  .progres{height:6px;border-radius:999px;background:rgba(36,26,20,.12);overflow:hidden;margin:0 0 14px}
+  .progres i{display:block;height:100%;width:0;background:#A8542A;transition:width .25s}
+
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:200;max-width:min(92vw,460px);padding:13px 22px;border-radius:999px;background:#241A14;color:#FBF4EB;font-size:14.5px;
+    box-shadow:0 10px 30px rgba(36,26,20,.3);opacity:0;pointer-events:none;transition:opacity .25s;text-align:center}
+  #toast.on{opacity:1}
+  #toast.err{background:#9B2C1F}
+
+  @media (max-width:640px){
+    .top .in{padding:10px 14px;gap:10px}
+    .top .qui{display:none}
+    .top .titre{font-size:18px}
+    .top .actions .voir{display:none}
+    main{padding:20px 14px 90px}
+    .entete h2{font-size:25px}
+    .grille{grid-template-columns:repeat(2,1fr);gap:12px}
+    .carte .nom{font-size:17px}
+    .carte .photo .prix{font-size:17px;padding:2px 10px}
+    .ligne{flex-wrap:wrap;gap:8px}
+    .ligne .type{flex:0 0 100%}
+    .ligne .txt{flex:1 1 60%}
+    .voile{padding:0;align-items:flex-end}
+    .modale{max-width:none;border-radius:24px 24px 0 0;max-height:94vh;max-height:94dvh}
+    .modale .mh{padding:18px 18px 4px}
+    .modale .mb{padding:8px 18px 4px}
+    .modale .mf{padding:14px 18px calc(18px + env(safe-area-inset-bottom))}
+    .modale .mf .btn{flex:1 1 auto}
+    .deux{grid-template-columns:1fr}
+    .boite{padding:30px 22px}
+  }
+</style>
+<script src="config.js"></script>
+<script src="site-data.js"></script>
+</head>
+<body>
+
+<!-- ============ 1. Service pas encore configuré ============ -->
+<section id="v-config" class="centre" hidden>
+  <div class="boite" style="max-width:560px">
+    <img class="logo" src="image/logo/LOGO.jpeg" alt="Henna by Inès">
+    <h1>Espace administrateur</h1>
+    <p class="sous">Il reste une configuration à faire, une seule fois.</p>
+    <div class="info" style="margin-bottom:18px">La connexion à la base de données gratuite (Supabase) n'est pas encore renseignée dans <code>config.js</code>.</div>
+    <ol class="etapes">
+      <li>Créer un projet gratuit sur <strong>supabase.com</strong>.</li>
+      <li>Exécuter le fichier <code>supabase-setup.sql</code> (SQL Editor).</li>
+      <li>Créer le compte administrateur (Authentication &gt; Users).</li>
+      <li>Copier l'URL et la clé publique dans <code>config.js</code>, rubrique <code>supabase</code>.</li>
+    </ol>
+    <p style="font-size:14.5px;color:rgba(36,26,20,.7)">Le détail pas à pas se trouve dans <code>ADMIN-SETUP.md</code>.</p>
+    <a class="retour" href="index.html">← Retour au site</a>
+  </div>
+</section>
+
+<!-- ============ 2. Connexion ============ -->
+<section id="v-login" class="centre" hidden>
+  <form class="boite" id="f-login" autocomplete="on">
+    <img class="logo" src="image/logo/LOGO.jpeg" alt="Henna by Inès">
+    <h1>Espace administrateur</h1>
+    <p class="sous">Connectez-vous pour modifier votre site.</p>
+    <p class="erreur" id="login-err" hidden></p>
+    <label class="champ">Adresse e-mail
+      <input type="email" id="login-email" required autocomplete="username" inputmode="email" autocapitalize="off">
+    </label>
+    <label class="champ">Mot de passe
+      <input type="password" id="login-pw" required autocomplete="current-password">
+    </label>
+    <button type="submit" class="btn" id="login-btn">Se connecter</button>
+    <a class="retour" href="index.html">← Retour au site</a>
+  </form>
+</section>
+
+<!-- ============ 3. Espace de gestion ============ -->
+<section id="v-admin" hidden>
+  <header class="top">
+    <div class="in">
+      <img src="image/logo/LOGO.jpeg" alt="">
+      <div>
+        <div class="titre">Espace administrateur</div>
+        <div class="qui" id="qui"></div>
+      </div>
+      <div class="actions">
+        <a class="btn sec petit voir" href="index.html" target="_blank" rel="noopener">Voir le site</a>
+        <button type="button" class="btn sec petit" id="b-logout">Se déconnecter</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="onglets" role="tablist" id="onglets">
+      <button type="button" role="tab" data-tab="textes" aria-selected="true">Textes</button>
+      <button type="button" role="tab" data-tab="photos" aria-selected="false">Photos du site</button>
+      <button type="button" role="tab" data-tab="galerie" aria-selected="false">Réalisations</button>
+      <button type="button" role="tab" data-tab="location" aria-selected="false">Location</button>
+      <button type="button" role="tab" data-tab="produits" aria-selected="false">Produits &amp; prix</button>
+    </div>
+    <div id="panneau"><div class="chargement">Chargement…</div></div>
+  </main>
+</section>
+
+<div id="toast" role="status"></div>
+<div id="modal" class="voile" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var CFG = window.HENNA_CONFIG || {};
+  var DB = window.HennaDB;
+  var SITE = window.HennaSite;
+  var SKEY = 'henna_admin_session';
+
+  function $(id) { return document.getElementById(id); }
+  var esc = SITE.esc;
+
+  /* ====================================================================== */
+  /*  Utilitaires                                                            */
+  /* ====================================================================== */
+  var toastTimer;
+  function toast(msg, isErr) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.className = 'on' + (isErr ? ' err' : '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.className = ''; }, isErr ? 5200 : 2800);
+  }
+
+  function show(id) {
+    ['v-config', 'v-login', 'v-admin'].forEach(function (v) { $(v).hidden = v !== id; });
+  }
+
+  function slug(s) {
+    return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'article';
+  }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function euro(n) { return SITE.formatPrice(n); }
+
+  function explain(e) {
+    var m = (e && e.message) || String(e);
+    if (e && (e.status === 404 || /relation .* does not exist|PGRST205|Could not find the table/i.test(m)))
+      return 'La base n\'est pas prête : exécutez d\'abord supabase-setup.sql (voir ADMIN-SETUP.md).';
+    if (e && (e.status === 401 || e.status === 403 || /row-level security|JWT/i.test(m)))
+      return 'Modification refusée : vérifiez que l\'adresse e-mail dans supabase-setup.sql est bien celle du compte administrateur.';
+    if (/Failed to fetch|NetworkError/i.test(m)) return 'Connexion impossible. Vérifiez votre accès internet puis réessayez.';
+    return m;
+  }
+
+  /* ====================================================================== */
+  /*  Connexion (API d'authentification Supabase)                            */
+  /* ====================================================================== */
+  function getSession() { try { return JSON.parse(localStorage.getItem(SKEY) || 'null'); } catch (e) { return null; } }
+  function setSession(s) { try { s ? localStorage.setItem(SKEY, JSON.stringify(s)) : localStorage.removeItem(SKEY); } catch (e) {} }
+
+  function authCall(grant, body) {
+    return fetch(DB.url + '/auth/v1/token?grant_type=' + grant, {
+      method: 'POST', headers: { apikey: DB.key, 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) { var e = new Error(j.error_description || j.msg || j.message || ('Erreur ' + r.status)); e.status = r.status; throw e; }
+        return j;
+      });
+    }).then(function (j) {
+      var s = { access_token: j.access_token, refresh_token: j.refresh_token,
+        expires_at: Date.now() + (j.expires_in || 3600) * 1000, email: (j.user && j.user.email) || '' };
+      setSession(s);
+      return s;
+    });
+  }
+
+  function token() {
+    var s = getSession();
+    if (!s) return Promise.reject(new Error('Session expirée, reconnectez-vous.'));
+    if (s.expires_at - Date.now() > 60000) return Promise.resolve(s.access_token);
+    return authCall('refresh_token', { refresh_token: s.refresh_token }).then(function (n) { return n.access_token; }, function (e) {
+      setSession(null); location.reload(); throw e;
+    });
+  }
+
+  // Appel à la base avec le jeton de l'administratrice.
+  function db(method, path, json, prefer) {
+    return token().then(function (t) {
+      return DB.rest(method, path, { token: t, json: json, headers: prefer ? { Prefer: prefer } : undefined });
+    });
+  }
+
+  /* ====================================================================== */
+  /*  Photos : redimensionnement dans le navigateur + envoi au stockage      */
+  /* ====================================================================== */
+  function loadBitmap(file) {
+    var viaImg = function () {
+      return new Promise(function (res, rej) {
+        var u = URL.createObjectURL(file), im = new Image();
+        im.onload = function () { res(im); };
+        im.onerror = function () { rej(new Error('Photo illisible (utilisez un JPG, PNG ou WebP).')); };
+        im.src = u;
+      });
+    };
+    if (window.createImageBitmap) {
+      return createImageBitmap(file, { imageOrientation: 'from-image' }).catch(viaImg);
+    }
+    return viaImg();
+  }
+  function jpeg(canvas, q) {
+    return new Promise(function (res) { canvas.toBlob(res, 'image/jpeg', q); });
+  }
+  // Photo entière, côté le plus long limité à `max` pixels.
+  function fitJpeg(file, max, q) {
+    return loadBitmap(file).then(function (b) {
+      var w = b.width || b.naturalWidth, h = b.height || b.naturalHeight, k = Math.min(1, max / Math.max(w, h));
+      var c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+      var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(b, 0, 0, c.width, c.height);
+      return jpeg(c, q);
+    });
+  }
+  // Vignette recadrée au format W×H (comme les cartes de la page Location).
+  function coverJpeg(file, W, H, q) {
+    return loadBitmap(file).then(function (b) {
+      var w = b.width || b.naturalWidth, h = b.height || b.naturalHeight, k = Math.max(W / w, H / h);
+      var c = document.createElement('canvas'); c.width = W; c.height = H;
+      var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H);
+      x.drawImage(b, (W - w * k) / 2, (H - h * k) / 2, w * k, h * k);
+      return jpeg(c, q);
+    });
+  }
+
+  function upload(path, blob) {
+    return token().then(function (t) {
+      return fetch(DB.url + '/storage/v1/object/' + DB.bucket + '/' + path, {
+        method: 'POST',
+        headers: { apikey: DB.key, Authorization: 'Bearer ' + t, 'x-upsert': 'true', 'Content-Type': blob.type || 'image/jpeg', 'cache-control': 'max-age=31536000' },
+        body: blob
+      });
+    }).then(function (r) {
+      if (!r.ok) return r.text().then(function (t) { var e = new Error('Envoi de la photo refusé (' + r.status + ') ' + t.slice(0, 160)); e.status = r.status; throw e; });
+      return DB.publicUrl(path);
+    });
+  }
+
+  // Supprime un fichier du stockage si (et seulement si) il y a été envoyé depuis cet espace.
+  function removeFile(url) {
+    var pre = DB.publicUrl('');
+    if (typeof url !== 'string' || url.indexOf(pre) !== 0) return Promise.resolve();
+    return token().then(function (t) {
+      return fetch(DB.url + '/storage/v1/object/' + DB.bucket + '/' + url.slice(pre.length), {
+        method: 'DELETE', headers: { apikey: DB.key, Authorization: 'Bearer ' + t }
+      });
+    }).catch(function () {});
+  }
+
+  /* ====================================================================== */
+  /*  Données                                                                */
+  /* ====================================================================== */
+  var S = { content: {}, rentals: [], gallery: [], doc: null, tab: 'textes' };
+
+  function pushToSite() { SITE.setData({ content: S.content, rentals: S.rentals, gallery: S.gallery }); }
+
+  function loadAll() {
+    return Promise.all([
+      db('GET', 'site_content?select=key,value'),
+      db('GET', 'rentals?select=*&order=position.asc,name.asc'),
+      db('GET', 'gallery?select=*&order=position.asc,id.asc'),
+      fetch('index.html?v=' + Date.now()).then(function (r) { return r.text(); })
+    ]).then(function (r) {
+      S.content = {};
+      (r[0] || []).forEach(function (x) { S.content[x.key] = x.value; });
+      S.rentals = r[1] || [];
+      S.gallery = r[2] || [];
+      S.doc = new DOMParser().parseFromString(r[3], 'text/html');
+      pushToSite();
+    });
+  }
+  function reloadTable(t) {
+    var q = t === 'rentals' ? 'rentals?select=*&order=position.asc,name.asc' : 'gallery?select=*&order=position.asc,id.asc';
+    return db('GET', q).then(function (rows) { S[t] = rows || []; pushToSite(); });
+  }
+
+  function setContent(key, value, def) {
+    if (value == null || value === '' || value === def) {
+      return db('DELETE', 'site_content?key=eq.' + encodeURIComponent(key)).then(function () { delete S.content[key]; pushToSite(); });
+    }
+    return db('POST', 'site_content?on_conflict=key', [{ key: key, value: String(value), updated_at: new Date().toISOString() }],
+      'resolution=merge-duplicates,return=minimal').then(function () { S.content[key] = String(value); pushToSite(); });
+  }
+
+  /* ====================================================================== */
+  /*  Modale                                                                 */
+  /* ====================================================================== */
+  var modalCleanup = null;
+  function closeModal() {
+    $('modal').hidden = true; $('modal').innerHTML = '';
+    document.body.style.overflow = '';
+    if (modalCleanup) { modalCleanup(); modalCleanup = null; }
+  }
+
+  // opts : { title, body (html), buttons:[{label, kind, left, action:(btn)=>Promise|void, keepOpen}], onOpen(root) }
+  function openModal(opts) {
+    var m = $('modal');
+    m.innerHTML = '<div class="modale" role="dialog" aria-modal="true" aria-label="' + esc(opts.title) + '">' +
+      '<div class="mh"><h2>' + esc(opts.title) + '</h2><button type="button" class="mx" aria-label="Fermer" data-close>×</button></div>' +
+      '<div class="mb">' + opts.body + '</div>' +
+      '<div class="mf">' + (opts.buttons || []).map(function (b, i) {
+        return '<button type="button" class="btn ' + (b.kind || '') + (b.left ? ' gauche' : '') + '" data-bi="' + i + '">' + esc(b.label) + '</button>';
+      }).join('') + '</div></div>';
+    m.hidden = false;
+    document.body.style.overflow = 'hidden';
+
+    m.onclick = function (e) {
+      if (e.target === m || (e.target.closest && e.target.closest('[data-close]'))) { closeModal(); return; }
+      var bt = e.target.closest && e.target.closest('[data-bi]');
+      if (!bt || bt.disabled) return;
+      var b = opts.buttons[+bt.getAttribute('data-bi')];
+      var label = bt.textContent;
+      bt.disabled = true; bt.textContent = 'Un instant…';
+      Promise.resolve().then(function () { return b.action(bt); }).then(function (keep) {
+        if (keep === false) { bt.disabled = false; bt.textContent = label; return; }
+        closeModal();
+      }, function (err) {
+        bt.disabled = false; bt.textContent = label;
+        toast(explain(err), true);
+      });
+    };
+    var esch = function (e) { if (e.key === 'Escape') closeModal(); };
+    document.addEventListener('keydown', esch);
+    modalCleanup = function () { document.removeEventListener('keydown', esch); };
+    if (opts.onOpen) opts.onOpen(m);
+    var first = m.querySelector('input:not([type=file]),textarea,select');
+    if (first) setTimeout(function () { first.focus(); }, 30);
+  }
+
+  function confirmBox(title, message, okLabel) {
+    return new Promise(function (res) {
+      var done = false;
+      openModal({
+        title: title, body: '<p style="margin:6px 0 12px;font-size:16px">' + message + '</p>',
+        buttons: [
+          { label: 'Annuler', kind: 'sec', action: function () { done = true; res(false); } },
+          { label: okLabel || 'Confirmer', kind: 'danger', action: function () { done = true; res(true); } }
+        ]
+      });
+      var prev = modalCleanup;
+      modalCleanup = function () { if (prev) prev(); if (!done) res(false); };
+    });
+  }
+
+  // Zone « déposer des photos » : renvoie les fichiers choisis via onFiles(files).
+  function dropzone(multiple, onFiles) {
+    return '<label class="deposer" data-drop><strong>' + (multiple ? 'Choisir des photos' : 'Choisir une photo') + '</strong>' +
+      '<span>' + (multiple ? 'ou les déposer ici' : 'ou la déposer ici') + ' · JPG, PNG ou WebP</span>' +
+      '<input type="file" accept="image/*"' + (multiple ? ' multiple' : '') + ' data-file></label>';
+  }
+  function wireDrop(root, onFiles) {
+    var z = root.querySelector('[data-drop]'), inp = root.querySelector('[data-file]');
+    if (!z) return;
+    inp.addEventListener('change', function () { if (inp.files.length) onFiles([].slice.call(inp.files)); inp.value = ''; });
+    ['dragenter', 'dragover'].forEach(function (ev) { z.addEventListener(ev, function (e) { e.preventDefault(); z.classList.add('survol'); }); });
+    ['dragleave', 'drop'].forEach(function (ev) { z.addEventListener(ev, function (e) { e.preventDefault(); z.classList.remove('survol'); }); });
+    z.addEventListener('drop', function (e) {
+      var fl = [].slice.call(e.dataTransfer.files).filter(function (f) { return /^image\//.test(f.type); });
+      if (fl.length) onFiles(fl);
+    });
+  }
+
+  /* ====================================================================== */
+  /*  Onglet 1 : Textes                                                      */
+  /* ====================================================================== */
+  var GROUPES = {
+    hdr: 'En-tête', hero: 'Accueil — bandeau', presta: 'Prestations henné', real: 'Réalisations',
+    cones: 'Produits — cônes', poudre: 'Produits — poudre', loc: 'Location & articles personnalisés',
+    histoire: 'Mon histoire', resa: 'Réservation', contact: 'Contact', pied: 'Pied de page'
+  };
+  var TYPES = { h1: 'Titre', h2: 'Titre', h3: 'Sous-titre', p: 'Paragraphe', li: 'Liste', span: 'Texte court', div: 'Texte court' };
+
+  function textItems() {
+    var out = [];
+    [].forEach.call(S.doc.querySelectorAll('[data-edit]'), function (el) {
+      var key = el.getAttribute('data-edit');
+      out.push({ key: key, group: key.split('.')[0], type: TYPES[el.tagName.toLowerCase()] || 'Texte', def: SITE.fromEl(el) });
+    });
+    return out;
+  }
+
+  function renderTextes(filter) {
+    var items = textItems(), f = (filter || '').toLowerCase(), groups = {}, order = [];
+    items.forEach(function (it) {
+      var cur = S.content['text.' + it.key];
+      it.cur = cur != null && cur !== '' ? cur : it.def;
+      if (f && (it.cur + ' ' + it.def).toLowerCase().indexOf(f) < 0) return;
+      if (!groups[it.group]) { groups[it.group] = []; order.push(it.group); }
+      groups[it.group].push(it);
+    });
+    var html = order.map(function (g) {
+      return '<div class="groupe"><h3>' + esc(GROUPES[g] || g) + '</h3>' + groups[g].map(function (it) {
+        var mod = S.content['text.' + it.key] != null;
+        return '<div class="ligne"><div class="type">' + esc(it.type) + '</div>' +
+          '<div class="txt">' + esc(it.cur.replace(/\*\*/g, '')) + (mod ? '<span class="badge">modifié</span>' : '') + '</div>' +
+          '<button type="button" class="btn sec petit" data-edit-text="' + esc(it.key) + '">Modifier</button></div>';
+      }).join('') + '</div>';
+    }).join('');
+    $('liste-textes').innerHTML = html || '<div class="vide"><p>Aucun texte ne correspond à votre recherche.</p></div>';
+  }
+
+  function tabTextes() {
+    $('panneau').innerHTML =
+      '<div class="entete"><div><h2>Textes du site</h2><p>Cliquez sur « Modifier » à côté du texte à changer. Les changements sont visibles sur le site dès l\'enregistrement.</p></div>' +
+      '<input class="recherche" id="rech" type="search" placeholder="Rechercher un texte…" aria-label="Rechercher un texte"></div>' +
+      '<div id="liste-textes"></div>';
+    renderTextes('');
+    $('rech').addEventListener('input', function () { renderTextes(this.value); });
+    $('liste-textes').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-edit-text]');
+      if (b) editText(b.getAttribute('data-edit-text'));
+    });
+  }
+
+  function editText(key) {
+    var it = textItems().filter(function (x) { return x.key === key; })[0];
+    if (!it) return;
+    var cur = S.content['text.' + key] != null ? S.content['text.' + key] : it.def;
+    var modified = S.content['text.' + key] != null;
+    var rows = Math.max(3, Math.min(14, Math.ceil(cur.length / 60) + (cur.split('\n').length - 1)));
+    var buttons = [];
+    if (modified) buttons.push({ label: 'Rétablir l\'original', kind: 'danger', left: true, action: function () {
+      return setContent('text.' + key, null).then(function () { toast('Texte d\'origine rétabli.'); renderTextes($('rech') ? $('rech').value : ''); });
+    } });
+    buttons.push({ label: 'Annuler', kind: 'sec', action: function () {} });
+    buttons.push({ label: 'Enregistrer', action: function () {
+      var v = $('m-texte').value.replace(/\r/g, '').trim();
+      if (!v) { toast('Le texte ne peut pas être vide.', true); return false; }
+      return setContent('text.' + key, v, it.def).then(function () { toast('Texte enregistré.'); renderTextes($('rech') ? $('rech').value : ''); });
+    } });
+    openModal({
+      title: (it.type) + ' · ' + (GROUPES[it.group] || ''),
+      body: '<label class="champ">Votre texte<textarea id="m-texte" rows="' + rows + '">' + esc(cur) + '</textarea></label>' +
+        '<p class="aide">Pour mettre un mot en <strong>gras</strong>, entourez-le de deux étoiles : <code>**mot**</code>. Un retour à la ligne reste un retour à la ligne.</p>' +
+        (modified ? '<details><summary>Voir le texte d\'origine</summary><p>' + esc(it.def) + '</p></details>' : ''),
+      buttons: buttons
+    });
+  }
+
+  /* ====================================================================== */
+  /*  Onglet 2 : Photos du site                                              */
+  /* ====================================================================== */
+  function imageItems() {
+    var out = [];
+    [].forEach.call(S.doc.querySelectorAll('img[data-img]'), function (el) {
+      out.push({ key: el.getAttribute('data-img'), alt: el.getAttribute('alt') || el.getAttribute('data-img'), def: el.getAttribute('src') });
+    });
+    return out;
+  }
+
+  function tabPhotos() {
+    var items = imageItems();
+    $('panneau').innerHTML =
+      '<div class="entete"><div><h2>Photos du site</h2><p>Remplacez une photo de l\'accueil par une autre. Elle sera automatiquement redimensionnée.</p></div></div>' +
+      '<div class="grille">' + items.map(function (it) {
+        var url = S.content['img.' + it.key], mod = !!url;
+        return '<div class="carte"><div class="photo"><img src="' + esc(url || it.def) + '" alt="" loading="lazy"></div>' +
+          '<div class="corps"><div class="meta">' + esc(it.alt) + (mod ? '<span class="badge">modifiée</span>' : '') + '</div>' +
+          '<div class="barre"><button type="button" class="btn sec petit" data-replace="' + esc(it.key) + '">Remplacer</button></div></div></div>';
+      }).join('') + '</div>';
+    $('panneau').querySelector('.grille').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-replace]');
+      if (b) replaceImage(b.getAttribute('data-replace'));
+    });
+  }
+
+  function replaceImage(key) {
+    var it = imageItems().filter(function (x) { return x.key === key; })[0];
+    var cur = S.content['img.' + key];
+    var chosen = null;
+    var buttons = [];
+    if (cur) buttons.push({ label: 'Rétablir l\'originale', kind: 'danger', left: true, action: function () {
+      return db('DELETE', 'site_content?key=eq.' + encodeURIComponent('img.' + key)).then(function () {
+        delete S.content['img.' + key]; pushToSite(); removeFile(cur); toast('Photo d\'origine rétablie.'); tabPhotos();
+      });
+    } });
+    buttons.push({ label: 'Annuler', kind: 'sec', action: function () {} });
+    buttons.push({ label: 'Enregistrer', action: function () {
+      if (!chosen) { toast('Choisissez d\'abord une photo.', true); return false; }
+      return fitJpeg(chosen, 1600, 0.85).then(function (blob) {
+        return upload('site/' + slug(key) + '-' + uid() + '.jpg', blob);
+      }).then(function (url) {
+        return db('POST', 'site_content?on_conflict=key', [{ key: 'img.' + key, value: url, updated_at: new Date().toISOString() }],
+          'resolution=merge-duplicates,return=minimal').then(function () {
+          S.content['img.' + key] = url; pushToSite(); if (cur) removeFile(cur);
+          toast('Photo remplacée.'); tabPhotos();
+        });
+      });
+    } });
+    openModal({
+      title: 'Remplacer la photo',
+      body: '<p style="margin:0 0 8px;font-size:14.5px;color:rgba(36,26,20,.7)">' + esc(it.alt) + '</p>' +
+        '<img class="apercu" id="m-apercu" src="' + esc(cur || it.def) + '" alt="">' + dropzone(false),
+      buttons: buttons,
+      onOpen: function (root) {
+        wireDrop(root, function (files) {
+          chosen = files[0];
+          $('m-apercu').src = URL.createObjectURL(chosen);
+        });
+      }
+    });
+  }
+
+  /* ====================================================================== */
+  /*  Onglet 3 : Réalisations (galerie de l'accueil)                         */
+  /* ====================================================================== */
+  function moveInList(table, list, from, to) {
+    if (to < 0 || to >= list.length) return Promise.resolve();
+    var arr = list.slice(); arr.splice(to, 0, arr.splice(from, 1)[0]);
+    var jobs = [];
+    arr.forEach(function (row, i) {
+      if (row.position !== i + 1) jobs.push(db('PATCH', table + '?' + (table === 'rentals' ? 'id=eq.' + encodeURIComponent(row.id) : 'id=eq.' + row.id), { position: i + 1 }));
+    });
+    return Promise.all(jobs).then(function () { return reloadTable(table); });
+  }
+
+  function tabGalerie() {
+    var list = S.gallery;
+    var head = '<div class="entete"><div><h2>Nos réalisations</h2><p>Les photos affichées dans la galerie de l\'accueil. Vous pouvez en ajouter, en retirer et changer leur ordre.</p></div>' +
+      '<button type="button" class="btn" id="g-add">+ Ajouter des photos</button></div>';
+    if (!list.length) {
+      var defs = defaultGallery();
+      $('panneau').innerHTML = head +
+        '<div class="vide"><p>La galerie affiche pour l\'instant les ' + defs.length + ' photos d\'origine du site.<br>Pour pouvoir les retirer ou les réordonner, importez-les d\'abord ici.</p>' +
+        '<button type="button" class="btn sec" id="g-import">Importer les photos actuelles</button></div>';
+      $('g-import').addEventListener('click', function () {
+        this.disabled = true; this.textContent = 'Import…';
+        db('POST', 'gallery', defs.map(function (d, i) { return { src: d.src, caption: d.caption, position: i + 1 }; }), 'return=minimal')
+          .then(function () { return reloadTable('gallery'); }).then(function () { toast('Photos importées.'); tabGalerie(); })
+          .catch(function (e) { toast(explain(e), true); tabGalerie(); });
+      });
+    } else {
+      $('panneau').innerHTML = head + '<div class="grille" id="g-grille">' + list.map(function (g, i) {
+        return '<div class="carte"><div class="photo"><img src="' + esc(g.src) + '" alt="" loading="lazy"></div>' +
+          '<div class="corps"><div class="meta">' + esc(g.caption || 'Sans légende') + '</div>' +
+          '<div class="barre"><button class="ico" data-g="left" data-i="' + i + '" aria-label="Déplacer avant"' + (i === 0 ? ' disabled' : '') + '>◀</button>' +
+          '<button class="ico" data-g="right" data-i="' + i + '" aria-label="Déplacer après"' + (i === list.length - 1 ? ' disabled' : '') + '>▶</button>' +
+          '<button class="ico" data-g="edit" data-i="' + i + '" aria-label="Modifier la légende">✎</button>' +
+          '<button class="ico" data-g="del" data-i="' + i + '" aria-label="Supprimer">🗑</button></div></div></div>';
+      }).join('') + '</div>';
+      $('g-grille').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-g]'); if (!b || b.disabled) return;
+        var i = +b.getAttribute('data-i'), act = b.getAttribute('data-g');
+        if (act === 'left' || act === 'right') {
+          b.disabled = true;
+          moveInList('gallery', S.gallery, i, i + (act === 'left' ? -1 : 1)).then(tabGalerie).catch(function (er) { toast(explain(er), true); });
+        }
+        if (act === 'edit') editCaption(S.gallery[i]);
+        if (act === 'del') deleteGallery(S.gallery[i]);
+      });
+    }
+    $('g-add').addEventListener('click', addGallery);
+  }
+
+  function defaultGallery() {
+    return [].map.call(S.doc.querySelectorAll('[data-gallery] img'), function (im) {
+      return { src: im.getAttribute('src'), caption: im.getAttribute('alt') || '' };
+    });
+  }
+
+  function editCaption(g) {
+    openModal({
+      title: 'Légende de la photo',
+      body: '<img class="apercu" src="' + esc(g.src) + '" alt="" style="max-height:220px"><label class="champ">Légende (décrit la photo, utile pour Google)<input id="m-cap" type="text" value="' + esc(g.caption || '') + '"></label>',
+      buttons: [{ label: 'Annuler', kind: 'sec', action: function () {} },
+        { label: 'Enregistrer', action: function () {
+          return db('PATCH', 'gallery?id=eq.' + g.id, { caption: $('m-cap').value.trim() })
+            .then(function () { return reloadTable('gallery'); }).then(function () { toast('Légende enregistrée.'); tabGalerie(); });
+        } }]
+    });
+  }
+
+  function deleteGallery(g) {
+    confirmBox('Supprimer cette photo ?', 'Elle ne sera plus affichée dans la galerie de l\'accueil.', 'Supprimer').then(function (ok) {
+      if (!ok) return;
+      db('DELETE', 'gallery?id=eq.' + g.id).then(function () { removeFile(g.src); return reloadTable('gallery'); })
+        .then(function () { toast('Photo supprimée.'); tabGalerie(); }).catch(function (e) { toast(explain(e), true); });
+    });
+  }
+
+  // Envoi de plusieurs photos, avec barre de progression.
+  function sendMany(files, folder, onEach) {
+    var bar = document.getElementById('m-prog');
+    var done = 0, results = [];
+    return files.reduce(function (p, f, i) {
+      return p.then(function () { return onEach(f, i); }).then(function (r) {
+        results.push(r); done++; if (bar) bar.style.width = Math.round(done / files.length * 100) + '%';
+      });
+    }, Promise.resolve()).then(function () { return results; });
+  }
+
+  function addGallery() {
+    var files = [];
+    openModal({
+      title: 'Ajouter des photos',
+      body: dropzone(true) + '<div class="photos-liste" id="m-prev"></div>' +
+        '<label class="champ">Légende (facultatif, appliquée à toutes les photos)<input id="m-cap" type="text" placeholder="Ex. Henné de mariée, motifs floraux"></label>' +
+        '<div class="progres" id="m-progbox" hidden><i id="m-prog"></i></div>',
+      buttons: [{ label: 'Annuler', kind: 'sec', action: function () {} },
+        { label: 'Ajouter à la galerie', action: function () {
+          if (!files.length) { toast('Choisissez au moins une photo.', true); return false; }
+          $('m-progbox').hidden = false;
+          var cap = $('m-cap').value.trim();
+          return sendMany(files, 'galerie', function (f) {
+            return fitJpeg(f, 1600, 0.85).then(function (b) { return upload('galerie/realisation-' + uid() + '.jpg', b); });
+          }).then(function (urls) {
+            var pos = S.gallery.reduce(function (m, g) { return Math.max(m, g.position || 0); }, 0);
+            // si la galerie n'avait pas encore été importée, on importe d'abord les photos d'origine pour ne rien faire disparaître
+            var base = S.gallery.length ? [] : defaultGallery().map(function (d, i) { return { src: d.src, caption: d.caption, position: i + 1 }; });
+            pos = base.length || pos;
+            var rows = base.concat(urls.map(function (u, i) { return { src: u, caption: cap, position: pos + i + 1 }; }));
+            return db('POST', 'gallery', rows, 'return=minimal');
+          }).then(function () { return reloadTable('gallery'); }).then(function () { toast(files.length + ' photo(s) ajoutée(s).'); tabGalerie(); });
+        } }],
+      onOpen: function (root) {
+        wireDrop(root, function (fl) {
+          files = files.concat(fl);
+          $('m-prev').innerHTML = files.map(function (f) { return '<div class="vignette"><img src="' + URL.createObjectURL(f) + '" alt=""></div>'; }).join('');
+        });
+      }
+    });
+  }
+
+  /* ====================================================================== */
+  /*  Onglet 4 : Location                                                    */
+  /* ====================================================================== */
+  function catLabel(id) {
+    var c = (CFG.rentalCategories || []).filter(function (x) { return x.id === id; })[0];
+    return c ? c.label : id;
+  }
+  function photoUrl(p, thumb) {
+    if (p && typeof p === 'object') return (thumb && p.thumb) || p.src;
+    return 'image/location/' + p + (thumb ? '-t.jpg' : '.jpg');
+  }
+
+  function tabLocation() {
+    var list = S.rentals;
+    var head = '<div class="entete"><div><h2>Location d\'articles</h2><p>Les articles de la page Location : photos, prix et catégorie. Les clientes demandent un devis par WhatsApp.</p></div>' +
+      '<button type="button" class="btn" id="r-add">+ Ajouter un article</button></div>';
+    if (!list.length) {
+      $('panneau').innerHTML = head +
+        '<div class="vide"><p>La page Location affiche pour l\'instant les ' + (CFG._rentalsDefault || []).length + ' articles d\'origine du site.<br>Importez-les ici pour pouvoir les modifier, les retirer ou en ajouter.</p>' +
+        '<button type="button" class="btn sec" id="r-import">Importer le catalogue actuel</button></div>';
+      $('r-import').addEventListener('click', function () {
+        this.disabled = true; this.textContent = 'Import…';
+        importRentals().then(function () { toast('Catalogue importé.'); tabLocation(); }).catch(function (e) { toast(explain(e), true); tabLocation(); });
+      });
+    } else {
+      $('panneau').innerHTML = head + '<div class="grille" id="r-grille">' + list.map(function (r, i) {
+        var ph = (r.photos || [])[0];
+        return '<div class="carte' + (r.active === false ? ' masque' : '') + '"><div class="photo">' +
+          (ph ? '<img src="' + esc(photoUrl(ph, true)) + '" alt="" loading="lazy">' : '') +
+          '<span class="prix">' + (r.price == null ? 'Sur devis' : esc(euro(r.price))) + '</span>' +
+          ((r.photos || []).length > 1 ? '<span class="nb">' + r.photos.length + ' photos</span>' : '') + '</div>' +
+          '<div class="corps"><div class="nom">' + esc(r.name) + '</div>' +
+          '<div class="meta">' + esc(catLabel(r.cat)) + (r.active === false ? ' · masqué' : '') + '</div>' +
+          '<div class="barre"><button class="ico" data-r="left" data-i="' + i + '" aria-label="Déplacer avant"' + (i === 0 ? ' disabled' : '') + '>◀</button>' +
+          '<button class="ico" data-r="right" data-i="' + i + '" aria-label="Déplacer après"' + (i === list.length - 1 ? ' disabled' : '') + '>▶</button>' +
+          '<button class="ico" data-r="edit" data-i="' + i + '" aria-label="Modifier">✎</button>' +
+          '<button class="ico" data-r="del" data-i="' + i + '" aria-label="Supprimer">🗑</button></div></div></div>';
+      }).join('') + '</div>';
+      $('r-grille').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-r]'); if (!b || b.disabled) return;
+        var i = +b.getAttribute('data-i'), act = b.getAttribute('data-r');
+        if (act === 'left' || act === 'right') {
+          b.disabled = true;
+          moveInList('rentals', S.rentals, i, i + (act === 'left' ? -1 : 1)).then(tabLocation).catch(function (er) { toast(explain(er), true); });
+        }
+        if (act === 'edit') editRental(S.rentals[i]);
+        if (act === 'del') deleteRental(S.rentals[i]);
+      });
+    }
+    $('r-add').addEventListener('click', function () { editRental(null); });
+  }
+
+  function importRentals() {
+    var rows = (CFG._rentalsDefault || []).map(function (r, i) {
+      return { id: r.id, name: r.name, note: r.note || null, price: r.price == null ? null : r.price, cat: r.cat, photos: r.photos, position: i + 1, active: true };
+    });
+    return db('POST', 'rentals?on_conflict=id', rows, 'resolution=merge-duplicates,return=minimal').then(function () { return reloadTable('rentals'); });
+  }
+
+  function deleteRental(r) {
+    confirmBox('Supprimer « ' + esc(r.name) + ' » ?', 'L\'article et ses photos disparaîtront de la page Location. Pour le masquer sans le perdre, utilisez plutôt « Modifier » puis décochez « Visible ».', 'Supprimer').then(function (ok) {
+      if (!ok) return;
+      db('DELETE', 'rentals?id=eq.' + encodeURIComponent(r.id)).then(function () {
+        (r.photos || []).forEach(function (p) { if (p && typeof p === 'object') { removeFile(p.src); removeFile(p.thumb); } });
+        return reloadTable('rentals');
+      }).then(function () { toast('Article supprimé.'); tabLocation(); }).catch(function (e) { toast(explain(e), true); });
+    });
+  }
+
+  function editRental(r) {
+    var isNew = !r;
+    // Une seule liste ordonnée : photos existantes ({ p }) et nouvelles photos ({ file, url }).
+    var list = r ? (r.photos || []).map(function (p) { return { p: p, url: photoUrl(p, true) }; }) : [];
+    var cats = CFG.rentalCategories || [];
+
+    function thumbsHtml() {
+      return list.map(function (t, n) {
+        return '<div class="vignette"><img src="' + esc(t.url) + '" alt="">' + (n === 0 ? '<span class="cv">Couverture</span>' : '') +
+          '<div class="acts"><button type="button" data-ph="del" data-i="' + n + '" aria-label="Retirer la photo">×</button>' +
+          (n > 0 ? '<button type="button" data-ph="first" data-i="' + n + '" aria-label="Mettre en couverture" title="Mettre en couverture">★</button>' : '') + '</div></div>';
+      }).join('');
+    }
+    function refresh() { $('m-photos').innerHTML = thumbsHtml(); }
+
+    openModal({
+      title: isNew ? 'Nouvel article à louer' : 'Modifier l\'article',
+      body: '<label class="champ">Nom de l\'article<input id="m-nom" type="text" required value="' + esc(r ? r.name : '') + '" placeholder="Ex. Arche florale"></label>' +
+        '<label class="champ">Précision (facultatif)<input id="m-note" type="text" value="' + esc(r && r.note ? r.note : '') + '" placeholder="Ex. l\'unité, au choix…"></label>' +
+        '<div class="deux"><label class="champ">Prix de location (€)<input id="m-prix" type="text" inputmode="decimal" value="' + (r && r.price != null ? esc(r.price) : '') + '" placeholder="Vide = sur devis"></label>' +
+        '<label class="champ">Catégorie<select id="m-cat">' + cats.map(function (c) {
+          return '<option value="' + esc(c.id) + '"' + ((r ? r.cat : cats[0] && cats[0].id) === c.id ? ' selected' : '') + '>' + esc(c.label) + '</option>';
+        }).join('') + '</select></label></div>' +
+        '<label class="case"><input type="checkbox" id="m-actif"' + (!r || r.active !== false ? ' checked' : '') + '> Visible sur le site</label>' +
+        '<div class="champ" style="margin-bottom:8px">Photos <span style="text-transform:none;letter-spacing:0">(la première est la couverture)</span></div>' +
+        '<div class="photos-liste" id="m-photos"></div>' + dropzone(true) +
+        '<div class="progres" id="m-progbox" hidden><i id="m-prog"></i></div>',
+      buttons: [{ label: 'Annuler', kind: 'sec', action: function () {} },
+        { label: isNew ? 'Ajouter l\'article' : 'Enregistrer', action: function () {
+          var name = $('m-nom').value.trim();
+          if (!name) { toast('Indiquez le nom de l\'article.', true); return false; }
+          if (!list.length) { toast('Ajoutez au moins une photo.', true); return false; }
+          var ptxt = $('m-prix').value.trim().replace(',', '.');
+          var price = ptxt === '' ? null : Number(ptxt);
+          if (price !== null && (!isFinite(price) || price < 0)) { toast('Le prix n\'est pas valide.', true); return false; }
+          $('m-progbox').hidden = false;
+          var id = r ? r.id : (slug(name) + '-' + uid().slice(-4));
+          var fresh = list.filter(function (t) { return t.file && !t.p; });
+          return sendMany(fresh, 'location', function (a) {
+            return Promise.all([fitJpeg(a.file, 1400, 0.82), coverJpeg(a.file, 520, 650, 0.8)]).then(function (bl) {
+              var base = 'location/' + slug(name) + '-' + uid();
+              return Promise.all([upload(base + '.jpg', bl[0]), upload(base + '-t.jpg', bl[1])]);
+            }).then(function (u) { a.p = { src: u[0], thumb: u[1] }; });
+          }).then(function () {
+            var photos = list.map(function (t) { return t.p; });
+            var row = { id: id, name: name, note: $('m-note').value.trim() || null, price: price, cat: $('m-cat').value,
+              photos: photos, active: $('m-actif').checked, updated_at: new Date().toISOString() };
+            if (isNew) {
+              // si le catalogue n'a jamais été importé, on le fait d'abord pour que les articles d'origine restent affichés
+              var pre = S.rentals.length ? Promise.resolve() : importRentals();
+              return pre.then(function () {
+                row.position = S.rentals.reduce(function (m, x) { return Math.max(m, x.position || 0); }, 0) + 1;
+                return db('POST', 'rentals', row, 'return=minimal');
+              });
+            }
+            return db('PATCH', 'rentals?id=eq.' + encodeURIComponent(r.id), row).then(function () {
+              // photos retirées : on les supprime du stockage si elles y avaient été envoyées
+              (r.photos || []).forEach(function (p) {
+                if (p && typeof p === 'object' && !photos.some(function (q) { return q && q.src === p.src; })) { removeFile(p.src); removeFile(p.thumb); }
+              });
+            });
+          }).then(function () { return reloadTable('rentals'); }).then(function () { toast(isNew ? 'Article ajouté.' : 'Article enregistré.'); tabLocation(); });
+        } }],
+      onOpen: function (root) {
+        refresh();
+        wireDrop(root, function (fl) {
+          fl.forEach(function (f) { list.push({ file: f, url: URL.createObjectURL(f) }); });
+          refresh();
+        });
+        $('m-photos').addEventListener('click', function (e) {
+          var b = e.target.closest('[data-ph]'); if (!b) return;
+          var i = +b.getAttribute('data-i'), act = b.getAttribute('data-ph');
+          if (act === 'del') list.splice(i, 1);
+          if (act === 'first') list.unshift(list.splice(i, 1)[0]);
+          refresh();
+        });
+      }
+    });
+  }
+
+  /* ====================================================================== */
+  /*  Onglet 5 : Produits & prix                                             */
+  /* ====================================================================== */
+  function tabProduits() {
+    var D = CFG._productsDefault || {}, P = CFG.products || {};
+    $('panneau').innerHTML =
+      '<div class="entete"><div><h2>Produits &amp; prix</h2><p>Le prix et le nom modifiés ici changent à la fois l\'affichage du site, le panier et la page de commande. Les frais de port restent calculés automatiquement.</p></div></div>' +
+      Object.keys(D).map(function (sku) {
+        var p = P[sku], mod = S.content['product.' + sku + '.price'] != null || S.content['product.' + sku + '.label'] != null;
+        return '<div class="ligne"><div class="txt"><strong style="font-weight:500">' + esc(p.label) + '</strong>' + (mod ? '<span class="badge">modifié</span>' : '') + '</div>' +
+          '<div style="font:600 22px/1 \'Cormorant Garamond\',serif;color:#A8542A;min-width:70px;text-align:right">' + esc(euro(p.price)) + '</div>' +
+          '<button type="button" class="btn sec petit" data-prod="' + esc(sku) + '">Modifier</button></div>';
+      }).join('');
+    $('panneau').onclick = function (e) {
+      var b = e.target.closest('[data-prod]'); if (b) editProduct(b.getAttribute('data-prod'));
+    };
+  }
+
+  function editProduct(sku) {
+    var D = CFG._productsDefault[sku], P = CFG.products[sku];
+    var mod = S.content['product.' + sku + '.price'] != null || S.content['product.' + sku + '.label'] != null;
+    var buttons = [];
+    if (mod) buttons.push({ label: 'Rétablir l\'original', kind: 'danger', left: true, action: function () {
+      return Promise.all([setContent('product.' + sku + '.price', null), setContent('product.' + sku + '.label', null)])
+        .then(function () { toast('Valeurs d\'origine rétablies.'); tabProduits(); });
+    } });
+    buttons.push({ label: 'Annuler', kind: 'sec', action: function () {} });
+    buttons.push({ label: 'Enregistrer', action: function () {
+      var pr = Number($('m-p').value.replace(',', '.')), lb = $('m-l').value.trim();
+      if (!isFinite(pr) || pr < 0 || $('m-p').value.trim() === '') { toast('Le prix n\'est pas valide.', true); return false; }
+      if (!lb) { toast('Le nom ne peut pas être vide.', true); return false; }
+      return Promise.all([setContent('product.' + sku + '.price', String(pr), String(D.price)), setContent('product.' + sku + '.label', lb, D.label)])
+        .then(function () { toast('Produit enregistré.'); tabProduits(); });
+    } });
+    openModal({
+      title: 'Modifier le produit',
+      body: '<label class="champ">Nom du produit (affiché dans le panier)<input id="m-l" type="text" value="' + esc(P.label) + '"></label>' +
+        '<label class="champ">Prix (€)<input id="m-p" type="text" inputmode="decimal" value="' + esc(String(P.price).replace('.', ',')) + '"></label>' +
+        '<p class="aide">Le texte de description du produit se modifie dans l\'onglet « Textes ».</p>',
+      buttons: buttons
+    });
+  }
+
+  /* ====================================================================== */
+  /*  Navigation entre onglets                                               */
+  /* ====================================================================== */
+  var TABS = { textes: tabTextes, photos: tabPhotos, galerie: tabGalerie, location: tabLocation, produits: tabProduits };
+  function goTab(name) {
+    S.tab = name;
+    [].forEach.call($('onglets').children, function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === name)); });
+    $('panneau').onclick = null;
+    TABS[name]();
+  }
+  $('onglets').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tab]'); if (b) goTab(b.getAttribute('data-tab'));
+  });
+
+  /* ====================================================================== */
+  /*  Démarrage                                                              */
+  /* ====================================================================== */
+  function enter() {
+    var s = getSession();
+    $('qui').textContent = s && s.email ? 'Connectée : ' + s.email : '';
+    show('v-admin');
+    $('panneau').innerHTML = '<div class="chargement">Chargement…</div>';
+    loadAll().then(function () { goTab(S.tab); }).catch(function (e) {
+      $('panneau').innerHTML = '<div class="erreur">' + esc(explain(e)) + '</div><button class="btn sec" id="retry">Réessayer</button>';
+      $('retry').addEventListener('click', enter);
+    });
+  }
+
+  $('b-logout').addEventListener('click', function () { setSession(null); show('v-login'); });
+
+  $('f-login').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = $('login-btn'), err = $('login-err');
+    err.hidden = true; btn.disabled = true; btn.textContent = 'Connexion…';
+    authCall('password', { email: $('login-email').value.trim(), password: $('login-pw').value }).then(function () {
+      $('login-pw').value = '';
+      enter();
+    }, function (ex) {
+      err.textContent = ex.status === 400 || ex.status === 401 || /invalid/i.test(ex.message)
+        ? 'Adresse e-mail ou mot de passe incorrect.' : explain(ex);
+      err.hidden = false;
+    }).then(function () { btn.disabled = false; btn.textContent = 'Se connecter'; });
+  });
+
+  if (!DB.enabled) show('v-config');
+  else if (getSession()) enter();
+  else show('v-login');
+})();
+</script>
+</body>
+</html>

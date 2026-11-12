@@ -125,6 +125,27 @@ window.HENNA_CONFIG = {
 
 
   /* --------------------------------------------------------------------------
+     5 bis. ESPACE ADMINISTRATEUR  (service gratuit Supabase)
+     --------------------------------------------------------------------------
+     Permet à l'administratrice du site de se connecter sur admin.html pour
+     modifier les textes, les prix, les photos, la galerie de réalisations et
+     le catalogue de location, sans toucher au code.
+     Mise en place : voir ADMIN-SETUP.md (10 minutes, une seule fois).
+       url     -> « Project URL » du projet Supabase (https://xxxx.supabase.co)
+       anonKey -> clé publique « anon public » (elle peut être publique : c'est
+                  la connexion administrateur + les règles de la base qui
+                  protègent les modifications)
+     Tant que « url » est vide, le site s'affiche comme avant et admin.html
+     explique ce qu'il reste à configurer.
+  -------------------------------------------------------------------------- */
+  supabase: {
+    url: "https://cvozkuuhhwzvtnejkgyv.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2b3prdXVoaHd6dnRuZWprZ3l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ0OTgxNTEsImV4cCI6MjExMDA3NDE1MX0.rcW9kndi3CNo6nkKLWmKNmUN2R4WkeiQ7J6rhKKQsCI",
+    bucket: "media"        // nom du stockage d'images (créé par supabase-setup.sql)
+  },
+
+
+  /* --------------------------------------------------------------------------
      6. LOCATION D'ARTICLES  (catalogue de la page location.html)
      --------------------------------------------------------------------------
      Pour changer un prix, un nom ou ajouter une photo : modifiez ici, la

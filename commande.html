@@ -250,6 +250,7 @@
 </footer>
 
 <script src="config.js"></script>
+<script src="site-data.js"></script>
 <script src="cart.js"></script>
 <script>
 (function () {
@@ -362,7 +363,8 @@
     render();
   });
   window.addEventListener('storage', function () { render(); });
-  window.addEventListener('henna-cart-change', function () { render(); });   // modifié depuis le mini-panier   // panier modifié dans un autre onglet
+  window.addEventListener('henna-cart-change', function () { render(); });
+  window.addEventListener('henna-content-updated', function () { render(); });   // prix modifiés depuis l'espace admin   // modifié depuis le mini-panier   // panier modifié dans un autre onglet
 
   /* ---------- envoi au backend (Apps Script), même logique que le reste du site ---------- */
   function envoyer(payload) {

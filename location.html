@@ -194,12 +194,14 @@
 </footer>
 
 <script src="config.js"></script>
+<script src="site-data.js"></script>
 <script src="cart.js"></script>
 <script>
 (function () {
   var CFG = window.HENNA_CONFIG || {};
   var CATS = CFG.rentalCategories || [];
-  var ITEMS = CFG.rentals || [];
+  function avecPhotos(l) { return (l || []).filter(function (i) { return i.photos && i.photos.length; }); }
+  var ITEMS = avecPhotos(CFG.rentals);   // mis à jour si l'administratrice a modifié le catalogue (voir site-data.js)
   var DIR = 'image/location/';
 
   function $(id) { return document.getElementById(id); }
@@ -207,6 +209,11 @@
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
+  }
+  // Une photo est soit un nom de fichier de image/location/ (« tapis-1 »), soit { src, thumb } (photo ajoutée depuis l'espace admin).
+  function photoSrc(p, thumb) {
+    if (p && typeof p === 'object') return (thumb && p.thumb) || p.src;
+    return DIR + p + (thumb ? '-t.jpg' : '.jpg');
   }
   function prixTexte(it) { return it.price == null ? 'Sur devis' : String(it.price).replace('.', ',') + ' €'; }
 
@@ -264,7 +271,7 @@
       var n = it.photos.length;
       return '<article class="carte">' +
         '<button type="button" class="vignette" data-open="' + idx + '" aria-label="Voir les photos : ' + esc(it.name) + '">' +
-          '<img src="' + DIR + esc(it.photos[0]) + '-t.jpg" alt="' + esc(it.name) + '" loading="lazy" width="520" height="650">' +
+          '<img src="' + esc(photoSrc(it.photos[0], true)) + '" alt="' + esc(it.name) + '" loading="lazy" width="520" height="650">' +
           (n > 1 ? '<span class="nbphotos">' + n + ' photos</span>' : '') +
           '<span class="prix' + (it.price == null ? ' devis' : '') + '">' + esc(prixTexte(it)) + '</span>' +
         '</button>' +
@@ -314,7 +321,7 @@
   function showPhoto() {
     var it = lbItem, n = it.photos.length;
     var img = lb.querySelector('.lb-img');
-    img.src = DIR + it.photos[lbPos] + '.jpg';
+    img.src = photoSrc(it.photos[lbPos]);
     img.alt = it.name + ' — photo ' + (lbPos + 1) + ' sur ' + n;
     var leg = lb.querySelector('.lb-legende');
     leg.querySelector('strong').textContent = it.name + (it.note ? ' (' + it.note + ')' : '');
@@ -325,7 +332,7 @@
     leg.querySelector('.lb-devis').href = waLien(waMessage(it));
     lb.querySelector('.lb-prec').hidden = lb.querySelector('.lb-suiv').hidden = n < 2;
     // précharge la photo suivante
-    if (n > 1) (new Image()).src = DIR + it.photos[(lbPos + 1) % n] + '.jpg';
+    if (n > 1) (new Image()).src = photoSrc(it.photos[(lbPos + 1) % n]);
   }
 
   function openLb(idx) {
@@ -367,6 +374,14 @@
   if (CATS.some(function (c) { return c.id === h; })) current = h;
   renderFiltres();
   renderGalerie();
+
+  // le catalogue de la base arrive après l'affichage : on redessine
+  window.addEventListener('henna-content-updated', function () {
+    ITEMS = avecPhotos(CFG.rentals);
+    if (!CATS.some(function (c) { return c.id === current; })) current = 'tout';
+    renderFiltres();
+    renderGalerie();
+  });
 })();
 </script>
 </body>
