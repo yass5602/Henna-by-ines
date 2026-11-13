@@ -266,7 +266,7 @@
   /* ---------------------------------------------------------------------- */
   function loadEditMode() {
     try {
-      if (!ENABLED || /admin(\.html)?\/?$/.test(location.pathname)) return;
+      if (!ENABLED || /(admin|pilotage)(\.html)?\/?$/.test(location.pathname)) return;
       var asked = /[?&]edit(=|&|$)/.test(location.search);
       var hasSession = !!window.localStorage.getItem('henna_admin_session');
       if (!hasSession) { window.sessionStorage.removeItem('henna_edit'); return; }

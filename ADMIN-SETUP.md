@@ -68,6 +68,27 @@ Depuis l'espace administrateur (`/admin.html`), le bandeau sombre « Modifier di
 - **Location** : chaque article porte ses boutons (◀ ▶ déplacer, ✎ Modifier, 🗑 Supprimer) ; « + Ajouter un article » en haut de la liste ; les articles masqués se réaffichent via « Articles masqués ».
 - **Quitter** : bouton « Quitter » dans la barre en bas de l'écran. Les visiteurs ne voient jamais cette barre et ne téléchargent pas le fichier `edit-mode.js`.
 
+## Pilotage : agenda, recettes et tableau de bord
+
+La page privée **`/pilotage.html`** (lien « Agenda & recettes » dans l'espace administrateur, même e-mail et mot de passe) regroupe :
+
+- un **tableau de bord** : recettes, dépenses et bénéfice du jour, de la semaine (lundi à dimanche) et du mois, comparés à la période précédente, avec graphique (30 jours, 12 semaines ou 12 mois) et répartition par prestation ;
+- un **calendrier** mensuel et un **agenda** de rendez-vous (titre, client, date et heure ou journée entière, lieu, note) ;
+- les **recettes et dépenses** (montant, date, prestation, mode de paiement, note) avec filtres, recherche et export CSV ;
+- un onglet **Google Agenda**.
+
+**Installation (une seule fois)** : dans Supabase > SQL Editor, exécuter le contenu de `supabase-pilotage.sql` (après `supabase-setup.sql`). Il crée quatre tables **privées** : seule l'administratrice connectée peut les lire ou les modifier ; les visiteurs n'ont aucun accès.
+
+**Commandes PayPal** : quand un client clique sur « Payer avec PayPal » dans `commande.html`, la commande (nom, e-mail, téléphone, panier, total) est déposée dans la liste « Commandes PayPal à confirmer ». Elle n'est **pas** comptée dans les totaux tant que vous n'avez pas cliqué sur « Vérifier et enregistrer » : un clic ne prouve pas qu'un paiement a abouti. Vérifiez dans PayPal, ajustez si besoin, puis enregistrez ; ou « Ignorer ». Les visiteurs peuvent seulement déposer cette ligne, jamais la relire.
+
+**Google Agenda** (formule simple, sans projet Google Cloud) :
+
+- chaque rendez-vous a un bouton « + Google Agenda » qui ouvre Google Agenda avec l'événement déjà rempli, à valider ;
+- l'onglet Google Agenda affiche votre agenda dans la page : saisir l'adresse Gmail de l'agenda. Il s'affiche si vous êtes connectée à ce compte Google dans le navigateur. Ne rendez pas l'agenda public (vos rendez-vous clients seraient visibles par tous) ;
+- il n'y a pas de synchronisation automatique dans les deux sens : un rendez-vous créé ici n'apparaît dans Google Agenda que via le bouton.
+
+**Confidentialité** : les nom, e-mail et téléphone des clients PayPal sont conservés dans votre base Supabase privée (ils partaient déjà vers votre Google Sheet). Mentionnez-le dans votre politique de confidentialité si besoin et supprimez les lignes devenues inutiles.
+
 ## Bon à savoir
 
 - **Rien ne casse si Supabase est indisponible** : le site affiche la dernière version connue (mémorisée dans le navigateur

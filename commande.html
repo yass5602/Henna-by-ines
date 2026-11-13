@@ -411,7 +411,7 @@
   var btnValider = $('btn-valider');
   var erreurEl = $('form-erreur');
   var commandeRef = null;
-  var dernierTotal = 0, dernierLoc = false, dernierColis = false;
+  var dernierTotal = 0, dernierLoc = false, dernierColis = false, dernierPayload = null;
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -464,6 +464,7 @@
         return;
       }
       commandeRef = res && res.orderId;
+      dernierPayload = payload;
       dernierTotal = c.total;
       dernierLoc = c.hasRental; dernierColis = c.hasParcel;
       locked = true;
@@ -501,6 +502,37 @@
       erreurEl.hidden = false;
     });
   });
+
+  /* Quand le client clique sur « Payer avec PayPal », on dépose la commande dans l'espace de pilotage de
+     l'administratrice (table « commandes_paypal », à confirmer). Le dépôt est silencieux : il ne retarde
+     ni ne bloque jamais l'ouverture de PayPal. Une seule fois par commande. */
+  var paypalDeja = {};
+  function noterClicPaypal() {
+    try {
+      var D = window.HennaDB;
+      if (!D || !D.enabled || !dernierPayload) return;
+      var cle = String(commandeRef || ('t' + dernierTotal));
+      if (paypalDeja[cle]) return;
+      paypalDeja[cle] = true;
+      var pl = dernierPayload, ct = pl.contact || {};
+      var resume = (pl.item && pl.item.label ? pl.item.label : '') + (pl.eventDate ? ' — événement le ' + pl.eventDate : '');
+      fetch(D.url + '/rest/v1/commandes_paypal', {
+        method: 'POST', keepalive: true,
+        headers: { apikey: D.key, Authorization: 'Bearer ' + D.key, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify({
+          ref: commandeRef ? String(commandeRef).slice(0, 80) : null,
+          client: ((ct.firstName || '') + ' ' + (ct.lastName || '')).trim().slice(0, 200) || null,
+          email: ct.email ? String(ct.email).slice(0, 200) : null,
+          telephone: ct.phone ? String(ct.phone).slice(0, 60) : null,
+          resume: resume.slice(0, 2000) || null,
+          items: (pl.items || []).slice(0, 40).map(function (l) { return { sku: l.sku, label: l.label, price: l.price, qty: l.qty }; }),
+          total: Number(dernierTotal) || 0
+        })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  $('lien-paypal').addEventListener('click', noterClicPaypal);
+  $('lien-paypal').addEventListener('auxclick', noterClicPaypal);
 
   $('btn-confirmer-paiement').addEventListener('click', function () {
     var b = $('btn-confirmer-paiement');
