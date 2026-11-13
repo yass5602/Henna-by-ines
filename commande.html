@@ -540,7 +540,11 @@
     b.textContent = 'Enregistrement…';
     envoyer({
       type: 'payment', kind: 'order', ref: commandeRef, amount: dernierTotal, currency: CURRENCY,
-      method: 'paypal', declaredBy: 'client', createdAt: new Date().toISOString()
+      method: 'paypal', declaredBy: 'client', createdAt: new Date().toISOString(),
+      // Coordonnées reprises dans l'e-mail « Paiement signalé » (ignorées par une ancienne version du script).
+      contact: dernierPayload ? dernierPayload.contact : null,
+      address: dernierPayload ? dernierPayload.address : null,
+      resume: dernierPayload && dernierPayload.item ? dernierPayload.item.label : null
     }).then(function () {}, function () {}).then(function () {
       Cart.clear();                       // la commande est partie : on vide le panier
       $('zone-paiement').hidden = true;

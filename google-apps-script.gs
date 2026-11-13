@@ -193,6 +193,27 @@ function buildDescription(d, who, type, address, refUrl) {
    Paiement signalé -> l'événement passe en confirmé
    ========================================================================== */
 
+/* Bloc « coordonnées de la cliente » commun aux e-mails de commande et de paiement.
+   Renvoie { adresse, lignes } ; une ligne null est ignorée à l'assemblage. */
+function lignesClient(d, locSeule) {
+  const contact = d.contact || {};
+  const who = ((contact.firstName || '') + ' ' + (contact.lastName || '')).trim();
+  const client = contact.email || (d.customer && d.customer.email) || null;
+  const a = d.address || {};
+  const adresse = (a.street || a.city)
+    ? [a.streetNumber, a.street].filter(String).join(' ') + ', ' + (a.zip || '') + ' ' + (a.city || '')
+    : null;
+  return {
+    adresse: adresse,
+    lignes: [
+      who ? ('Cliente    : ' + who) : null,
+      'E-mail     : ' + (client || '—'),
+      contact.phone ? ('Téléphone  : ' + contact.phone) : null,
+      adresse ? ((locSeule ? 'Adresse    : ' : 'Livraison  : ') + adresse + (locSeule ? '' : ' (Colissimo)')) : null
+    ]
+  };
+}
+
 function handlePayment(d) {
   const quand = fmtDate(new Date());
 
@@ -221,11 +242,18 @@ function handlePayment(d) {
     return { ok: true, confirmed: true };
   }
 
+  const contactP = d.contact || {};
+  const nomP = ((contactP.firstName || '') + ' ' + (contactP.lastName || '')).trim();
   notify(
-    'Paiement signalé (' + (d.kind || 'commande') + ') — ' + d.amount + ' ' + d.currency,
-    'Un paiement PayPal de ' + d.amount + ' ' + d.currency + ' a été signalé le ' + quand + '.'
-    + '\nRéférence : ' + (d.ref || '—')
-    + '\n\n⚠️ À vérifier sur votre compte PayPal.'
+    'Paiement signalé (' + (d.kind || 'commande') + ') — ' + d.amount + ' ' + d.currency + (nomP ? ' — ' + nomP : ''),
+    ['PAIEMENT SIGNALÉ PAR LA CLIENTE', '',
+      'Un paiement PayPal de ' + d.amount + ' ' + d.currency + ' a été signalé le ' + quand + '.',
+      'Référence : ' + (d.ref || '—'), '']
+      .concat((d.contact || d.address) ? lignesClient(d, false).lignes : [])
+      .concat(d.resume ? ['', 'Commande : ' + d.resume] : [])
+      .concat(['', '⚠️ À vérifier sur votre compte PayPal.'])
+      .filter(function (l) { return l !== null; }).join('\n'),
+    contactP.email || null
   );
   return { ok: true };
 }
@@ -266,14 +294,11 @@ function handleOrder(d) {
   const corps = [
     'NOUVELLE COMMANDE',
     '',
-    who ? ('Cliente    : ' + who) : null,
-    'E-mail     : ' + (client || '—'),
-    contact.phone ? ('Téléphone  : ' + contact.phone) : null,
-    address ? ((locSeule ? 'Adresse    : ' : 'Livraison  : ') + address + (locSeule ? '' : ' (Colissimo)')) : null,
+  ].concat(lignesClient(d, locSeule).lignes).concat([
     d.eventDate ? ('Événement  : ' + d.eventDate + '  (LOCATION : vérifier la disponibilité)') : null,
     '',
     'Articles :'
-  ].concat(lignes.map(function (l) { return '   • ' + l; })).concat([
+  ]).concat(lignes.map(function (l) { return '   • ' + l; })).concat([
     '',
     'Sous-total : ' + Number(sousTotal).toFixed(2) + ' ' + devise,
     'Livraison  : ' + portTxt,
